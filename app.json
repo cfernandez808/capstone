@@ -1,0 +1,12 @@
+{
+  "name": "readingFace",
+  "displayName": "readingFace",
+  "expo": {
+    "name": "readingFace",
+    "slug": "readingFace",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
