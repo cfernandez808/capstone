@@ -4,7 +4,12 @@ import ImagePicker from 'react-native-image-picker';
 
 import Amplify from 'aws-amplify'
 import config from './aws-exports'
-Amplify.configure(config)
+Amplify.configure({
+  ...config,
+  Analytics: {
+    disabled: true,
+  },
+});
 import { withAuthenticator } from 'aws-amplify-react-native'
 
 const App = () => {
