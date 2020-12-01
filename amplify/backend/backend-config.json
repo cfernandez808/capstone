@@ -1,1 +1,16 @@
-{}
+{
+  "auth": {
+    "readingface32687b80": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "readingFace": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
+}
