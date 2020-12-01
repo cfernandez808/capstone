@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Alert, Text, TouchableOpacity, Image } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-
-console.log("what is this", ImagePicker)
 
 const App = () => {
   const [image, setImage] = useState(null);
@@ -28,7 +26,6 @@ const App = () => {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        let source = { uri: response.uri };
         setImage(response.uri)
       }
     });
@@ -36,9 +33,6 @@ const App = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>
-        Simple Image Picker
-      </Text>
       <TouchableOpacity
         onPress={selectImage}
       >
