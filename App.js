@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { View, Alert, Text, TouchableOpacity, Image } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
+Amplify.configure(config)
+import { withAuthenticator } from 'aws-amplify-react-native'
+
 const App = () => {
   const [image, setImage] = useState(null);
 
@@ -46,4 +51,4 @@ const App = () => {
 }
 
 
-export default App;
+export default withAuthenticator(App);
