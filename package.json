@@ -1,5 +1,5 @@
 {
-  "main": "index.js",
+  "main": "App.js",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -9,7 +9,10 @@
     "christian": "react-native start --reset-cache"
   },
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.9",
+    "@react-navigation/bottom-tabs": "^5.11.2",
+    "@react-navigation/native": "^5.8.10",
     "amazon-cognito-identity-js": "^4.5.5",
     "aws-amplify": "^3.3.11",
     "aws-amplify-react-native": "^4.2.9",
@@ -21,15 +24,16 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.3",
-    "react-native-gesture-handler": "~1.7.0",
+    "react-native-gesture-handler": "^1.9.0",
     "react-native-image-picker": "^2.3.4",
-    "react-native-reanimated": "~1.13.0",
-    "react-native-screens": "~2.10.1",
+    "react-native-reanimated": "^1.13.2",
+    "react-native-safe-area-context": "^3.1.9",
+    "react-native-screens": "^2.15.0",
     "react-native-unimodules": "~0.11.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0",
+    "@babel/core": "^7.9.6",
     "babel-jest": "~25.2.6",
     "jest": "~25.2.6",
     "react-test-renderer": "~16.13.1"
