@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Alert, Text, TouchableOpacity, Image } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-import Amplify from 'aws-amplify'
+import Amplify, {AWS} from 'aws-amplify'
 import config from './aws-exports'
 Amplify.configure({
   ...config,
@@ -14,6 +14,8 @@ import { withAuthenticator } from 'aws-amplify-react-native'
 
 const App = () => {
   const [image, setImage] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
 
   function selectImage() {
     let options = {
@@ -40,6 +42,25 @@ const App = () => {
       }
     });
   }
+  async function createContact() {
+    const data = {
+      body: {
+        name: name,
+        phone: phone
+      }
+    };
+    const apiData = await API.post('formapi', '/contact', data);
+    console.log({ apiData });
+  }
+
+  function updateFormState(key, value) {
+    if(key === 'phone') {
+      setPhone(value)
+    }
+    if(key === 'name') {
+      setName(value)
+    }
+  }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -51,6 +72,11 @@ const App = () => {
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
+      <View>
+        <input placeholder="phone" onChange={e => updateFormState('phone', e.target.value)} />
+        <input placeholder="name" onChange={e => updateFormState('name', e.target.value)} />
+        <button onClick={createContact}>Create New Contact</button>
+      </View>
     </View>
   );
 }

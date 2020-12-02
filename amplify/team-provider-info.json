@@ -1,4 +1,22 @@
 {
+  "devdynamo": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-readingface-devdynamo-01017-authRole",
+      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-devdynamo-01017-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-devdynamo-01017-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-readingface-devdynamo-01017-deployment",
+      "UnauthRoleName": "amplify-readingface-devdynamo-01017-unauthRole",
+      "StackName": "amplify-readingface-devdynamo-01017",
+      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-devdynamo-01017/c2a95ae0-3432-11eb-842a-12d2fa0db74d",
+      "AmplifyAppId": "d1jbdgysh53xov"
+    },
+    "categories": {
+      "auth": {
+        "readingface32687b80": {}
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-readingface-dev-142452-authRole",
