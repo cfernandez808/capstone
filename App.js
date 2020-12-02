@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Alert, Text, TouchableOpacity, Image } from 'react-native';
+import { Button, View, Alert, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-import Amplify, {AWS} from 'aws-amplify'
+import Amplify, {API} from 'aws-amplify'
 import config from './aws-exports'
 Amplify.configure({
   ...config,
@@ -16,6 +16,7 @@ const App = () => {
   const [image, setImage] = useState(null);
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
+  const [id, setId] = useState('');
 
   function selectImage() {
     let options = {
@@ -46,21 +47,22 @@ const App = () => {
     const data = {
       body: {
         name: name,
-        phone: phone
+        phone: phone,
+        id: id
       }
     };
     const apiData = await API.post('formapi', '/contact', data);
     console.log({ apiData });
   }
 
-  function updateFormState(key, value) {
-    if(key === 'phone') {
-      setPhone(value)
-    }
-    if(key === 'name') {
-      setName(value)
-    }
-  }
+  // function updateFormState(key, value) {
+  //   if(key === 'phone') {
+  //     setPhone(value)
+  //   }
+  //   if(key === 'name') {
+  //     setName(value)
+  //   }
+  // }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -73,9 +75,14 @@ const App = () => {
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <View>
-        <input placeholder="phone" onChange={e => updateFormState('phone', e.target.value)} />
-        <input placeholder="name" onChange={e => updateFormState('name', e.target.value)} />
-        <button onClick={createContact}>Create New Contact</button>
+        <TextInput placeholder="id" onChangeText={txt => setId(txt)} />
+        <TextInput placeholder="phone" onChangeText={txt => setPhone(txt)} />
+        <TextInput placeholder="name" onChangeText={txt => setName(txt)} />
+        <Button
+          onPress={createContact}
+          title="Create New Contact"
+          color="#f194ff"
+        />
       </View>
     </View>
   );
