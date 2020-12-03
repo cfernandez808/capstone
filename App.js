@@ -1,18 +1,20 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
-import { Text, View } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Scan from './Scan'
+import ScanStack from './ScanStack'
 import Map from './Map'
 import HelloWorldSceneAR from './Viro'
 const Tab = createBottomTabNavigator();
+
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Scan" component={Scan} />
+        <Tab.Screen name="Scan" component={ScanStack} />
         <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Viro" component={HelloWorldSceneAR} />
       </Tab.Navigator>

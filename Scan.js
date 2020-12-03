@@ -12,11 +12,8 @@ Amplify.configure({
 });
 import { withAuthenticator } from 'aws-amplify-react-native'
 
-const Scan = () => {
+const Scan = ({ navigation }) => {
   const [image, setImage] = useState(null);
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
-  const [id, setId] = useState('');
 
   function selectImage() {
     let options = {
@@ -40,19 +37,9 @@ const Scan = () => {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         setImage(response.uri)
+        navigation.navigate('Profile', { image })
       }
     });
-  }
-  async function createContact() {
-    const data = {
-      body: {
-        name: name,
-        phone: phone,
-        id: id
-      }
-    };
-    const apiData = await API.post('formapi', '/contact', data);
-    console.log({ apiData });
   }
 
   // function updateFormState(key, value) {
@@ -69,33 +56,11 @@ const Scan = () => {
       <TouchableOpacity
         onPress={selectImage}
       >
-        <Text>Pick an image</Text>
+        <Text>Scan</Text>
       </TouchableOpacity>
-      {image && (
+      {/* {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
-      <View>
-        <TextInput
-          placeholder="id"
-          onChangeText={txt => setId(txt)}
-          placeholderTextColor="#f194ff"
-        />
-        <TextInput
-          placeholder="phone"
-          onChangeText={txt => setPhone(txt)}
-          placeholderTextColor="#f194ff"
-        />
-        <TextInput
-          placeholder="name"
-          onChangeText={txt => setName(txt)}
-          placeholderTextColor="#f194ff"
-        />
-        <Button
-          onPress={createContact}
-          title="Create New Contact"
-          color="#f194ff"
-        />
-      </View>
+      )} */}
     </View>
   );
 }
