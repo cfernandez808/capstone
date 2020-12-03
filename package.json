@@ -6,11 +6,12 @@
     "web": "expo start --web",
     "start": "react-native start",
     "test": "jest",
-    "christian": "react-native start --reset-cache"
+    "christian": "cd ios && pod install && cd ../ && react-native start --reset-cache"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.9",
+    "@react-native-mapbox-gl/maps": "^8.1.0-rc.9",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
     "amazon-cognito-identity-js": "^4.5.5",
