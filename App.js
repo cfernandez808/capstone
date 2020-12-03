@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Scan from './Scan'
 import Map from './Map'
+import HelloWorldSceneAR from './Viro'
 const Tab = createBottomTabNavigator();
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <Tab.Navigator>
         <Tab.Screen name="Scan" component={Scan} />
         <Tab.Screen name="Map" component={Map} />
+        <Tab.Screen name="Viro" component={HelloWorldSceneAR} />
       </Tab.Navigator>
     </NavigationContainer>
   );
