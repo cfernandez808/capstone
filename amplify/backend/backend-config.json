@@ -11,6 +11,55 @@
     "readingFace": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
+    },
+    "formtable": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "formfunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "formtable",
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
+        },
+        {
+          "category": "storage",
+          "resourceName": "formtable",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
+    }
+  },
+  "api": {
+    "formapi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "formfunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   }
 }

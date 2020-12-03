@@ -1,4 +1,40 @@
 {
+  "mapboxdev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-readingface-mapboxdev-194107-authRole",
+      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mapboxdev-194107-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mapboxdev-194107-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-readingface-mapboxdev-194107-deployment",
+      "UnauthRoleName": "amplify-readingface-mapboxdev-194107-unauthRole",
+      "StackName": "amplify-readingface-mapboxdev-194107",
+      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-mapboxdev-194107/52f49b20-34d6-11eb-8b54-0a99e59b1983",
+      "AmplifyAppId": "d1jbdgysh53xov"
+    },
+    "categories": {
+      "auth": {
+        "readingface32687b80": {}
+      }
+    }
+  },
+  "devdynamo": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-readingface-devdynamo-01017-authRole",
+      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-devdynamo-01017-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-devdynamo-01017-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-readingface-devdynamo-01017-deployment",
+      "UnauthRoleName": "amplify-readingface-devdynamo-01017-unauthRole",
+      "StackName": "amplify-readingface-devdynamo-01017",
+      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-devdynamo-01017/c2a95ae0-3432-11eb-842a-12d2fa0db74d",
+      "AmplifyAppId": "d1jbdgysh53xov"
+    },
+    "categories": {
+      "auth": {
+        "readingface32687b80": {}
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-readingface-dev-142452-authRole",
@@ -14,6 +50,24 @@
     "categories": {
       "auth": {
         "readingface32687b80": {}
+      }
+    }
+  },
+  "test": {
+    "awscloudformation": {
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-readingface-test-233027-deployment",
+      "UnauthRoleName": "amplify-readingface-test-233027-unauthRole",
+      "StackName": "amplify-readingface-test-233027",
+      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-test-233027/31f58a00-342d-11eb-a4f1-0ebd71830845",
+      "AuthRoleName": "amplify-readingface-test-233027-authRole",
+      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-test-233027-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-test-233027-authRole",
+      "AmplifyAppId": "d1jbdgysh53xov"
+    },
+    "categories": {
+      "function": {
+        "formfunction": {}
       }
     }
   }
