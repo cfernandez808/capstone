@@ -6,7 +6,8 @@
     "web": "expo start --web",
     "start": "react-native start",
     "test": "jest",
-    "christian": "cd ios && pod install && cd ../ && react-native start --reset-cache"
+    "christian": "cd ios && pod install && cd ../ && react-native start --reset-cache",
+    "nodemon": "nodemon start server"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
