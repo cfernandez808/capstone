@@ -1,43 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { View, Alert, Text, TouchableOpacity } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Alert,
+  Text,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+import ImagePicker from "react-native-image-picker";
 
-import Amplify, { Storage } from 'aws-amplify'
-import config from './aws-exports'
+import Amplify, { API, Storage } from "aws-amplify";
+import config from "./aws-exports";
 Amplify.configure({
   ...config,
   Analytics: {
     disabled: true,
   },
 });
-import { withAuthenticator } from 'aws-amplify-react-native'
+import { withAuthenticator } from "aws-amplify-react-native";
 
 const Scan = ({ navigation }) => {
   const [image, setImage] = useState(null);
-  const [match, setMatch] = useState(null);
+  // data from DynamoDB when there is a match
   const [data, setData] = useState(null);
+  const [matches, setMatches] = useState(null);
 
   useEffect(()=> {
       if(image && match !== null) {
-        const title = image.split('/').slice(-1).toString();
-        uploadToStorage(image, title);
+//         const title = image.split('/').slice(-1).toString();
+//         uploadToStorage(image, title);
         // depending on the match result, may need to pass different parameters
         navigation.navigate('Profile', { image, title, match, data })
       }
     }, [image, match])
 
   // upload the image to S3 for either create a collection or to search the image in collections
-  async function uploadToStorage (pathToImageFile, title) {
-    try {
-      const response = await fetch(pathToImageFile);
-      const blob = await response.blob();
-      Storage.put(title, blob, {
-        contentType: 'image/jpeg',
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+//   async function uploadToStorage (pathToImageFile, title) {
+//     try {
+//       const response = await fetch(pathToImageFile);
+//       const blob = await response.blob();
+//       Storage.put(title, blob, {
+//         contentType: 'image/jpeg',
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
 
   //searchFacesbyImage method
 
@@ -45,40 +52,75 @@ const Scan = ({ navigation }) => {
 
   function selectImage () {
     let options = {
-      title: 'You can choose one image',
+      title: "You can choose one image",
       maxWidth: 256,
       maxHeight: 256,
       storageOptions: {
-        skipBackup: true
-      }
+        skipBackup: true,
+      },
     };
 
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(options, async (response) => {
+      console.log({ response });
+
       if (response.didCancel) {
-        console.log('User cancelled photo picker');
-        Alert.alert('You did not select any image');
+        console.log("User cancelled photo picker");
+        Alert.alert("You did not select any image");
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        console.log("ImagePicker Error: ", response.error);
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
+        console.log("User tapped custom button: ", response.customButton);
       } else {
-        setImage(response.uri)
-        // temporarily setMatch to be false to trigger create a profile
-        setMatch(false)
+
+        const uri = response.uri;
+        const uriParts = uri.split(".");
+        let fileType = uriParts[uriParts.length - 1];
+        let formData = new FormData();
+        formData.append("photo", {
+          uri,
+          name: `photo.${fileType}`,
+          type: `image/${fileType}`,
+        });
+
+        let options = {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+        };
+
+        const fetchResult = await fetch(
+          `http://192.168.1.66:8080/api/upload/${name}`,
+          // "http://localhost:8080/api/upload",
+          options
+        );
+        const data = await fetchResult.json();
+        setMatches(data);
+        console.log(data);
+        setImage(response.uri);
       }
     });
   }
+  
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableOpacity
-        onPress={selectImage}
-      >
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <TouchableOpacity onPress={selectImage}>
         <Text>Scan</Text>
       </TouchableOpacity>
+    // keep the image and match parts for testing
+      {image && (
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      )}
+      {matches && (
+        <Text>
+          {matches.length} Matches, First Match:{" "}
+          {matches.length && matches[0].Face.ImageId}
+        </Text>
+      )}
     </View>
   );
-}
-
-
+};
 export default withAuthenticator(Scan);

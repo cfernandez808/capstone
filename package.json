@@ -6,7 +6,8 @@
     "web": "expo start --web",
     "start": "react-native start",
     "test": "jest",
-    "christian": "cd ios && pod install && cd ../ && react-native start --reset-cache"
+    "christian": "cd ios && pod install && cd ../ && react-native start --reset-cache",
+    "nodemon": "nodemon start server"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
@@ -24,6 +25,10 @@
     "expo-splash-screen": "~0.6.2",
     "expo-status-bar": "~1.0.2",
     "expo-updates": "~0.3.2",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.3",
@@ -33,6 +38,7 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.0",
     "react-native-unimodules": "~0.11.0",
+    "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.12",
     "react-viro": "2.17.0"
   },
