@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Button,
   View,
   Alert,
   Text,
-  TextInput,
   TouchableOpacity,
   Image,
 } from "react-native";
 import ImagePicker from "react-native-image-picker";
 
-import Amplify, { API } from "aws-amplify";
+import Amplify, { API, Storage } from "aws-amplify";
 import config from "./aws-exports";
 Amplify.configure({
   ...config,
@@ -20,14 +18,39 @@ Amplify.configure({
 });
 import { withAuthenticator } from "aws-amplify-react-native";
 
-const Scan = () => {
+const Scan = ({ navigation }) => {
   const [image, setImage] = useState(null);
-  const [phone, setPhone] = useState("");
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
+  // data from DynamoDB when there is a match
+  const [data, setData] = useState(null);
   const [matches, setMatches] = useState(null);
 
-  function selectImage() {
+  useEffect(()=> {
+      if(image && match !== null) {
+//         const title = image.split('/').slice(-1).toString();
+//         uploadToStorage(image, title);
+        // depending on the match result, may need to pass different parameters
+        navigation.navigate('Profile', { image, title, match, data })
+      }
+    }, [image, match])
+
+  // upload the image to S3 for either create a collection or to search the image in collections
+//   async function uploadToStorage (pathToImageFile, title) {
+//     try {
+//       const response = await fetch(pathToImageFile);
+//       const blob = await response.blob();
+//       Storage.put(title, blob, {
+//         contentType: 'image/jpeg',
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+
+  //searchFacesbyImage method
+
+  //if match a get data call should be made here
+
+  function selectImage () {
     let options = {
       title: "You can choose one image",
       maxWidth: 256,
@@ -48,6 +71,7 @@ const Scan = () => {
       } else if (response.customButton) {
         console.log("User tapped custom button: ", response.customButton);
       } else {
+
         const uri = response.uri;
         const uriParts = uri.split(".");
         let fileType = uriParts[uriParts.length - 1];
@@ -79,32 +103,14 @@ const Scan = () => {
       }
     });
   }
-  async function createContact() {
-    const data = {
-      body: {
-        name: name,
-        phone: phone,
-        id: id,
-      },
-    };
-    const apiData = await API.post("formapi", "/contact", data);
-    console.log({ apiData });
-  }
-
-  // function updateFormState(key, value) {
-  //   if(key === 'phone') {
-  //     setPhone(value)
-  //   }
-  //   if(key === 'name') {
-  //     setName(value)
-  //   }
-  // }
+  
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableOpacity onPress={selectImage}>
-        <Text>Pick an image</Text>
+        <Text>Scan</Text>
       </TouchableOpacity>
+    // keep the image and match parts for testing
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
@@ -114,28 +120,6 @@ const Scan = () => {
           {matches.length && matches[0].Face.ImageId}
         </Text>
       )}
-      <View>
-        <TextInput
-          placeholder="id"
-          onChangeText={(txt) => setId(txt)}
-          placeholderTextColor="#f194ff"
-        />
-        <TextInput
-          placeholder="phone"
-          onChangeText={(txt) => setPhone(txt)}
-          placeholderTextColor="#f194ff"
-        />
-        <TextInput
-          placeholder="name"
-          onChangeText={(txt) => setName(txt)}
-          placeholderTextColor="#f194ff"
-        />
-        <Button
-          onPress={createContact}
-          title="Create New Contact"
-          color="#f194ff"
-        />
-      </View>
     </View>
   );
 };

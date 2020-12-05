@@ -15,6 +15,7 @@
     "@react-native-mapbox-gl/maps": "^8.1.0-rc.9",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
+    "@react-navigation/stack": "^5.12.8",
     "amazon-cognito-identity-js": "^4.5.5",
     "aws-amplify": "^3.3.11",
     "aws-amplify-react-native": "^4.2.9",
