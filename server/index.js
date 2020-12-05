@@ -61,7 +61,7 @@ app.post("/api/upload/:name", upload.single("photo"), (req, res, next) => {
           DetectionAttributes: ["ALL"],
           Image: {
             S3Object: {
-              Bucket: "faceimages142452-dev",
+              Bucket: "faceimages194107-mapboxdev",
               Name: req.file.key,
             },
           },

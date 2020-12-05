@@ -68,8 +68,8 @@ const Scan = () => {
         };
 
         const fetchResult = await fetch(
-          `http://192.168.1.66:8080/api/upload/${name}`,
-          // "http://localhost:8080/api/upload",
+          `http://10.0.0.27:8080/api/upload/${name}`,
+          // `http://localhost:8080/api/upload/${name}`,
           options
         );
         const data = await fetchResult.json();
