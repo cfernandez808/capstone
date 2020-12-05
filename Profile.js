@@ -8,15 +8,16 @@ Amplify.configure({
     disabled: true,
   },
 });
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCCESS_KEY } from './localSecrets'
+import './localSecrets'
+console.log(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCCESS_KEY)
 
 const AWS = require('aws-sdk')
 const awsRegion = config["aws_cognito_region"]
 const awsBucket = config["aws_user_files_s3_bucket"]
 
 const myConfig = new AWS.Config({
-  accessKeyId: AWS_ACCESS_KEY_ID,
-  secretAccessKey: AWS_SECRET_ACCCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCCESS_KEY,
   region: awsRegion
 });
 
