@@ -30,10 +30,10 @@ const Profile = ({ route }) => {
   const [id, setId] = useState('');
 
   // const [symptom, setSymptom] = useState('');
-  const { image, title, match, data } = route.params;
+  const { image, title, matches, data } = route.params;
 
   // useEffect(() => {
-  //   const { data, match } = route.params;
+  //   const { data, matches } = route.params;
   //   if (match) {
   //     const { id, firstName, lastName, phone } = data;
   //     setPhone(phone);
@@ -43,8 +43,8 @@ const Profile = ({ route }) => {
   //   }
   // }, [])
 
-  async function handleSubmit (match) {
-    if (!match) {
+  async function handleSubmit (matches) {
+    if (!matches.length) {
       await createCollection();
       await indexFace();
       await createContact();

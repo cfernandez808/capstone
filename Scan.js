@@ -25,13 +25,13 @@ const Scan = ({ navigation }) => {
   const [matches, setMatches] = useState(null);
 
   useEffect(()=> {
-      if(image && match !== null) {
+      if(image && matches !== null) {
 //         const title = image.split('/').slice(-1).toString();
 //         uploadToStorage(image, title);
         // depending on the match result, may need to pass different parameters
         navigation.navigate('Profile', { image, title, match, data })
       }
-    }, [image, match])
+    }, [image, matches])
 
   // upload the image to S3 for either create a collection or to search the image in collections
 //   async function uploadToStorage (pathToImageFile, title) {
@@ -103,7 +103,7 @@ const Scan = ({ navigation }) => {
       }
     });
   }
-  
+
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
