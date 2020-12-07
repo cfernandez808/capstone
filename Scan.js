@@ -26,10 +26,10 @@ const Scan = ({ navigation }) => {
 
   useEffect(()=> {
       if(image && matches !== null) {
-//         const title = image.split('/').slice(-1).toString();
+        const title = image.split('/').slice(-1).toString();
 //         uploadToStorage(image, title);
         // depending on the match result, may need to pass different parameters
-        navigation.navigate('Profile', { image, title, match, data })
+        navigation.navigate('Profile', { image, title, matches, data })
       }
     }, [image, matches])
 
@@ -92,8 +92,8 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-          `http://10.0.0.27:8080/api/upload/${name}`,
-          // `http://localhost:8080/api/upload/${name}`,
+          `http://10.0.0.27:8080/api/upload/`,
+          // `http://localhost:8080/api/upload/`,
           options
         );
         const data = await fetchResult.json();
@@ -104,13 +104,12 @@ const Scan = ({ navigation }) => {
     });
   }
 
-
+// keep the image and match parts for testing
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableOpacity onPress={selectImage}>
         <Text>Scan</Text>
       </TouchableOpacity>
-    // keep the image and match parts for testing
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}

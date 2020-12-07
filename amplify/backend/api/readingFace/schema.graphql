@@ -1,0 +1,30 @@
+type Business @model {
+  id: ID!
+  name: String!
+  address: String!
+  phone: String!
+  visitors: [Visit] @connection(keyName: "byBusiness", fields: ["id"])
+}
+
+type Visit
+  @model
+  @key(name: "byBusiness", fields: ["businessID", "hasSymptom"])
+  @key(name: "byCustomer", fields: ["customerID", "hasSymptom"]) {
+  id: ID!
+  createdAt: String!
+  hasSymptom: Boolean!
+  businessID: ID!
+  customerID: ID!
+  business: Business! @connection(fields: ["businessID"])
+  customer: Customer! @connection(fields: ["customerID"])
+}
+
+type Customer @model {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  phone: String!
+  email: String!
+  collectionId: ID!
+  businesses: [Visit] @connection(keyName: "byCustomer", fields: ["id"])
+}

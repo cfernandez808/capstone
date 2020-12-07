@@ -7,7 +7,6 @@ const Stack = createStackNavigator();
 
 const ScanStack = () => {
   return (
-    // <NavigationContainer >
       <Stack.Navigator>
         <Stack.Screen
           name="Scan"
@@ -15,7 +14,6 @@ const ScanStack = () => {
         />
         <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
-    // </NavigationContainer>
   )
 }
 

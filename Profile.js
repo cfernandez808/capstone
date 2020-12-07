@@ -107,20 +107,20 @@ const Profile = ({ route }) => {
 
   }
 
-  async function createContact() {
-    const collectionId = lastName + phone.slice(-4);
-    const data = {
-      body: {
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        id: id,
-        collectionId: collectionId,
-      }
-    };
-    console.log(data);
-    const apiData = await API.post('formapi', '/contact', data);
-    console.log({ apiData });
+  // async function createContact() {
+  //   const collectionId = lastName + phone.slice(-4);
+  //   const data = {
+  //     body: {
+  //       firstName: firstName,
+  //       lastName: lastName,
+  //       phone: phone,
+  //       id: id,
+  //       collectionId: collectionId,
+  //     }
+  //   };
+  //   console.log(data);
+  //   const apiData = await API.post('formapi', '/contact', data);
+  //   console.log({ apiData });
   }
 
   // function updateFormState(key, value) {
@@ -161,7 +161,7 @@ const Profile = ({ route }) => {
       />
       <Button
         onPress={() => handleSubmit(match)}
-        title= { match ? "Update Profile" : "Create Profile" }
+        title= { matches.length ? "Update Profile" : "Create Profile" }
         color="#f194ff"
       />
     </View>
