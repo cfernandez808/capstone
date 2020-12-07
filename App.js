@@ -10,8 +10,6 @@ import HelloWorldSceneAR from "./Viro";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createBottomTabNavigator();
 
-const Stack = createStackNavigator();
-
 const App = () => {
   return (
     <NavigationContainer>

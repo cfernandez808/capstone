@@ -35,6 +35,7 @@ const upload = multer({
 
 app.use(morgan("dev"));
 
+
 app.post("/api/upload", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
@@ -61,7 +62,7 @@ app.post("/api/upload", upload.single("photo"), (req, res, next) => {
           DetectionAttributes: ["ALL"],
           Image: {
             S3Object: {
-              Bucket: "faceimages142452-dev",
+              Bucket: "faceimages194107-mapboxdev",
               Name: req.file.key,
             },
           },

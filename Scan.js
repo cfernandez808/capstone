@@ -85,7 +85,10 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-          "http://192.168.1.66:8080/api/upload",
+          `http://10.0.0.27:8080/api/upload/`,
+          // `http://localhost:8080/api/upload/`,
+
+//           "http://192.168.1.66:8080/api/upload",
           // `http://192.168.1.66:8080/api/upload/${name}`
           // "http://localhost:8080/api/upload",
           options
@@ -97,6 +100,7 @@ const Scan = ({ navigation }) => {
       }
     });
   }
+
   // keep the image and match parts for testing
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
