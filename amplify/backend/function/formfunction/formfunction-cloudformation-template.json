@@ -82,7 +82,7 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-readingface-mapboxdev-194107-deployment",
+          "S3Bucket": "amplify-readingface-devdynamo-01017-deployment",
           "S3Key": "amplify-builds/formfunction-3669564877644a315339-build.zip"
         }
       }

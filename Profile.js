@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, View, TextInput, Image } from "react-native";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { createUser } from "./graphql/mutations";
-import { listUsers } from "./graphql/queries";
+import { createBusiness, createVisit, createCustomer, updateCustomer } from './graphql/mutations'
+import * as queries from './graphql/queries'
+// import { createUser } from "./graphql/mutations";
+// import { listUsers } from "./graphql/queries";
 import config from "./aws-exports";
+
 Amplify.configure({
   ...config,
   Analytics: {
@@ -26,10 +29,11 @@ const myConfig = new AWS.Config({
 const rekognition = new AWS.Rekognition(myConfig);
 
 const Profile = ({ route }) => {
-  const [phone, setPhone] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [id, setId] = useState("");
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [symptom, setSymptom] = useState('');
 
   // const [symptom, setSymptom] = useState('');
   const { image, title, matches, data } = route.params;
@@ -69,7 +73,9 @@ const Profile = ({ route }) => {
     if (!matches.length) {
       await createCollection();
       await indexFace();
-      await createContact();
+      const customerID = await createNewCustomer();
+      await createNewVisit(customerID);
+      await getCustomerWithVisits(customerID);
     }
     await addUser("test");
   }
@@ -144,30 +150,40 @@ const Profile = ({ route }) => {
     );
   }
 
-  async function createContact() {
-    const collectionId = lastName + phone.slice(-4);
-    const data = {
-      body: {
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        id: id,
-        collectionId: collectionId,
-      },
-    };
+  // create a new customer
+  const createNewCustomer = async() => {
+    const collectionId = firstName + lastName + phone.slice(-4);
+    const inputData = {
+      firstName,
+      lastName,
+      phone,
+      email,
+      collectionId
+    }
+    const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
     console.log(data);
-    const apiData = await API.post("formapi", "/contact", data);
-    console.log({ apiData });
+    const customerID = data.createCustomer.id;
+    console.log(customerID);
+    return customerID;
   }
 
-  // function updateFormState(key, value) {
-  //   if(key === 'phone') {
-  //     setPhone(value)
-  //   }
-  //   if(key === 'name') {
-  //     setName(value)
-  //   }
-  // }
+  // create a new visit
+  const createNewVisit = async(customerID) => {
+    const inputData = {
+      hasSymptom: symptom,
+      // we need to have businessID available after the business signs in
+      businessID: "B1",
+      customerID,
+    }
+    return await API.graphql(graphqlOperation(createVisit, {input: inputData}))
+  }
+
+  // get customer visits
+  const getCustomerWithVisits = async (customerID) => {
+    const customerVisits = await API.graphql({ query: queries.getCustomer, variables: { id: customerID }})
+    console.log("Customer info", customerVisits);
+    console.log("the record of visits by this customer", customerVisits.data.getCustomer.businesses);
+  }
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -177,9 +193,8 @@ const Profile = ({ route }) => {
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <TextInput
-        value={id}
-        placeholder="id"
-        onChangeText={(txt) => setId(txt)}
+        placeholder="email"
+        onChangeText={txt => setEmail(txt)}
         placeholderTextColor="#f194ff"
       />
       <TextInput
@@ -200,9 +215,14 @@ const Profile = ({ route }) => {
         onChangeText={(txt) => setLastName(txt)}
         placeholderTextColor="#f194ff"
       />
+      <TextInput
+        placeholder="no symptom"
+        onChangeText={txt => setSymptom(txt)}
+        placeholderTextColor="#f194ff"
+      />
       <Button
         onPress={() => handleSubmit(matches)}
-        title={matches ? "Update Profile" : "Create Profile"}
+        title= { matches.length ? "Update Profile" : "Create Profile" }
         color="#f194ff"
       />
     </View>
@@ -210,3 +230,26 @@ const Profile = ({ route }) => {
 };
 
 export default Profile;
+
+
+// seed business data
+// const seed = async () => {
+
+  // const createNewBusiness = async() => {
+  //   const businesses = [
+  //     { id: "B1", name: "Business 1", address: "Philadelphia", phone: "888-888-8888" },
+  //     { id: "B2", name: "Business 2", address: "Chicago", phone: "666-666-6666"},
+  //   ];
+
+  //   businesses.map( async (business) => {
+  //     return await API.graphql(graphqlOperation(createBusiness, {input: business}))
+  //   })
+  // }
+  // createNewBusiness();
+// }
+
+// check all the visits of a business (for heatmap)
+  // const getBusinessesWithVisits = async () => {
+  //   const businessVisits = await API.graphql({ query: queries.getBusiness, variables: { id: "B1" }})
+  //   console.log("the record of visits at B1", businessVisits.data.getBusiness.visitors)
+  // }

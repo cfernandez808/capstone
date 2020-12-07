@@ -85,14 +85,8 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-<<<<<<< HEAD
           `http://10.0.0.27:8080/api/upload/${name}`,
           // `http://localhost:8080/api/upload/${name}`,
-=======
-          "http://192.168.1.66:8080/api/upload",
-          // `http://192.168.1.66:8080/api/upload/${name}`
-          // "http://localhost:8080/api/upload",
->>>>>>> 544c4046c35f430930f0cdbd7c989e205ad5ddae
           options
         );
         const data = await fetchResult.json();
@@ -102,12 +96,9 @@ const Scan = ({ navigation }) => {
       }
     });
   }
-<<<<<<< HEAD
 
 
-=======
   // keep the image and match parts for testing
->>>>>>> 544c4046c35f430930f0cdbd7c989e205ad5ddae
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableOpacity onPress={selectImage}>
