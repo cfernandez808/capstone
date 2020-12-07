@@ -1,13 +1,13 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ScanStack from './ScanStack'
-import Scan from './Scan';
-import Map from './Map'
-import HelloWorldSceneAR from './Viro'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import "react-native-gesture-handler";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ScanStack from "./ScanStack";
+// import Scan from './Scan';
+import Map from "./Map";
+import HelloWorldSceneAR from "./Viro";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
@@ -22,12 +22,12 @@ const App = () => {
           tabBarIcon: ({ color, size }) => {
             let iconName;
 
-            if (route.name === 'Scan') {
-              iconName = 'magnify';
-            } else if (route.name === 'Map') {
-              iconName = 'google-maps';
-            } else if (route.name === 'Viro') {
-              iconName = 'augmented-reality';
+            if (route.name === "Scan") {
+              iconName = "magnify";
+            } else if (route.name === "Map") {
+              iconName = "google-maps";
+            } else if (route.name === "Viro") {
+              iconName = "augmented-reality";
             }
 
             // You can return any component that you like here!
@@ -35,8 +35,8 @@ const App = () => {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: '#9D9589',
+          activeTintColor: "tomato",
+          inactiveTintColor: "#9D9589",
         }}
       >
         <Tab.Screen name="Scan" component={ScanStack} />
@@ -45,6 +45,6 @@ const App = () => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
 
-export default App
+export default App;
