@@ -35,7 +35,8 @@ const upload = multer({
 
 app.use(morgan("dev"));
 
-app.post("/api/upload/", upload.single("photo"), (req, res, next) => {
+
+app.post("/api/upload", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
 

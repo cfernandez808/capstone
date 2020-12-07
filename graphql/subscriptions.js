@@ -203,6 +203,21 @@ export const onCreateCustomer = /* GraphQL */ `
     }
   }
 `;
+
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
+      id
+      ImageId
+      firstName
+      lastName
+      phone
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const onUpdateCustomer = /* GraphQL */ `
   subscription OnUpdateCustomer {
     onUpdateCustomer {
@@ -228,6 +243,21 @@ export const onUpdateCustomer = /* GraphQL */ `
     }
   }
 `;
+
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
+      id
+      ImageId
+      firstName
+      lastName
+      phone
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const onDeleteCustomer = /* GraphQL */ `
   subscription OnDeleteCustomer {
     onDeleteCustomer {
@@ -248,6 +278,20 @@ export const onDeleteCustomer = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
+      id
+      ImageId
+      firstName
+      lastName
+      phone
       createdAt
       updatedAt
     }

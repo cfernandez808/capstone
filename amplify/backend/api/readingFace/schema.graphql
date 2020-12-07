@@ -26,4 +26,10 @@ type Customer @model {
   email: String!
   collectionId: ID!
   businesses: [Visit] @connection(keyName: "byCustomer", fields: ["id"])
+
+type User @model {
+  ImageId: ID!
+  firstName: String!
+  lastName: String!
+  phone: String!
 }

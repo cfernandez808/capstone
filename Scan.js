@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Alert,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, Alert, Text, TouchableOpacity, Image } from "react-native";
 import ImagePicker from "react-native-image-picker";
 
 import Amplify, { API, Storage } from "aws-amplify";
@@ -24,33 +18,33 @@ const Scan = ({ navigation }) => {
   const [data, setData] = useState(null);
   const [matches, setMatches] = useState(null);
 
-  useEffect(()=> {
-      if(image && matches !== null) {
-        const title = image.split('/').slice(-1).toString();
-//         uploadToStorage(image, title);
-        // depending on the match result, may need to pass different parameters
-        navigation.navigate('Profile', { image, title, matches, data })
-      }
-    }, [image, matches])
+  useEffect(() => {
+    if (image && matches !== null) {
+      const title = image.split("/").slice(-1).toString();
+      //         uploadToStorage(image, title);
+      // depending on the match result, may need to pass different parameters
+      navigation.navigate("Profile", { image, title, matches, data });
+    }
+  }, [image, matches]);
 
   // upload the image to S3 for either create a collection or to search the image in collections
-//   async function uploadToStorage (pathToImageFile, title) {
-//     try {
-//       const response = await fetch(pathToImageFile);
-//       const blob = await response.blob();
-//       Storage.put(title, blob, {
-//         contentType: 'image/jpeg',
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
+  //   async function uploadToStorage (pathToImageFile, title) {
+  //     try {
+  //       const response = await fetch(pathToImageFile);
+  //       const blob = await response.blob();
+  //       Storage.put(title, blob, {
+  //         contentType: 'image/jpeg',
+  //       });
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
   //searchFacesbyImage method
 
   //if match a get data call should be made here
 
-  function selectImage () {
+  function selectImage() {
     let options = {
       title: "You can choose one image",
       maxWidth: 256,
@@ -61,7 +55,7 @@ const Scan = ({ navigation }) => {
     };
 
     ImagePicker.showImagePicker(options, async (response) => {
-      console.log({ response });
+      // console.log({ response });
 
       if (response.didCancel) {
         console.log("User cancelled photo picker");
@@ -71,7 +65,6 @@ const Scan = ({ navigation }) => {
       } else if (response.customButton) {
         console.log("User tapped custom button: ", response.customButton);
       } else {
-
         const uri = response.uri;
         const uriParts = uri.split(".");
         let fileType = uriParts[uriParts.length - 1];
@@ -94,6 +87,10 @@ const Scan = ({ navigation }) => {
         const fetchResult = await fetch(
           `http://10.0.0.27:8080/api/upload/`,
           // `http://localhost:8080/api/upload/`,
+
+//           "http://192.168.1.66:8080/api/upload",
+          // `http://192.168.1.66:8080/api/upload/${name}`
+          // "http://localhost:8080/api/upload",
           options
         );
         const data = await fetchResult.json();
@@ -104,7 +101,7 @@ const Scan = ({ navigation }) => {
     });
   }
 
-// keep the image and match parts for testing
+  // keep the image and match parts for testing
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableOpacity onPress={selectImage}>
