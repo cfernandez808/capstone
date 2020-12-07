@@ -11,7 +11,6 @@ type Visit
   @key(name: "byBusiness", fields: ["businessID", "hasSymptom"])
   @key(name: "byCustomer", fields: ["customerID", "hasSymptom"]) {
   id: ID!
-  createdAt: String!
   hasSymptom: String!
   businessID: ID!
   customerID: ID!
