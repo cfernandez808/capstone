@@ -7,12 +7,12 @@ type Business @model {
 }
 
 type Visit
-  @model
+  @model(queries: null)
   @key(name: "byBusiness", fields: ["businessID", "hasSymptom"])
   @key(name: "byCustomer", fields: ["customerID", "hasSymptom"]) {
   id: ID!
   createdAt: String!
-  hasSymptom: Boolean!
+  hasSymptom: String!
   businessID: ID!
   customerID: ID!
   business: Business! @connection(fields: ["businessID"])
