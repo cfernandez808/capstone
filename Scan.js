@@ -67,6 +67,7 @@ const Scan = ({ navigation }) => {
       } else {
         const uri = response.uri;
         const uriParts = uri.split(".");
+        // generate a title based on image picker's automatically created image name
         const title = uri.split("/").slice(-1).toString();
         let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
@@ -74,7 +75,7 @@ const Scan = ({ navigation }) => {
 
         formData.append("photo", {
           uri,
-          name: title,
+          name: `photo.${fileType}`,
           type: `image/${fileType}`,
         });
 
@@ -88,8 +89,8 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-          `http://10.0.0.27:8080/api/upload/${name}`,
-          // `http://localhost:8080/api/upload/${name}`,
+          `http://10.0.0.27:8080/api/upload/${title}`,
+          // `http://localhost:8080/api/upload/`,
           options
         );
         const data = await fetchResult.json();
@@ -99,7 +100,6 @@ const Scan = ({ navigation }) => {
       }
     });
   }
-
 
   // keep the image and match parts for testing
   return (

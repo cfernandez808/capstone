@@ -80,63 +80,6 @@ const Profile = ({ route }) => {
     await addUser("test");
   }
 
-  const createCollection = () => {
-    // create a collection
-    const collectionId = lastName + phone.slice(-4);
-    console.log(collectionId);
-    const paramsCollection = {
-      CollectionId: collectionId,
-    };
-    rekognition.createCollection(paramsCollection, (err, data) => {
-      if (err) console.log(err, err.stack);
-      else console.log(data);
-    });
-
-    //list all the collections
-    rekognition.listCollections({}, (err, data) => {
-      if (err) console.log(err, err.stack);
-      else {
-        console.log(data);
-      }
-    });
-
-    //delete a collection
-    // rekognition.deleteCollection(paramsCollection, (err, data) => {
-    //   if (err) console.log(err, err.stack);
-    //   else console.log(data);
-    // })
-  };
-
-  const indexFace = () => {
-    //index the face
-    const path = "public/" + title;
-    const collectionId = lastName + phone.slice(-4);
-    const paramsIndexFace = {
-      CollectionId: collectionId,
-      DetectionAttributes: ["ALL"],
-      Image: {
-        S3Object: {
-          Bucket: awsBucket,
-          Name: path,
-        },
-      },
-    };
-
-    rekognition.indexFaces(paramsIndexFace, (err, data) => {
-      if (err) console.log(err, err.stack);
-      else console.log(data);
-    });
-
-    //describe a particular collection's info
-    rekognition.describeCollection(
-      { CollectionId: collectionId },
-      (err, data) => {
-        if (err) console.log(err, err.stack);
-        else console.log(data);
-      }
-    );
-  };
-
   // async function addUser(ImageId) {
   //   await API.graphql(
   //     graphqlOperation(createUser, {

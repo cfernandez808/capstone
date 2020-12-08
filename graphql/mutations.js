@@ -1,7 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-
 export const createBusiness = /* GraphQL */ `
   mutation CreateBusiness(
     $input: CreateBusinessInput!
@@ -15,10 +14,10 @@ export const createBusiness = /* GraphQL */ `
       visitors {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -41,10 +40,10 @@ export const updateBusiness = /* GraphQL */ `
       visitors {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -67,10 +66,10 @@ export const deleteBusiness = /* GraphQL */ `
       visitors {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -87,7 +86,6 @@ export const createVisit = /* GraphQL */ `
   ) {
     createVisit(input: $input, condition: $condition) {
       id
-      createdAt
       hasSymptom
       businessID
       customerID
@@ -115,6 +113,7 @@ export const createVisit = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      createdAt
       updatedAt
     }
   }
@@ -126,7 +125,6 @@ export const updateVisit = /* GraphQL */ `
   ) {
     updateVisit(input: $input, condition: $condition) {
       id
-      createdAt
       hasSymptom
       businessID
       customerID
@@ -154,6 +152,7 @@ export const updateVisit = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      createdAt
       updatedAt
     }
   }
@@ -165,7 +164,6 @@ export const deleteVisit = /* GraphQL */ `
   ) {
     deleteVisit(input: $input, condition: $condition) {
       id
-      createdAt
       hasSymptom
       businessID
       customerID
@@ -193,6 +191,7 @@ export const deleteVisit = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      createdAt
       updatedAt
     }
   }
@@ -212,10 +211,10 @@ export const createCustomer = /* GraphQL */ `
       businesses {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -225,24 +224,6 @@ export const createCustomer = /* GraphQL */ `
     }
   }
 `;
-
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      ImageId
-      firstName
-      lastName
-      phone
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 export const updateCustomer = /* GraphQL */ `
   mutation UpdateCustomer(
     $input: UpdateCustomerInput!
@@ -258,10 +239,10 @@ export const updateCustomer = /* GraphQL */ `
       businesses {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -271,24 +252,6 @@ export const updateCustomer = /* GraphQL */ `
     }
   }
 `;
-
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    updateUser(input: $input, condition: $condition) {
-      id
-      ImageId
-      firstName
-      lastName
-      phone
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 export const deleteCustomer = /* GraphQL */ `
   mutation DeleteCustomer(
     $input: DeleteCustomerInput!
@@ -304,31 +267,14 @@ export const deleteCustomer = /* GraphQL */ `
       businesses {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
-      ImageId
-      firstName
-      lastName
-      phone
       createdAt
       updatedAt
     }

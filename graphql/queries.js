@@ -1,7 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-
 export const getBusiness = /* GraphQL */ `
   query GetBusiness($id: ID!) {
     getBusiness(id: $id) {
@@ -12,10 +11,10 @@ export const getBusiness = /* GraphQL */ `
       visitors {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -59,10 +58,10 @@ export const getCustomer = /* GraphQL */ `
       businesses {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -72,21 +71,6 @@ export const getCustomer = /* GraphQL */ `
     }
   }
 `;
-
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      ImageId
-      firstName
-      lastName
-      phone
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 export const listCustomers = /* GraphQL */ `
   query ListCustomers(
     $filter: ModelCustomerFilterInput
@@ -104,28 +88,6 @@ export const listCustomers = /* GraphQL */ `
         businesses {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-        
-
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        ImageId
-        firstName
-        lastName
-        phone
         createdAt
         updatedAt
       }

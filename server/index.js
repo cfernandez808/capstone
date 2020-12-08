@@ -22,13 +22,13 @@ const config = new aws.Config({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: "faceimages01017-devdynamo",
+    bucket: "faceimages00139-mbtester",
     acl: "public-read",
     metadata(req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },
     key(req, file, cb) {
-      cb(null, req.params.name + Date.now().toString() + ".png");
+      cb(null, req.params.title);
     },
   }),
 });
@@ -36,15 +36,41 @@ const upload = multer({
 app.use(morgan("dev"));
 
 
-app.post("/api/upload", upload.single("photo"), (req, res, next) => {
+app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
+
+    // list all the faces in a collection
+    // const listFacesParams = {
+    //   CollectionId: "irelia-faces"
+    // };
+
+    // client.listFaces(listFacesParams, (err, data) => {
+    //   if(err) console.log(err, err.stack);
+    //   else {
+    //     console.log("data from listFaces", data["Faces"]);
+        // delete faces
+        // data["Faces"].map(face => {
+        //   const faceId = face["FaceId"];
+        //   console.log(faceId);
+        //   const deleteFaceParams = {
+        //     CollectionId: "irelia-faces",
+        //     FaceIds: [faceId]
+        //   }
+        //   client.deleteFaces(deleteFaceParams, (err, data) => {
+        //     if(err) console.log(err, err.stack);
+        //     else console.log("deleted face", data);
+        //   })
+        // })
+    //   }
+    // })
+
     const searchFacesParams = {
       CollectionId: "irelia-faces",
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: "faceimages01017-devdynamo",
+          Bucket: "faceimages00139-mbtester",
           Name: req.file.key,
         },
       },
@@ -62,7 +88,7 @@ app.post("/api/upload", upload.single("photo"), (req, res, next) => {
           DetectionAttributes: ["ALL"],
           Image: {
             S3Object: {
-              Bucket: "faceimages01017-devdynamo",
+              Bucket: "faceimages00139-mbtester",
               Name: req.file.key,
             },
           },
