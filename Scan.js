@@ -21,7 +21,7 @@ const Scan = ({ navigation }) => {
   useEffect(() => {
     if (image && matches !== null) {
       const title = image.split("/").slice(-1).toString();
-      //         uploadToStorage(image, title);
+      // uploadToStorage(image, title);
       // depending on the match result, may need to pass different parameters
       navigation.navigate("Profile", { image, title, matches, data });
     }
@@ -67,11 +67,14 @@ const Scan = ({ navigation }) => {
       } else {
         const uri = response.uri;
         const uriParts = uri.split(".");
+        const title = uri.split("/").slice(-1).toString();
         let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
+
+
         formData.append("photo", {
           uri,
-          name: `photo.${fileType}`,
+          name: title,
           type: `image/${fileType}`,
         });
 

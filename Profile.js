@@ -137,18 +137,18 @@ const Profile = ({ route }) => {
     );
   };
 
-  async function addUser(ImageId) {
-    await API.graphql(
-      graphqlOperation(createUser, {
-        input: {
-          ImageId,
-          firstName,
-          lastName,
-          phone,
-        },
-      })
-    );
-  }
+  // async function addUser(ImageId) {
+  //   await API.graphql(
+  //     graphqlOperation(createUser, {
+  //       input: {
+  //         ImageId,
+  //         firstName,
+  //         lastName,
+  //         phone,
+  //       },
+  //     })
+  //   );
+  // }
 
   // create a new customer
   const createNewCustomer = async() => {

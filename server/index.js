@@ -4,6 +4,9 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const multerS3 = require("multer-s3");
+// import awsBucket from aws-exports so that it will change as we change env
+// const awsConfig = require('../aws-exports');
+// const awsBucket = awsConfig("aws_user_files_s3_bucket");
 
 require("../secrets");
 
@@ -19,33 +22,34 @@ const config = new aws.Config({
   region: "us-east-1",
 });
 
-const upload = multer({
-  storage: multerS3({
-    s3,
-    bucket: "faceimages194107-mapboxdev",
-    acl: "public-read",
-    metadata(req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
-    },
-    key(req, file, cb) {
-      cb(null, req.params.name + Date.now().toString() + ".png");
-    },
-  }),
-});
+// const upload = multer({
+//   storage: multerS3({
+//     s3,
+//     bucket: awsBucket,
+//     acl: "public-read",
+//     metadata(req, file, cb) {
+//       cb(null, { fieldName: file.fieldname });
+//     },
+//     key(req, file, cb) {
+//       cb(null, req.params.name + Date.now().toString() + ".png");
+//     },
+//   }),
+// });
 
 app.use(morgan("dev"));
 
 
-app.post("/api/upload", upload.single("photo"), (req, res, next) => {
+// app.post("/api/upload", upload.single("photo"), (req, res, next) => {
+app.post("/api/upload", (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
-
+    // list all the collections and search one by one
     const searchFacesParams = {
       CollectionId: "irelia-faces",
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: "faceimages194107-mapboxdev",
+          Bucket: awsBucket,
           Name: req.file.key,
         },
       },
@@ -57,12 +61,13 @@ app.post("/api/upload", upload.single("photo"), (req, res, next) => {
         console.log(err);
         res.send([]);
       } else if (data.FaceMatches.length === 0) {
+
         const paramsIndexFace = {
           CollectionId: "irelia-faces",
           DetectionAttributes: ["ALL"],
           Image: {
             S3Object: {
-              Bucket: "faceimages194107-mapboxdev",
+              Bucket: awsBucket,
               Name: req.file.key,
             },
           },
@@ -80,30 +85,6 @@ app.post("/api/upload", upload.single("photo"), (req, res, next) => {
       }
     });
 
-    // const params = {
-    //   SourceImage: {
-    //     S3Object: {
-    //       Bucket: "faceimages142452-dev",
-    //       Name: req.file.key,
-    //     },
-    //   },
-    //   TargetImage: {
-    //     S3Object: {
-    //       Bucket: "faceimages142452-dev",
-    //       Name: "public/7A8C0D65-C8AF-49EA-B881-9515D0451227.jpg",
-    //     },
-    //   },
-    //   SimilarityThreshold: 0,
-    // };
-
-    // client.compareFaces(params, (err, data) => {
-    //   if (err) {
-    //     return res.json({ Similarity: 0 });
-    //   }
-    //   const face = data.FaceMatches[0];
-    //   console.log(face);
-    //   res.json(face);
-    // });
   } catch (err) {
     next(err);
   }

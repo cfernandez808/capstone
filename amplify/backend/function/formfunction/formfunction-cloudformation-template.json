@@ -83,7 +83,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-readingface-devdynamo-01017-deployment",
-          "S3Key": "amplify-builds/formfunction-3669564877644a315339-build.zip"
+          "S3Key": "amplify-builds/formfunction-5571493342386967306e-build.zip"
         }
       }
     },
