@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ScanStack from "./ScanStack";
 // import Scan from './Scan';
 import Map from "./Map";
+import AddBusiness from "./AddBusiness";
 import HelloWorldSceneAR from "./Viro";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createBottomTabNavigator();

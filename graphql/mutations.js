@@ -1,7 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-
 export const createBusiness = /* GraphQL */ `
   mutation CreateBusiness(
     $input: CreateBusinessInput!
@@ -12,17 +11,6 @@ export const createBusiness = /* GraphQL */ `
       name
       address
       phone
-      visitors {
-        items {
-          id
-          createdAt
-          hasSymptom
-          businessID
-          customerID
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
