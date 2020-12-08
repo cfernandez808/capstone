@@ -22,9 +22,11 @@ const MapHome = ({navigation}) => {
   useEffect(() => {
     if (heatMap) {
       navigation.navigate('HeatMap')
+      setHeatMap(!heatMap)
     }
     if (busMap) {
       navigation.navigate('BusMap')
+      setBusMap(!busMap)
     }
   })
 
@@ -38,7 +40,7 @@ const MapHome = ({navigation}) => {
           </Card.Content>
           <Card.Cover source={{uri: 'https://i.stack.imgur.com/Gc1wv.png'}} />
           <Card.Actions>
-            <Button onPress={()=>setHeatMap(true)}>GO</Button>
+            <Button onPress={()=>setHeatMap(!heatMap)}>GO</Button>
           </Card.Actions>
         </Card>
         <Card style={{height: '50%'}}>
@@ -48,7 +50,7 @@ const MapHome = ({navigation}) => {
         </Card.Content>
         <Card.Cover source={{uri: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/1800x1200_virus_3d_render_red_03_other.jpg?resize=*:350px'}} />
         <Card.Actions>
-          <Button onPress={()=>setBusMap(true)}>GO</Button>
+          <Button onPress={()=>setBusMap(!busMap)}> GO </Button>
         </Card.Actions>
       </Card>
     </View>

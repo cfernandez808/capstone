@@ -8,6 +8,7 @@ import {
   Button,
   Paragraph
 } from 'react-native-paper';
+import DiaPortal from './DiaPortal'
 
 MapboxGL.setAccessToken("pk.eyJ1IjoidGRjMDI3IiwiYSI6ImNrZnd4eWIyaDEzajMyeW85MzdtZmx2ZmUifQ.QIhkgLlH5J1JwPKiWNUe_A");
 
@@ -63,15 +64,13 @@ export default class BusMap extends Component {
   handleVis(bus) {
     this.setState(prevState => {
       let copy = {...prevState}
+
       copy.businesses.forEach( (business, idx) => {
         if (idx == bus.id) {
           business.visible = !business.visible
         }
-
       })
 
-
-      console.log(copy)
       return copy
     })
   }
@@ -95,17 +94,7 @@ export default class BusMap extends Component {
                       color="red"
                       size={20}
                       onPress={() => this.handleVis(bus)} />
-                    <Portal>
-                      <Dialog visible={bus.visible} onDismiss={() => this.handleVis(bus)}>
-                        <Dialog.Title>{bus.name}</Dialog.Title>
-                        <Dialog.Content>
-                          <Paragraph>{bus.name} has had {bus.cases} Cases Reported in the last 4 weeks!</Paragraph>
-                        </Dialog.Content>
-                        <Dialog.Actions>
-                          <Button onPress={() => this.handleVis(bus)}>Done</Button>
-                        </Dialog.Actions>
-                      </Dialog>
-                    </Portal>
+                    <DiaPortal bus={bus} handleVis={this.handleVis}/>
                     </View>
                   </MapboxGL.MarkerView>
                 ))
