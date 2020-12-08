@@ -30,7 +30,7 @@ const Profile = ({ route }) => {
   const [id, setId] = useState('');
 
   // const [symptom, setSymptom] = useState('');
-  const { image, title, match, data } = route.params;
+  const { image, title, matches, data } = route.params;
 
   // useEffect(() => {
   //   const { data, match } = route.params;
@@ -43,8 +43,8 @@ const Profile = ({ route }) => {
   //   }
   // }, [])
 
-  async function handleSubmit (match) {
-    if (!match) {
+  async function handleSubmit (matches) {
+    if (!matches.length) {
       await createCollection();
       await indexFace();
       await createContact();
@@ -160,8 +160,8 @@ const Profile = ({ route }) => {
         placeholderTextColor="#f194ff"
       />
       <Button
-        onPress={() => handleSubmit(match)}
-        title= { match ? "Update Profile" : "Create Profile" }
+        onPress={() => handleSubmit(matches)}
+        title= { matches ? "Update Profile" : "Create Profile" }
         color="#f194ff"
       />
     </View>

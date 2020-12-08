@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const multerS3 = require("multer-s3");
+require('../data.js')
 
 require("../secrets");
 
@@ -35,7 +36,29 @@ const upload = multer({
 
 app.use(morgan("dev"));
 
-app.post("/api/upload/:name", upload.single("photo"), (req, res, next) => {
+app.get('/api/covid', (req, res, next) => {
+  const geo = {
+    type: "FeatureCollection",
+    features: []
+  }
+  const geoMap = covid.map(obj => {
+    if(obj.cases) {
+      geo.features.push({
+        "type": "feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [...obj.coordinates]
+        },
+        "properties": {
+          "cases": obj.cases
+        }
+      })
+      return geo
+    }
+  })
+  res.json(geo)
+})
+app.post("/api/upload/", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
 

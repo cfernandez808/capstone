@@ -25,13 +25,13 @@ const Scan = ({ navigation }) => {
   const [matches, setMatches] = useState(null);
 
   useEffect(()=> {
-      if(image && match !== null) {
-//         const title = image.split('/').slice(-1).toString();
-//         uploadToStorage(image, title);
+      if(image && matches !== null) {
+        const title = image.split('/').slice(-1).toString();
+        // uploadToStorage(image, title);
         // depending on the match result, may need to pass different parameters
-        navigation.navigate('Profile', { image, title, match, data })
+        navigation.navigate('Profile', { image, title, matches, data })
       }
-    }, [image, match])
+    }, [image, matches])
 
   // upload the image to S3 for either create a collection or to search the image in collections
 //   async function uploadToStorage (pathToImageFile, title) {
@@ -92,7 +92,7 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-          `http://192.168.1.66:8080/api/upload/${name}`,
+          `http://192.168.1.17:8080/api/upload/`,
           // "http://localhost:8080/api/upload",
           options
         );
@@ -103,14 +103,13 @@ const Scan = ({ navigation }) => {
       }
     });
   }
-  
 
+ // keep the image and match parts for testing
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableOpacity onPress={selectImage}>
         <Text>Scan</Text>
       </TouchableOpacity>
-    // keep the image and match parts for testing
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
