@@ -41,29 +41,29 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
     const client = new aws.Rekognition(config);
 
     // list all the faces in a collection
-    // const listFacesParams = {
-    //   CollectionId: "irelia-faces"
-    // };
+    const listFacesParams = {
+      CollectionId: "irelia-faces"
+    };
 
-    // client.listFaces(listFacesParams, (err, data) => {
-    //   if(err) console.log(err, err.stack);
-    //   else {
-    //     console.log("data from listFaces", data["Faces"]);
+    client.listFaces(listFacesParams, (err, data) => {
+      if(err) console.log(err, err.stack);
+      else {
+        console.log("data from listFaces", data["Faces"]);
         // delete faces
-        // data["Faces"].map(face => {
-        //   const faceId = face["FaceId"];
-        //   console.log(faceId);
-        //   const deleteFaceParams = {
-        //     CollectionId: "irelia-faces",
-        //     FaceIds: [faceId]
-        //   }
-        //   client.deleteFaces(deleteFaceParams, (err, data) => {
-        //     if(err) console.log(err, err.stack);
-        //     else console.log("deleted face", data);
-        //   })
-        // })
-    //   }
-    // })
+        data["Faces"].map(face => {
+          const faceId = face["FaceId"];
+          console.log(faceId);
+          const deleteFaceParams = {
+            CollectionId: "irelia-faces",
+            FaceIds: [faceId]
+          }
+          client.deleteFaces(deleteFaceParams, (err, data) => {
+            if(err) console.log(err, err.stack);
+            else console.log("deleted face", data);
+          })
+        })
+      }
+    })
 
     const searchFacesParams = {
       CollectionId: "irelia-faces",
@@ -81,25 +81,6 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
       if (err) {
         console.log(err);
         res.send([]);
-      } else if (data.FaceMatches.length === 0) {
-
-        const paramsIndexFace = {
-          CollectionId: "irelia-faces",
-          DetectionAttributes: ["ALL"],
-          Image: {
-            S3Object: {
-              Bucket: "faceimages00139-mbtester",
-              Name: req.file.key,
-            },
-          },
-        };
-        client.indexFaces(paramsIndexFace, (err, data) => {
-          if (err) console.log(err, err.stack);
-          else {
-            console.log(data);
-            res.send([]);
-          }
-        });
       } else {
         console.log(data.FaceMatches);
         res.send(data.FaceMatches);

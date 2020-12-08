@@ -21,28 +21,10 @@ const Scan = ({ navigation }) => {
   useEffect(() => {
     if (image && matches !== null) {
       const title = image.split("/").slice(-1).toString();
-      // uploadToStorage(image, title);
       // depending on the match result, may need to pass different parameters
       navigation.navigate("Profile", { image, title, matches, data });
     }
   }, [image, matches]);
-
-  // upload the image to S3 for either create a collection or to search the image in collections
-  //   async function uploadToStorage (pathToImageFile, title) {
-  //     try {
-  //       const response = await fetch(pathToImageFile);
-  //       const blob = await response.blob();
-  //       Storage.put(title, blob, {
-  //         contentType: 'image/jpeg',
-  //       });
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
-  //searchFacesbyImage method
-
-  //if match a get data call should be made here
 
   function selectImage() {
     let options = {
