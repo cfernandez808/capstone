@@ -4,9 +4,6 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const multerS3 = require("multer-s3");
-// import awsBucket from aws-exports so that it will change as we change env
-// const awsConfig = require('../aws-exports');
-// const awsBucket = awsConfig("aws_user_files_s3_bucket");
 
 require("../secrets");
 
@@ -22,34 +19,32 @@ const config = new aws.Config({
   region: "us-east-1",
 });
 
-// const upload = multer({
-//   storage: multerS3({
-//     s3,
-//     bucket: awsBucket,
-//     acl: "public-read",
-//     metadata(req, file, cb) {
-//       cb(null, { fieldName: file.fieldname });
-//     },
-//     key(req, file, cb) {
-//       cb(null, req.params.name + Date.now().toString() + ".png");
-//     },
-//   }),
-// });
+const upload = multer({
+  storage: multerS3({
+    s3,
+    bucket: "faceimages01017-devdynamo",
+    acl: "public-read",
+    metadata(req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key(req, file, cb) {
+      cb(null, req.params.name + Date.now().toString() + ".png");
+    },
+  }),
+});
 
 app.use(morgan("dev"));
 
 
-// app.post("/api/upload", upload.single("photo"), (req, res, next) => {
-app.post("/api/upload", (req, res, next) => {
+app.post("/api/upload", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
-    // list all the collections and search one by one
     const searchFacesParams = {
       CollectionId: "irelia-faces",
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: awsBucket,
+          Bucket: "faceimages01017-devdynamo",
           Name: req.file.key,
         },
       },
@@ -67,7 +62,7 @@ app.post("/api/upload", (req, res, next) => {
           DetectionAttributes: ["ALL"],
           Image: {
             S3Object: {
-              Bucket: awsBucket,
+              Bucket: "faceimages01017-devdynamo",
               Name: req.file.key,
             },
           },
