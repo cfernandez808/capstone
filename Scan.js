@@ -87,7 +87,7 @@ const Scan = ({ navigation }) => {
         const fetchResult = await fetch(
           `http://10.0.0.27:8080/api/upload/`,
           // `http://localhost:8080/api/upload/`,
-
+          //`http://192.168.1.17:8080/api/upload/` christian
 //           "http://192.168.1.66:8080/api/upload",
           // `http://192.168.1.66:8080/api/upload/${name}`
           // "http://localhost:8080/api/upload",
