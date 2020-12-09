@@ -11,65 +11,20 @@
     "readingFace": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
-    },
-    "formtable": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
     }
   },
-  "function": {
-    "formfunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "formtable",
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "attributeEnvMap": {
-            "Name": "TABLE_NAME",
-            "Arn": "TABLE_ARN"
-          }
-        },
-        {
-          "category": "storage",
-          "resourceName": "formtable",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
-    }
-  },
+  "function": {},
   "api": {
-    "formapi": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "formfunction",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
-    },
-    "readingFace": {
+    "readingface": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authreadingface32687b80"
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7,
+              "description": ""
             }
           },
           "additionalAuthenticationProviders": []

@@ -7,11 +7,10 @@ type Business @model {
   lng: String!
   visitors: [Visit] @connection(keyName: "byBusiness", fields: ["id"])
 }
-
 type Visit
   @model(queries: null)
-  @key(name: "byBusiness", fields: ["businessID", "customerID"])
-  @key(name: "byCustomer", fields: ["customerID", "businessID"]) {
+  @key(name: "byBusiness", fields: ["businessID", "hasSymptom"])
+  @key(name: "byCustomer", fields: ["customerID", "hasSymptom"]) {
   id: ID!
   hasSymptom: String!
   businessID: ID!
@@ -19,7 +18,6 @@ type Visit
   business: Business! @connection(fields: ["businessID"])
   customer: Customer! @connection(fields: ["customerID"])
 }
-
 type Customer @model {
   id: ID!
   firstName: String!

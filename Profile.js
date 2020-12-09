@@ -11,8 +11,7 @@ Amplify.configure({
     disabled: true,
   },
 });
-import "./localSecrets";
-console.log(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCCESS_KEY);
+import "./secrets";
 
 const AWS = require("aws-sdk");
 const awsRegion = config["aws_cognito_region"];
@@ -23,6 +22,22 @@ const myConfig = new AWS.Config({
   secretAccessKey: process.env.AWS_SECRET_ACCCESS_KEY,
   region: awsRegion,
 });
+
+// seed business data
+const seed = async () => {
+
+  const createNewBusiness = async() => {
+    const businesses = [
+      { id: "B1", name: "Business 1", address: "Philadelphia", lat: "39.9", lng: "-75.1", phone: "888-888-8888" },
+      { id: "B2", name: "Business 2", address: "Chicago", lat: "41.8", lng: "-87.6", phone: "666-666-6666"},
+    ];
+
+    businesses.map( async (business) => {
+      return await API.graphql(graphqlOperation(createBusiness, {input: business}))
+    })
+  }
+  createNewBusiness();
+}
 
 const rekognition = new AWS.Rekognition(myConfig);
 
@@ -63,12 +78,11 @@ const Profile = ({ route }) => {
 
   async function handleSubmit(matches) {
     if (!matches.length) {
-      console.log("all the states", phone, email, firstName, lastName, symptom, imageId)
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
     }
-    await addUser("test");
+    // await addUser("test");
   }
 
   //index a new face to collection
@@ -104,7 +118,7 @@ const Profile = ({ route }) => {
     }
     const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
     console.log(data);
-    const customerID = data.createCustomer.id;
+    const customerID = data.data.createCustomer.id;
     console.log(customerID);
     return customerID;
   }
@@ -173,22 +187,6 @@ const Profile = ({ route }) => {
 
 export default Profile;
 
-
-// seed business data
-// const seed = async () => {
-
-  // const createNewBusiness = async() => {
-  //   const businesses = [
-  //     { id: "B1", name: "Business 1", address: "Philadelphia", phone: "888-888-8888" },
-  //     { id: "B2", name: "Business 2", address: "Chicago", phone: "666-666-6666"},
-  //   ];
-
-  //   businesses.map( async (business) => {
-  //     return await API.graphql(graphqlOperation(createBusiness, {input: business}))
-  //   })
-  // }
-  // createNewBusiness();
-// }
 
 // check all the visits of a business (for heatmap)
   // const getBusinessesWithVisits = async () => {
