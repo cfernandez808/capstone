@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class App extends Component {
+export default class HeatMap extends Component {
   componentDidMount() {
     MapboxGL.setTelemetryEnabled(true);
   }
@@ -45,8 +45,7 @@ export default class App extends Component {
               centerCoordinate={[-74.009499, 40.704498]}
             />
             <MapboxGL.ShapeSource
-              id="earthquakes"
-              url="https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson">
+              url="https://localhost:8080/api/covid">
               <MapboxGL.HeatmapLayer
                 id="earthquakes"
                 sourceID="earthquakes"

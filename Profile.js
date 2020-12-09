@@ -13,7 +13,7 @@ Amplify.configure({
     disabled: true,
   },
 });
-import "./localSecrets";
+import "./secrets";
 console.log(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCCESS_KEY);
 
 const AWS = require("aws-sdk");
