@@ -82,7 +82,7 @@ export default class BusMap extends Component {
           <View style={styles.container}>
             <MapboxGL.MapView style={styles.map}>
               <MapboxGL.Camera
-                zoomLevel={20}
+                zoomLevel={15}
                 centerCoordinate={[-74.009499, 40.704498]}
               />
               {
