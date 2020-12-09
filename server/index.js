@@ -41,29 +41,29 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
     const client = new aws.Rekognition(config);
 
     // list all the faces in a collection
-    const listFacesParams = {
-      CollectionId: "irelia-faces"
-    };
+    // const listFacesParams = {
+    //   CollectionId: "irelia-faces"
+    // };
 
-    client.listFaces(listFacesParams, (err, data) => {
-      if(err) console.log(err, err.stack);
-      else {
-        console.log("data from listFaces", data["Faces"]);
-        // delete faces
-        data["Faces"].map(face => {
-          const faceId = face["FaceId"];
-          console.log(faceId);
-          const deleteFaceParams = {
-            CollectionId: "irelia-faces",
-            FaceIds: [faceId]
-          }
-          client.deleteFaces(deleteFaceParams, (err, data) => {
-            if(err) console.log(err, err.stack);
-            else console.log("deleted face", data);
-          })
-        })
-      }
-    })
+    // client.listFaces(listFacesParams, (err, data) => {
+    //   if(err) console.log(err, err.stack);
+    //   else {
+    //     console.log("data from listFaces", data["Faces"]);
+    //     // delete faces
+    //     data["Faces"].map(face => {
+    //       const faceId = face["FaceId"];
+    //       console.log(faceId);
+    //       const deleteFaceParams = {
+    //         CollectionId: "irelia-faces",
+    //         FaceIds: [faceId]
+    //       }
+    //       client.deleteFaces(deleteFaceParams, (err, data) => {
+    //         if(err) console.log(err, err.stack);
+    //         else console.log("deleted face", data);
+    //       })
+    //     })
+    //   }
+    // })
 
     const searchFacesParams = {
       CollectionId: "irelia-faces",
@@ -97,11 +97,3 @@ app.listen(8080, () => {
   console.log("Listening on port 8080");
 });
 
-// const paramsCollection = {
-//   CollectionId: "irelia-faces",
-// };
-// const client = new aws.Rekognition(config);
-// client.createCollection(paramsCollection, (err, data) => {
-//   if (err) console.log(err, err.stack);
-//   else console.log(data);
-// });
