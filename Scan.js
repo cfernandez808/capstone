@@ -21,7 +21,7 @@ const Scan = ({ navigation }) => {
   useEffect(() => {
     if (image && matches !== null) {
       const title = image.split("/").slice(-1).toString();
-      //         uploadToStorage(image, title);
+      // uploadToStorage(image, title);
       // depending on the match result, may need to pass different parameters
       navigation.navigate("Profile", { image, title, matches, data });
     }
@@ -67,8 +67,12 @@ const Scan = ({ navigation }) => {
       } else {
         const uri = response.uri;
         const uriParts = uri.split(".");
+        // generate a title based on image picker's automatically created image name
+        const title = uri.split("/").slice(-1).toString();
         let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
+
+
         formData.append("photo", {
           uri,
           name: `photo.${fileType}`,
@@ -85,12 +89,8 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-          `http://10.0.0.27:8080/api/upload/`,
+          `http://10.0.0.27:8080/api/upload/${title}`,
           // `http://localhost:8080/api/upload/`,
-          //`http://192.168.1.17:8080/api/upload/` christian
-//           "http://192.168.1.66:8080/api/upload",
-          // `http://192.168.1.66:8080/api/upload/${name}`
-          // "http://localhost:8080/api/upload",
           options
         );
         const data = await fetchResult.json();

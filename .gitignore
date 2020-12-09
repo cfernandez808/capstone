@@ -63,6 +63,10 @@ buck-out/
 .expo/*
 web-build/
 
+#secrets
+localSecrets.js
+secrets.js
+
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -78,7 +82,3 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
-
-#secrets
-localSecrets.js
-secrets.js

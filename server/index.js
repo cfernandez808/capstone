@@ -23,19 +23,18 @@ const config = new aws.Config({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: "faceimages194107-mapboxdev",
+    bucket: "faceimages00139-mbtester",
     acl: "public-read",
     metadata(req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },
     key(req, file, cb) {
-      cb(null, req.params.name + Date.now().toString() + ".png");
+      cb(null, req.params.title);
     },
   }),
 });
 
 app.use(morgan("dev"));
-
 
 app.get('/api/covid', (req, res, next) => {
   const geo = {
@@ -60,16 +59,41 @@ app.get('/api/covid', (req, res, next) => {
   res.json(geo)
 })
 
-app.post("/api/upload", upload.single("photo"), (req, res, next) => {
+app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
+
+    // list all the faces in a collection
+    // const listFacesParams = {
+    //   CollectionId: "irelia-faces"
+    // };
+
+    // client.listFaces(listFacesParams, (err, data) => {
+    //   if(err) console.log(err, err.stack);
+    //   else {
+    //     console.log("data from listFaces", data["Faces"]);
+        // delete faces
+        // data["Faces"].map(face => {
+        //   const faceId = face["FaceId"];
+        //   console.log(faceId);
+        //   const deleteFaceParams = {
+        //     CollectionId: "irelia-faces",
+        //     FaceIds: [faceId]
+        //   }
+        //   client.deleteFaces(deleteFaceParams, (err, data) => {
+        //     if(err) console.log(err, err.stack);
+        //     else console.log("deleted face", data);
+        //   })
+        // })
+    //   }
+    // })
 
     const searchFacesParams = {
       CollectionId: "irelia-faces",
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: "faceimages194107-mapboxdev",
+          Bucket: "faceimages00139-mbtester",
           Name: req.file.key,
         },
       },
@@ -81,12 +105,13 @@ app.post("/api/upload", upload.single("photo"), (req, res, next) => {
         console.log(err);
         res.send([]);
       } else if (data.FaceMatches.length === 0) {
+
         const paramsIndexFace = {
           CollectionId: "irelia-faces",
           DetectionAttributes: ["ALL"],
           Image: {
             S3Object: {
-              Bucket: "faceimages194107-mapboxdev",
+              Bucket: "faceimages00139-mbtester",
               Name: req.file.key,
             },
           },
@@ -104,30 +129,6 @@ app.post("/api/upload", upload.single("photo"), (req, res, next) => {
       }
     });
 
-    // const params = {
-    //   SourceImage: {
-    //     S3Object: {
-    //       Bucket: "faceimages142452-dev",
-    //       Name: req.file.key,
-    //     },
-    //   },
-    //   TargetImage: {
-    //     S3Object: {
-    //       Bucket: "faceimages142452-dev",
-    //       Name: "public/7A8C0D65-C8AF-49EA-B881-9515D0451227.jpg",
-    //     },
-    //   },
-    //   SimilarityThreshold: 0,
-    // };
-
-    // client.compareFaces(params, (err, data) => {
-    //   if (err) {
-    //     return res.json({ Similarity: 0 });
-    //   }
-    //   const face = data.FaceMatches[0];
-    //   console.log(face);
-    //   res.json(face);
-    // });
   } catch (err) {
     next(err);
   }

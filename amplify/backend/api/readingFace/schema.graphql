@@ -24,12 +24,6 @@ type Customer @model {
   lastName: String!
   phone: String!
   email: String!
-  collectionId: ID!
+  imageId: ID!
   businesses: [Visit] @connection(keyName: "byCustomer", fields: ["id"])
-
-type User @model {
-  ImageId: ID!
-  firstName: String!
-  lastName: String!
-  phone: String!
 }

@@ -11,10 +11,10 @@ export const onCreateBusiness = /* GraphQL */ `
       visitors {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -34,10 +34,10 @@ export const onUpdateBusiness = /* GraphQL */ `
       visitors {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -57,10 +57,10 @@ export const onDeleteBusiness = /* GraphQL */ `
       visitors {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -74,7 +74,6 @@ export const onCreateVisit = /* GraphQL */ `
   subscription OnCreateVisit {
     onCreateVisit {
       id
-      createdAt
       hasSymptom
       businessID
       customerID
@@ -102,6 +101,7 @@ export const onCreateVisit = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      createdAt
       updatedAt
     }
   }
@@ -110,7 +110,6 @@ export const onUpdateVisit = /* GraphQL */ `
   subscription OnUpdateVisit {
     onUpdateVisit {
       id
-      createdAt
       hasSymptom
       businessID
       customerID
@@ -138,6 +137,7 @@ export const onUpdateVisit = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      createdAt
       updatedAt
     }
   }
@@ -146,7 +146,6 @@ export const onDeleteVisit = /* GraphQL */ `
   subscription OnDeleteVisit {
     onDeleteVisit {
       id
-      createdAt
       hasSymptom
       businessID
       customerID
@@ -174,6 +173,7 @@ export const onDeleteVisit = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      createdAt
       updatedAt
     }
   }
@@ -190,10 +190,10 @@ export const onCreateCustomer = /* GraphQL */ `
       businesses {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -203,21 +203,6 @@ export const onCreateCustomer = /* GraphQL */ `
     }
   }
 `;
-
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser {
-    onCreateUser {
-      id
-      ImageId
-      firstName
-      lastName
-      phone
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 export const onUpdateCustomer = /* GraphQL */ `
   subscription OnUpdateCustomer {
     onUpdateCustomer {
@@ -230,10 +215,10 @@ export const onUpdateCustomer = /* GraphQL */ `
       businesses {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
@@ -243,21 +228,6 @@ export const onUpdateCustomer = /* GraphQL */ `
     }
   }
 `;
-
-export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser {
-    onUpdateUser {
-      id
-      ImageId
-      firstName
-      lastName
-      phone
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 export const onDeleteCustomer = /* GraphQL */ `
   subscription OnDeleteCustomer {
     onDeleteCustomer {
@@ -270,28 +240,14 @@ export const onDeleteCustomer = /* GraphQL */ `
       businesses {
         items {
           id
-          createdAt
           hasSymptom
           businessID
           customerID
+          createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser {
-    onDeleteUser {
-      id
-      ImageId
-      firstName
-      lastName
-      phone
       createdAt
       updatedAt
     }

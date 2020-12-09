@@ -10,5 +10,3 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: graphql
-        version: 3
-
