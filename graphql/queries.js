@@ -8,6 +8,8 @@ export const getBusiness = /* GraphQL */ `
       name
       address
       phone
+      lat
+      lng
       visitors {
         items {
           id
@@ -36,6 +38,8 @@ export const listBusinesss = /* GraphQL */ `
         name
         address
         phone
+        lat
+        lng
         visitors {
           nextToken
         }
@@ -54,7 +58,7 @@ export const getCustomer = /* GraphQL */ `
       lastName
       phone
       email
-      collectionId
+      imageId
       businesses {
         items {
           id
@@ -84,7 +88,7 @@ export const listCustomers = /* GraphQL */ `
         lastName
         phone
         email
-        collectionId
+        imageId
         businesses {
           nextToken
         }

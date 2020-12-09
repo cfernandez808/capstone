@@ -11,6 +11,8 @@ export const createBusiness = /* GraphQL */ `
       name
       address
       phone
+      lat
+      lng
       visitors {
         items {
           id
@@ -37,6 +39,8 @@ export const updateBusiness = /* GraphQL */ `
       name
       address
       phone
+      lat
+      lng
       visitors {
         items {
           id
@@ -63,6 +67,8 @@ export const deleteBusiness = /* GraphQL */ `
       name
       address
       phone
+      lat
+      lng
       visitors {
         items {
           id
@@ -94,6 +100,8 @@ export const createVisit = /* GraphQL */ `
         name
         address
         phone
+        lat
+        lng
         visitors {
           nextToken
         }
@@ -106,7 +114,7 @@ export const createVisit = /* GraphQL */ `
         lastName
         phone
         email
-        collectionId
+        imageId
         businesses {
           nextToken
         }
@@ -133,6 +141,8 @@ export const updateVisit = /* GraphQL */ `
         name
         address
         phone
+        lat
+        lng
         visitors {
           nextToken
         }
@@ -145,7 +155,7 @@ export const updateVisit = /* GraphQL */ `
         lastName
         phone
         email
-        collectionId
+        imageId
         businesses {
           nextToken
         }
@@ -172,6 +182,8 @@ export const deleteVisit = /* GraphQL */ `
         name
         address
         phone
+        lat
+        lng
         visitors {
           nextToken
         }
@@ -184,7 +196,7 @@ export const deleteVisit = /* GraphQL */ `
         lastName
         phone
         email
-        collectionId
+        imageId
         businesses {
           nextToken
         }
@@ -207,7 +219,7 @@ export const createCustomer = /* GraphQL */ `
       lastName
       phone
       email
-      collectionId
+      imageId
       businesses {
         items {
           id
@@ -235,7 +247,7 @@ export const updateCustomer = /* GraphQL */ `
       lastName
       phone
       email
-      collectionId
+      imageId
       businesses {
         items {
           id
@@ -263,7 +275,7 @@ export const deleteCustomer = /* GraphQL */ `
       lastName
       phone
       email
-      collectionId
+      imageId
       businesses {
         items {
           id

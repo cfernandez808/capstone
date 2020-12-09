@@ -8,6 +8,8 @@ export const onCreateBusiness = /* GraphQL */ `
       name
       address
       phone
+      lat
+      lng
       visitors {
         items {
           id
@@ -31,6 +33,8 @@ export const onUpdateBusiness = /* GraphQL */ `
       name
       address
       phone
+      lat
+      lng
       visitors {
         items {
           id
@@ -54,6 +58,8 @@ export const onDeleteBusiness = /* GraphQL */ `
       name
       address
       phone
+      lat
+      lng
       visitors {
         items {
           id
@@ -82,6 +88,8 @@ export const onCreateVisit = /* GraphQL */ `
         name
         address
         phone
+        lat
+        lng
         visitors {
           nextToken
         }
@@ -94,7 +102,7 @@ export const onCreateVisit = /* GraphQL */ `
         lastName
         phone
         email
-        collectionId
+        imageId
         businesses {
           nextToken
         }
@@ -118,6 +126,8 @@ export const onUpdateVisit = /* GraphQL */ `
         name
         address
         phone
+        lat
+        lng
         visitors {
           nextToken
         }
@@ -130,7 +140,7 @@ export const onUpdateVisit = /* GraphQL */ `
         lastName
         phone
         email
-        collectionId
+        imageId
         businesses {
           nextToken
         }
@@ -154,6 +164,8 @@ export const onDeleteVisit = /* GraphQL */ `
         name
         address
         phone
+        lat
+        lng
         visitors {
           nextToken
         }
@@ -166,7 +178,7 @@ export const onDeleteVisit = /* GraphQL */ `
         lastName
         phone
         email
-        collectionId
+        imageId
         businesses {
           nextToken
         }
@@ -186,7 +198,7 @@ export const onCreateCustomer = /* GraphQL */ `
       lastName
       phone
       email
-      collectionId
+      imageId
       businesses {
         items {
           id
@@ -211,7 +223,7 @@ export const onUpdateCustomer = /* GraphQL */ `
       lastName
       phone
       email
-      collectionId
+      imageId
       businesses {
         items {
           id
@@ -236,7 +248,7 @@ export const onDeleteCustomer = /* GraphQL */ `
       lastName
       phone
       email
-      collectionId
+      imageId
       businesses {
         items {
           id

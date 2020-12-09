@@ -3,8 +3,6 @@ import { Button, View, TextInput, Image } from "react-native";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { createBusiness, createVisit, createCustomer, updateCustomer } from './graphql/mutations'
 import * as queries from './graphql/queries'
-// import { createUser } from "./graphql/mutations";
-// import { listUsers } from "./graphql/queries";
 import config from "./aws-exports";
 
 Amplify.configure({
@@ -14,7 +12,6 @@ Amplify.configure({
   },
 });
 import "./secrets";
-console.log(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCCESS_KEY);
 
 const AWS = require("aws-sdk");
 const awsRegion = config["aws_cognito_region"];
@@ -34,78 +31,78 @@ const Profile = ({ route }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [symptom, setSymptom] = useState('');
+  const [imageId, setImageId] = useState('');
 
-  // const [symptom, setSymptom] = useState('');
+
   const { image, title, matches, data } = route.params;
 
   useEffect(() => {
-    // const { data, match } = route.params;
-    // if (match) {
-    //   const { id, firstName, lastName, phone } = data;
-    //   setPhone(phone);
-    //   setId(id);
-    //   setFirstName(firstName);
-    //   setLastName(lastName);
-    // }
-    fetchUsers();
+    if(!matches.length) indexFace();
+    // else fetchUsers();
   }, []);
 
-  async function fetchUsers() {
-    try {
-      const usersData = await API.graphql(graphqlOperation(listUsers));
-      const users = usersData.data.listUsers.items;
-      const imageId = matches[0].Face.ImageId;
-      const matchedUser = users.find((user) => user.ImageId === imageId);
-      setFirstName(matchedUser.firstName);
-      setLastName(matchedUser.lastName);
-      setId(matchedUser.id);
-      setPhone(matchedUser.phone);
-      console.log(users);
-      console.log(matches);
-      console.log(imageId);
-      console.log(matchedUser);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function fetchUsers() {
+  //   try {
+  //     const usersData = await API.graphql(graphqlOperation(listUsers));
+  //     const users = usersData.data.listUsers.items;
+  //     const imageId = matches[0].Face.ImageId;
+  //     const matchedUser = users.find((user) => user.ImageId === imageId);
+  //     setFirstName(matchedUser.firstName);
+  //     setLastName(matchedUser.lastName);
+  //     setId(matchedUser.id);
+  //     setPhone(matchedUser.phone);
+  //     console.log(users);
+  //     console.log(matches);
+  //     console.log(imageId);
+  //     console.log(matchedUser);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   async function handleSubmit(matches) {
     if (!matches.length) {
-      await createCollection();
-      await indexFace();
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
     }
-    await addUser("test");
+    // await addUser("test");
   }
 
-  // async function addUser(ImageId) {
-  //   await API.graphql(
-  //     graphqlOperation(createUser, {
-  //       input: {
-  //         ImageId,
-  //         firstName,
-  //         lastName,
-  //         phone,
-  //       },
-  //     })
-  //   );
-  // }
+  //index a new face to collection
+  const indexFace = () => {
+    const paramsIndexFace = {
+      CollectionId: "irelia-faces",
+      DetectionAttributes: ["ALL"],
+      Image: {
+        S3Object: {
+          Bucket: "faceimages00139-mbtester",
+          Name: title,
+        },
+      },
+    };
+    rekognition.indexFaces(paramsIndexFace, (err, data) => {
+      if (err) console.log(err, err.stack);
+      else {
+        console.log(data);
+        console.log("what is this?", data["FaceRecords"][0]["Face"]["ImageId"]);
+        setImageId(data["FaceRecords"][0]["Face"]["ImageId"]);
+      }
+    });
+  }
 
   // create a new customer
   const createNewCustomer = async() => {
-    const collectionId = firstName + lastName + phone.slice(-4);
     const inputData = {
       firstName,
       lastName,
       phone,
       email,
-      collectionId
+      imageId,
     }
     const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
     console.log(data);
-    const customerID = data.createCustomer.id;
+    const customerID = data.data.createCustomer.id;
     console.log(customerID);
     return customerID;
   }
@@ -174,21 +171,20 @@ const Profile = ({ route }) => {
 
 export default Profile;
 
-
 // seed business data
 // const seed = async () => {
 
-  // const createNewBusiness = async() => {
-  //   const businesses = [
-  //     { id: "B1", name: "Business 1", address: "Philadelphia", phone: "888-888-8888" },
-  //     { id: "B2", name: "Business 2", address: "Chicago", phone: "666-666-6666"},
-  //   ];
+//   const createNewBusiness = async() => {
+//     const businesses = [
+//       { id: "B1", name: "Business 1", address: "Philadelphia", lat: "39.9", lng: "-75.1", phone: "888-888-8888" },
+//       { id: "B2", name: "Business 2", address: "Chicago", lat: "41.8", lng: "-87.6", phone: "666-666-6666"},
+//     ];
 
-  //   businesses.map( async (business) => {
-  //     return await API.graphql(graphqlOperation(createBusiness, {input: business}))
-  //   })
-  // }
-  // createNewBusiness();
+//     businesses.map( async (business) => {
+//       return await API.graphql(graphqlOperation(createBusiness, {input: business}))
+//     })
+//   }
+//   createNewBusiness();
 // }
 
 // check all the visits of a business (for heatmap)

@@ -72,19 +72,19 @@ app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
     //   if(err) console.log(err, err.stack);
     //   else {
     //     console.log("data from listFaces", data["Faces"]);
-        // delete faces
-        // data["Faces"].map(face => {
-        //   const faceId = face["FaceId"];
-        //   console.log(faceId);
-        //   const deleteFaceParams = {
-        //     CollectionId: "irelia-faces",
-        //     FaceIds: [faceId]
-        //   }
-        //   client.deleteFaces(deleteFaceParams, (err, data) => {
-        //     if(err) console.log(err, err.stack);
-        //     else console.log("deleted face", data);
-        //   })
-        // })
+    //     // delete faces
+    //     data["Faces"].map(face => {
+    //       const faceId = face["FaceId"];
+    //       console.log(faceId);
+    //       const deleteFaceParams = {
+    //         CollectionId: "irelia-faces",
+    //         FaceIds: [faceId]
+    //       }
+    //       client.deleteFaces(deleteFaceParams, (err, data) => {
+    //         if(err) console.log(err, err.stack);
+    //         else console.log("deleted face", data);
+    //       })
+    //     })
     //   }
     // })
 
@@ -104,25 +104,6 @@ app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
       if (err) {
         console.log(err);
         res.send([]);
-      } else if (data.FaceMatches.length === 0) {
-
-        const paramsIndexFace = {
-          CollectionId: "irelia-faces",
-          DetectionAttributes: ["ALL"],
-          Image: {
-            S3Object: {
-              Bucket: "faceimages00139-mbtester",
-              Name: req.file.key,
-            },
-          },
-        };
-        client.indexFaces(paramsIndexFace, (err, data) => {
-          if (err) console.log(err, err.stack);
-          else {
-            console.log(data);
-            res.send([]);
-          }
-        });
       } else {
         console.log(data.FaceMatches);
         res.send(data.FaceMatches);
@@ -139,11 +120,3 @@ app.listen(8080, () => {
   console.log("Listening on port 8080");
 });
 
-// const paramsCollection = {
-//   CollectionId: "irelia-faces",
-// };
-// const client = new aws.Rekognition(config);
-// client.createCollection(paramsCollection, (err, data) => {
-//   if (err) console.log(err, err.stack);
-//   else console.log(data);
-// });

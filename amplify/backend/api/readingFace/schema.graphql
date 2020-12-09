@@ -3,9 +3,10 @@ type Business @model {
   name: String!
   address: String!
   phone: String!
+  lat: String!
+  lng: String!
   visitors: [Visit] @connection(keyName: "byBusiness", fields: ["id"])
 }
-
 type Visit
   @model(queries: null)
   @key(name: "byBusiness", fields: ["businessID", "hasSymptom"])
@@ -17,7 +18,6 @@ type Visit
   business: Business! @connection(fields: ["businessID"])
   customer: Customer! @connection(fields: ["customerID"])
 }
-
 type Customer @model {
   id: ID!
   firstName: String!
