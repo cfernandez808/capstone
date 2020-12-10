@@ -99,7 +99,7 @@ const Profile = ({ route }) => {
       // setId(matchedCustomer.id);
       setPhone(matchedCustomer.phone);
       setEmail(matchedCustomer.email);
-      setSymptom(symptom ? "Do not allow him!" : "No Symptoms!");
+      setSymptom(symptom ? "Danger! Do not enter!" : "No Symptoms!");
       console.log(customers);
     } catch (err) {
       console.log(err);
