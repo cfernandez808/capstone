@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const multerS3 = require("multer-s3");
-require('../data.js')
+require("../data.js");
 
 require("../secrets");
 
@@ -23,7 +23,7 @@ const config = new aws.Config({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: "faceimages00139-mbtester",
+    bucket: "faceimages194107-mapboxdev",
     acl: "public-read",
     metadata(req, file, cb) {
       cb(null, { fieldName: file.fieldname });
@@ -36,30 +36,30 @@ const upload = multer({
 
 app.use(morgan("dev"));
 
-app.get('/api/covid', (req, res, next) => {
+app.get("/api/covid", (req, res, next) => {
   const geo = {
     type: "FeatureCollection",
-    features: []
-  }
-  const geoMap = covid.map(obj => {
-    if(obj.cases) {
+    features: [],
+  };
+  const geoMap = covid.map((obj) => {
+    if (obj.cases) {
       geo.features.push({
-        "type": "feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [...obj.coordinates]
+        type: "feature",
+        geometry: {
+          type: "Point",
+          coordinates: [...obj.coordinates],
         },
-        "properties": {
-          "cases": obj.cases
-        }
-      })
-      return geo
+        properties: {
+          cases: obj.cases,
+        },
+      });
+      return geo;
     }
-  })
-  res.json(geo)
-})
+  });
+  res.json(geo);
+});
 
-app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
+app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
 
@@ -93,7 +93,7 @@ app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: "faceimages00139-mbtester",
+          Bucket: "faceimages194107-mapboxdev",
           Name: req.file.key,
         },
       },
@@ -109,7 +109,6 @@ app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
         res.send(data.FaceMatches);
       }
     });
-
   } catch (err) {
     next(err);
   }
@@ -119,4 +118,3 @@ app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
 app.listen(8080, () => {
   console.log("Listening on port 8080");
 });
-

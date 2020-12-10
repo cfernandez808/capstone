@@ -54,7 +54,6 @@ const Scan = ({ navigation }) => {
         let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
 
-
         formData.append("photo", {
           uri,
           name: `photo.${fileType}`,
@@ -71,8 +70,9 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-          `http://10.0.0.27:8080/api/upload/${title}`,
+          // `http://10.0.0.27:8080/api/upload/${title}`,
           // `http://localhost:8080/api/upload/`,
+          `http:/192.168.1.66:8080/api/upload/${title}`,
           options
         );
         const data = await fetchResult.json();
