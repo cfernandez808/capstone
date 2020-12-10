@@ -1,14 +1,14 @@
 {
-  "mbtester": {
+  "mapboxdev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-readingface-mbtester-00139-authRole",
-      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mbtester-00139-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mbtester-00139-authRole",
+      "AuthRoleName": "amplify-readingface-mapboxdev-194107-authRole",
+      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mapboxdev-194107-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mapboxdev-194107-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-readingface-mbtester-00139-deployment",
-      "UnauthRoleName": "amplify-readingface-mbtester-00139-unauthRole",
-      "StackName": "amplify-readingface-mbtester-00139",
-      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-mbtester-00139/8c8ed0b0-38e8-11eb-81ae-0aff04b5e65f",
+      "DeploymentBucketName": "amplify-readingface-mapboxdev-194107-deployment",
+      "UnauthRoleName": "amplify-readingface-mapboxdev-194107-unauthRole",
+      "StackName": "amplify-readingface-mapboxdev-194107",
+      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-mapboxdev-194107/52f49b20-34d6-11eb-8b54-0a99e59b1983",
       "AmplifyAppId": "d1jbdgysh53xov"
     },
     "categories": {
@@ -20,16 +20,16 @@
       }
     }
   },
-  "mapboxdev": {
+  "mbtester": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-readingface-mapboxdev-194107-authRole",
-      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mapboxdev-194107-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mapboxdev-194107-authRole",
+      "AuthRoleName": "amplify-readingface-mbtester-00139-authRole",
+      "UnauthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mbtester-00139-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::599331463232:role/amplify-readingface-mbtester-00139-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-readingface-mapboxdev-194107-deployment",
-      "UnauthRoleName": "amplify-readingface-mapboxdev-194107-unauthRole",
-      "StackName": "amplify-readingface-mapboxdev-194107",
-      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-mapboxdev-194107/52f49b20-34d6-11eb-8b54-0a99e59b1983",
+      "DeploymentBucketName": "amplify-readingface-mbtester-00139-deployment",
+      "UnauthRoleName": "amplify-readingface-mbtester-00139-unauthRole",
+      "StackName": "amplify-readingface-mbtester-00139",
+      "StackId": "arn:aws:cloudformation:us-east-1:599331463232:stack/amplify-readingface-mbtester-00139/8c8ed0b0-38e8-11eb-81ae-0aff04b5e65f",
       "AmplifyAppId": "d1jbdgysh53xov"
     },
     "categories": {

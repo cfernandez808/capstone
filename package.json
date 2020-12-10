@@ -10,6 +10,7 @@
     "nodemon": "nodemon start server"
   },
   "dependencies": {
+    "@foursquare/foursquare-places": "^1.0.3",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.9",
     "@react-native-mapbox-gl/maps": "^8.1.0-rc.9",
