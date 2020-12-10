@@ -9,7 +9,50 @@ import HelloWorldSceneAR from './Viro'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 const Tab = createBottomTabNavigator();
 
-// const Stack = createStackNavigator();
+const signUpConfig = {
+  header: 'Business Owner Sign Up',
+  hideAllDefaults: true,
+  defaultCountryCode: '1',
+  signUpFields: [
+    {
+      label: 'Business Name',
+      key: 'name',
+      required: true,
+      displayOrder: 1,
+      type: 'string'
+    },
+    {
+      label: 'Password',
+      key: 'password',
+      required: true,
+      displayOrder: 5,
+      type: 'password'
+    },
+    {
+      label: 'Phone Number',
+      key: 'phone_number',
+      required: true,
+      displayOrder: 3,
+      type: 'string'
+    },
+    {
+      label: 'Email',
+      key: 'email',
+      required: true,
+      displayOrder: 4,
+      type: 'string'
+    },
+    {
+      label: 'Address',
+      key: 'address',
+      required: true,
+      displayOrder: 2,
+      type: 'string'
+    }
+  ]
+}
+
+import { withAuthenticator } from "aws-amplify-react-native";
 
 const App = () => {
   return (
@@ -48,4 +91,8 @@ const App = () => {
   );
 };
 
-export default App;
+export default withAuthenticator(App, {
+  includeGreetings: true,
+  signUpConfig,
+  usernameAttributes: 'email'
+});

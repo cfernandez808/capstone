@@ -1,6 +1,6 @@
 {
   "auth": {
-    "readingface32687b80": {
+    "readingface826be470": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
