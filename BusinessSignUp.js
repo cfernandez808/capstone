@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Button, View, TextInput } from "react-native"
 import Amplify, { Auth, API, graphqlOperation } from "aws-amplify";
 import config from "./aws-exports";
@@ -84,22 +84,33 @@ const BusinessSignUp = () => {
         justifyContent: "center",
       }}
     >
-      <TextInput
-        placeholder="Business name"
-        onChangeText={(txt) => setName(txt)}
-        placeholderTextColor="#F194FF"
-      />
-      <TextInput
-        placeholder="Business phone"
-        onChangeText={(txt) => setPhone(txt)}
-        placeholderTextColor="#F194FF"
-      />
-      <TextInput
-        placeholder="Business address"
-        onChangeText={(txt) => setAddress(txt)}
-        placeholderTextColor="#F194FF"
-      />
-      <Button title="Add Business" onPress={onSubmit} />
+      { step === 0 ?
+      <Fragment>
+        <TextInput
+          placeholder="Business name"
+          onChangeText={(txt) => setName(txt)}
+          placeholderTextColor="#F194FF"
+        />
+        <TextInput
+          placeholder="Business phone"
+          onChangeText={(txt) => setPhone(txt)}
+          placeholderTextColor="#F194FF"
+        />
+        <TextInput
+          placeholder="Business email"
+          onChangeText={(txt) => setEmail(txt)}
+          placeholderTextColor="#F194FF"
+        />
+        <TextInput
+          placeholder="Business address"
+          onChangeText={(txt) => setAddress(txt)}
+          placeholderTextColor="#F194FF"
+        />
+        <Button title="Add Business" onPress={onSubmit} />
+      </Fragment> :
+      <Fragment>
+
+      </Fragment> }
     </View>
   );
 };

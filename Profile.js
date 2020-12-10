@@ -41,7 +41,7 @@ const rekognition = new AWS.Rekognition(myConfig);
 //   createNewBusiness();
 // }
 
-const Profile = ({ route }) => {
+const Profile = ({ navigation, route }) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
