@@ -1,19 +1,29 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ScanStack from './ScanStack'
-import MapStack from './Maps/MapStack'
-import HelloWorldSceneAR from './Viro'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import "react-native-gesture-handler";
+import React from "react";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ScanStack from "./ScanStack";
+import MapStack from "./Maps/MapStack";
+import HelloWorldSceneAR from "./Viro";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createBottomTabNavigator();
 
 // const Stack = createStackNavigator();
 
+const theme = {
+  ...DefaultTheme,
+  // Specify custom property
+  myOwnProperty: true,
+  // Specify custom property in nested object
+  colors: {
+    backgroundColor: "pink",
+    myOwnColor: "#BADA55",
+  },
+};
 const App = () => {
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName="Scan"
@@ -22,12 +32,12 @@ const App = () => {
             tabBarIcon: ({ color, size }) => {
               let iconName;
 
-              if (route.name === 'Scan') {
-                iconName = 'magnify';
-              } else if (route.name === 'MapHub') {
-                iconName = 'google-maps';
-              } else if (route.name === 'Viro') {
-                iconName = 'augmented-reality';
+              if (route.name === "Scan") {
+                iconName = "magnify";
+              } else if (route.name === "MapHub") {
+                iconName = "google-maps";
+              } else if (route.name === "Viro") {
+                iconName = "augmented-reality";
               }
 
               // You can return any component that you like here!
@@ -35,8 +45,8 @@ const App = () => {
             },
           })}
           tabBarOptions={{
-            activeTintColor: 'tomato',
-            inactiveTintColor: '#9D9589',
+            activeTintColor: "tomato",
+            inactiveTintColor: "#9D9589",
           }}
         >
           <Tab.Screen name="Scan" component={ScanStack} />

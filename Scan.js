@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Alert, Text, TouchableOpacity, Image } from "react-native";
+import {
+  IconButton,
+  Portal,
+  Dialog,
+  Button,
+  Paragraph,
+} from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import ImagePicker from "react-native-image-picker";
 
 import Amplify, { API, Storage } from "aws-amplify";
@@ -54,7 +62,6 @@ const Scan = ({ navigation }) => {
         let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
 
-
         formData.append("photo", {
           uri,
           name: `photo.${fileType}`,
@@ -71,8 +78,9 @@ const Scan = ({ navigation }) => {
         };
 
         const fetchResult = await fetch(
-          `http://10.0.0.27:8080/api/upload/${title}`,
+          // `http://10.0.0.27:8080/api/upload/${title}`,
           // `http://localhost:8080/api/upload/`,
+          `http://192.168.1.66:8080/api/upload/${title}`,
           options
         );
         const data = await fetchResult.json();
@@ -86,9 +94,28 @@ const Scan = ({ navigation }) => {
   // keep the image and match parts for testing
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <TouchableOpacity onPress={selectImage}>
-        <Text>Scan</Text>
-      </TouchableOpacity>
+      {/* <Avatar.Icon size={40} icon="all_out" onPress={selectImage} /> */}
+
+      {/* <Icon.Button
+        name="face-recognition"
+        backgroundColor="red"
+        onPress={selectImage}
+        size={80}
+        style={{
+          borderRadius: 10,
+        }}
+      >
+        SCAN
+      </Icon.Button> */}
+      <IconButton
+        icon="face-recognition"
+        color="purple"
+        size={100}
+        onPress={selectImage}
+      />
+
+      {/* <Appbar.Action icon="camera" onPress={selectImage} /> */}
+
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
