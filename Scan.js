@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Alert, Text, TouchableOpacity, Image } from "react-native";
 import ImagePicker from "react-native-image-picker";
 
-import Amplify, { API, Storage } from "aws-amplify";
+import Amplify from "aws-amplify";
 import config from "./aws-exports";
 Amplify.configure({
   ...config,
@@ -10,7 +10,7 @@ Amplify.configure({
     disabled: true,
   },
 });
-import { withAuthenticator } from "aws-amplify-react-native";
+// import { withAuthenticator } from "aws-amplify-react-native";
 
 const Scan = ({ navigation }) => {
   const [image, setImage] = useState(null);
@@ -101,4 +101,4 @@ const Scan = ({ navigation }) => {
     </View>
   );
 };
-export default withAuthenticator(Scan);
+export default Scan;

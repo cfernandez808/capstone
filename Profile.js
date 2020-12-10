@@ -25,6 +25,22 @@ const myConfig = new AWS.Config({
 
 const rekognition = new AWS.Rekognition(myConfig);
 
+// seed business data
+// const seed = async () => {
+
+//   const createNewBusiness = async() => {
+//     const businesses = [
+//       { id: "B1", name: "Business 1", address: "Philadelphia", lat: "39.9", lng: "-75.1", phone: "888-888-8888" },
+//       { id: "B2", name: "Business 2", address: "Chicago", lat: "41.8", lng: "-87.6", phone: "666-666-6666"},
+//     ];
+
+//     businesses.map( async (business) => {
+//       return await API.graphql(graphqlOperation(createBusiness, {input: business}))
+//     })
+//   }
+//   createNewBusiness();
+// }
+
 const Profile = ({ route }) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -65,6 +81,7 @@ const Profile = ({ route }) => {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
+      navigation.navigate("Scan");
     }
     // await addUser("test");
   }
@@ -76,7 +93,7 @@ const Profile = ({ route }) => {
       DetectionAttributes: ["ALL"],
       Image: {
         S3Object: {
-          Bucket: "faceimages00139-mbtester",
+          Bucket: awsBucket,
           Name: title,
         },
       },
@@ -171,21 +188,7 @@ const Profile = ({ route }) => {
 
 export default Profile;
 
-// seed business data
-// const seed = async () => {
 
-//   const createNewBusiness = async() => {
-//     const businesses = [
-//       { id: "B1", name: "Business 1", address: "Philadelphia", lat: "39.9", lng: "-75.1", phone: "888-888-8888" },
-//       { id: "B2", name: "Business 2", address: "Chicago", lat: "41.8", lng: "-87.6", phone: "666-666-6666"},
-//     ];
-
-//     businesses.map( async (business) => {
-//       return await API.graphql(graphqlOperation(createBusiness, {input: business}))
-//     })
-//   }
-//   createNewBusiness();
-// }
 
 // check all the visits of a business (for heatmap)
   // const getBusinessesWithVisits = async () => {
