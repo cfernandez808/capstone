@@ -81,7 +81,7 @@ const Profile = ({ navigation, route }) => {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
-      navigation.navigate("Scan");
+      // navigation.navigate("Scan");
     }
     // await addUser("test");
   }
