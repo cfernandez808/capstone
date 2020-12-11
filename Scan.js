@@ -10,7 +10,6 @@ Amplify.configure({
     disabled: true,
   },
 });
-// import { withAuthenticator } from "aws-amplify-react-native";
 
 const Scan = ({ navigation }) => {
   const [image, setImage] = useState(null);
