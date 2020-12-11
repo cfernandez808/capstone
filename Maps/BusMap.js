@@ -8,10 +8,10 @@ import {
   Button,
   Paragraph
 } from "react-native-paper";
-import DiaPortalEco from "./DiaPortalEco";
-import DiaPortalFsq from "./DiaPortalFsq";
 import Foursquare from "@foursquare/foursquare-places";
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from "@react-native-community/geolocation";
+import MarkersFsq from "./MarkersFsq"
+import MarkersBus from "./MarkersBus"
 import "../secrets";
 
 const FSQ_KEY = process.env.FOURSQ_ID
@@ -132,35 +132,24 @@ export default class BusMap extends Component {
                 /> : <Text>LOADING</Text>
             }
               {
-                fsqArr.map( (bus, idx) => (
-                  <MapboxGL.MarkerView id="business" key={bus.id} coordinate={[bus.location.lng, bus.location.lat]}>
-                  <View>
-                    <IconButton
-                      icon="map-marker-radius"
-                      color="blue"
-                      size={20}
-                      onPress={() => this.handleVis(bus)} />
-                    <DiaPortalFsq bus={bus} handleVis={this.handleVis}/>
-                  </View>
-                  </MapboxGL.MarkerView>
+                fsqArr.map(bus => (
+                  <MarkersFsq
+                    key={bus.id}
+                    bus={bus}
+                    city={bus.location.city}
+                    st={bus.location.state}
+                    address={bus.location.address}
+                    handleVis={this.handleVis}
+                  />
                 ))
               }
               {
-                this.state.businesses.map( (bus, idx) => (
-                  <MapboxGL.MarkerView
-                    id="business"
+                this.state.businesses.map( bus => (
+                  <MarkersBus
                     key={bus.id}
-                    coordinate={bus.coordinates}
-                  >
-                  <View>
-                    <IconButton
-                      icon="map-marker-radius"
-                      color="red"
-                      size={20}
-                      onPress={() => this.handleVis(bus)} />
-                    <DiaPortalEco bus={bus} handleVis={this.handleVis}/>
-                  </View>
-                  </MapboxGL.MarkerView>
+                    bus={bus}
+                    handleVis={this.handleVis}
+                  />
                 ))
               }
             </MapboxGL.MapView>
@@ -173,7 +162,7 @@ export default class BusMap extends Component {
                     bus.visible = false
                   })
                   return copy
-                });
+                })
               });
             }}>{
               !this.state.fsq[0] ? ('Start Search in Your Location') :
