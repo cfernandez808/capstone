@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import MapboxGL from "@react-native-mapbox-gl/maps";
+import '../secrets'
 
-MapboxGL.setAccessToken("pk.eyJ1IjoidGRjMDI3IiwiYSI6ImNrZnd4eWIyaDEzajMyeW85MzdtZmx2ZmUifQ.QIhkgLlH5J1JwPKiWNUe_A");
+MapboxGL.setAccessToken(process.env.MB_PUB_ACCESS_KEY);
 
 const styles = StyleSheet.create({
   page: {
@@ -41,12 +42,13 @@ export default class HeatMap extends Component {
         <View style={styles.container}>
           <MapboxGL.MapView style={styles.map}>
             <MapboxGL.Camera
-              zoomLevel={20}
+              zoomLevel={10}
               centerCoordinate={[-74.009499, 40.704498]}
             />
             <MapboxGL.ShapeSource
-              url="https://localhost:8080/api/covid">
-              <MapboxGL.HeatmapLayer
+              url="localhost:8080/api/covid"
+             >
+              {/* <MapboxGL.HeatmapLayer
                 id="earthquakes"
                 sourceID="earthquakes"
                 style={{
@@ -68,7 +70,7 @@ export default class HeatMap extends Component {
                     'rgb(178,24,43)',
                   ],
                 }}
-              />
+              /> */}
             </MapboxGL.ShapeSource>
           </MapboxGL.MapView>
         </View>
