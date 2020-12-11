@@ -26,7 +26,7 @@ const CustomerProfile = ({ route }) => {
   const [symptom, setSymptom] = useState('');
   const [imageId, setImageId] = useState('');
 
-  const { image, title, matches, data } = route.params;
+  const { image, title, matches, data, businessId } = route.params;
 
   useEffect(() => {
     if(!matches.length) indexFace();
@@ -85,7 +85,7 @@ const CustomerProfile = ({ route }) => {
     const inputData = {
       hasSymptom: symptom,
       // we need to have businessID available after the business signs in
-      businessID: "B1",
+      businessID: businessId,
       customerID,
     }
     return await API.graphql(graphqlOperation(createVisit, {input: inputData}))

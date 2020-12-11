@@ -122,7 +122,7 @@ const App = () => {
             inactiveTintColor: '#9D9589',
           }}
         >
-          <Tab.Screen name="Scan" component={scanStack} initialParams={{ businessId: businessId }} />
+          <Tab.Screen name="Scan" component={ScanStack} initialParams={{ businessId: businessId }} />
           <Tab.Screen name="MapHub" component={MapStack} />
         <Tab.Screen name="Profile" children={() => <BusinessProfileStack businessId={businessId}/>}/>
         </Tab.Navigator>
