@@ -14,14 +14,11 @@ const BusinessProfile = ({ navigation, route }) => {
   const { businessId } = route.params;
 
   const populateForm = async (businessId) => {
-    const businessInfo = await getBusinessWithVisits(businessId);
-    console.log("business information", businessInfo);
-    const {name, address, email, phone, visitors } = businessInfo;
+    const {name, address, email, phone, visitors } = await getBusinessWithVisits(businessId);
     setBname(name);
     setBaddress(address);
     setBemail(email);
-    setBphone(phone);
-    console.log("who are the visitors", visitors);
+    setBphone(phone)
     setVisitors(visitors);
   }
 
@@ -38,23 +35,32 @@ const BusinessProfile = ({ navigation, route }) => {
       }}
     >
         <TextInput
-          placeholder="Name"
+          mode= "outlined"
+          label="Business Name"
+          value={Bname}
           onChangeText={(txt) => setBname(txt)}
           placeholderTextColor="#F194FF"
         />
         <TextInput
-          placeholder="Phone Number"
+          mode= "outlined"
+          multiline= {true}
+          label="Address"
+          value={Baddress}
+          onChangeText={(txt) => setBaddress(txt)}
+          placeholderTextColor="#F194FF"
+        />
+        <TextInput
+          mode= "outlined"
+          label="Phone Number"
+          value={Bphone}
           onChangeText={(txt) => setBphone(txt)}
           placeholderTextColor="#F194FF"
         />
         <TextInput
-          placeholder="Email"
+          mode= "outlined"
+          label="Email"
+          value={Bemail}
           onChangeText={(txt) => setBemail(txt)}
-          placeholderTextColor="#F194FF"
-        />
-        <TextInput
-          placeholder="Address"
-          onChangeText={(txt) => setBaddress(txt)}
           placeholderTextColor="#F194FF"
         />
         <Button title="Update Profile" />
