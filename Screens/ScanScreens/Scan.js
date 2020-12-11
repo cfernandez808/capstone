@@ -3,7 +3,7 @@ import { View, Alert, Text, TouchableOpacity, Image } from "react-native";
 import ImagePicker from "react-native-image-picker";
 
 import Amplify from "aws-amplify";
-import config from "./aws-exports";
+import config from "../../aws-exports";
 Amplify.configure({
   ...config,
   Analytics: {

@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, View, TextInput, Image } from "react-native";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { createVisit, createCustomer, updateCustomer } from './graphql/mutations'
-import * as queries from './graphql/queries'
-import config from "./aws-exports";
+import { API, graphqlOperation } from "aws-amplify";
+import { createVisit, createCustomer, updateCustomer } from '../../graphql/mutations'
+import * as queries from '../../graphql/queries'
+import config from "../../aws-exports";
 
-Amplify.configure({
-  ...config,
-  Analytics: {
-    disabled: true,
-  },
-});
-import "./secrets";
 
 const AWS = require("aws-sdk");
 const awsRegion = config["aws_cognito_region"];
@@ -32,7 +25,6 @@ const CustomerProfile = ({ route }) => {
   const [lastName, setLastName] = useState('');
   const [symptom, setSymptom] = useState('');
   const [imageId, setImageId] = useState('');
-
 
   const { image, title, matches, data } = route.params;
 
