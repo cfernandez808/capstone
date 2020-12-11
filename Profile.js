@@ -38,6 +38,8 @@ const Profile = ({ route }) => {
   const [lastName, setLastName] = useState("");
   const [symptom, setSymptom] = useState("");
   const [imageId, setImageId] = useState("");
+  const [id, setId] = useState("");
+  const [hasSymptom, setHasSymptom] = useState(false);
 
   const { image, title, matches, data } = route.params;
 
@@ -77,6 +79,35 @@ const Profile = ({ route }) => {
   //   );
   // }
 
+  // async function fetchCustomers() {
+  //   try {
+  //     const customersData = await API.graphql(
+  //       graphqlOperation(queries.listCustomers)
+  //     );
+  //     const customers = customersData.data.listCustomers.items;
+  //     const imageId = matches[0].Face.ImageId;
+  //     const matchedCustomer = customers.find(
+  //       (customer) => customer.imageId === imageId
+  //     );
+  //     const symptom = matchedCustomer.firstName.includes(":S");
+  //     let firstName;
+  //     if (symptom) {
+  //       firstName = matchedCustomer.firstName.slice(0, -2);
+  //     } else {
+  //       firstName = matchedCustomer.firstName;
+  //     }
+  //     setFirstName(firstName);
+  //     setLastName(matchedCustomer.lastName);
+  //     // setId(matchedCustomer.id);
+  //     setPhone(matchedCustomer.phone);
+  //     setEmail(matchedCustomer.email);
+  //     setSymptom(symptom ? "Danger! Do not enter!" : "No Symptoms!");
+  //     console.log(customers);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
   async function fetchCustomers() {
     try {
       const customersData = await API.graphql(
@@ -96,23 +127,29 @@ const Profile = ({ route }) => {
       }
       setFirstName(firstName);
       setLastName(matchedCustomer.lastName);
-      // setId(matchedCustomer.id);
+      setImageId(matchedCustomer.imageId);
+      setId(matchedCustomer.id);
       setPhone(matchedCustomer.phone);
       setEmail(matchedCustomer.email);
-      setSymptom(symptom ? "Danger! Do not enter!" : "No Symptoms!");
-      console.log(customers);
+      setHasSymptom(symptom);
+      setSymptom(symptom ? "YES!" : "NO!");
+      // console.log(customers);
+      if (symptom) {
+        alert("Danger! Do not enter!");
+      }
     } catch (err) {
       console.log(err);
     }
   }
 
-  async function handleSubmit(matches) {
+  async function handleSubmit(evt) {
     if (!matches.length) {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
+    } else {
+      await updateSameCustomer();
     }
-    // await addUser("test");
   }
 
   //index a new face to collection
@@ -135,6 +172,42 @@ const Profile = ({ route }) => {
         setImageId(data["FaceRecords"][0]["Face"]["ImageId"]);
       }
     });
+  };
+
+  //update Customer
+  const updateSameCustomer = async () => {
+    try {
+      let hasSymptomTemp = false;
+      if (symptom.toLowerCase().includes("y")) {
+        setHasSymptom(true);
+        hasSymptomTemp = true;
+      } else {
+        setHasSymptom(false);
+        hasSymptomTemp = false;
+      }
+      console.log(hasSymptom);
+      console.log(hasSymptomTemp);
+      console.log(symptom);
+      const inputData = {
+        id,
+        firstName: firstName + (hasSymptomTemp ? ":S" : ""),
+        lastName,
+        phone,
+        email,
+        imageId,
+      };
+      console.log("DATA", inputData);
+      const data = await API.graphql(
+        graphqlOperation(updateCustomer, { input: inputData })
+      );
+      console.log(data);
+      if (hasSymptomTemp) {
+        alert("Danger! Do not enter!");
+      }
+      await createNewVisit(id);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // create a new customer
@@ -219,7 +292,7 @@ const Profile = ({ route }) => {
         placeholderTextColor="#f194ff"
       />
       <Button
-        onPress={() => handleSubmit(matches)}
+        onPress={handleSubmit}
         title={matches.length ? "Update Profile" : "Create Profile"}
         color="#f194ff"
       />
