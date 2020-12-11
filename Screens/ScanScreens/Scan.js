@@ -11,7 +11,7 @@ Amplify.configure({
   },
 });
 
-const Scan = ({ navigation }) => {
+const Scan = ({ navigation, route }) => {
   const [image, setImage] = useState(null);
   // data from DynamoDB when there is a match
   const [data, setData] = useState(null);

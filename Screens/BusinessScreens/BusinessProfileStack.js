@@ -9,7 +9,7 @@ const BusinessProfileStack = (props) => {
   const { businessId } = props;
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Business Profile" children={() => <BusinessProfile businessId={businessId}/>}
+      <Stack.Screen name="Business Profile" component = {BusinessProfile} initialParams={{ businessId: businessId }}
        />
       <Stack.Screen name="Visitors" component={BusinessVisitors} />
     </Stack.Navigator>

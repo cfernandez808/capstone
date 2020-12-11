@@ -3,8 +3,9 @@ import { Button, View, TextInput } from "react-native"
 import { Auth, API, graphqlOperation } from "aws-amplify";
 
 
-const BusinessProfile = (props) => {
-  const { businessId } = props;
+const BusinessProfile = ({ navigation, route }) => {
+  const { businessId } = route.params;
+  console.log(businessId);
   useEffect(()=> {
 
   })
