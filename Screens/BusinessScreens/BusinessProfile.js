@@ -4,7 +4,7 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 
 
 const BusinessProfile = (props) => {
-  console.log("props in BusinessProfile", props);
+  const { businessId } = props;
   useEffect(()=> {
 
   })
