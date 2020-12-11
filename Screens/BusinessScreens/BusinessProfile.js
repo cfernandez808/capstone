@@ -3,8 +3,8 @@ import { Button, View, TextInput } from "react-native"
 import { Auth, API, graphqlOperation } from "aws-amplify";
 
 
-const BusinessProfile = () => {
-
+const BusinessProfile = (props) => {
+  console.log("props in BusinessProfile", props);
   useEffect(()=> {
 
   })
@@ -18,26 +18,26 @@ const BusinessProfile = () => {
       }}
     >
         <TextInput
-          placeholder="Business name"
+          placeholder="Name"
           onChangeText={(txt) => setName(txt)}
           placeholderTextColor="#F194FF"
         />
         <TextInput
-          placeholder="Business phone"
+          placeholder="Phone Number"
           onChangeText={(txt) => setPhone(txt)}
           placeholderTextColor="#F194FF"
         />
         <TextInput
-          placeholder="Business email"
+          placeholder="Email"
           onChangeText={(txt) => setEmail(txt)}
           placeholderTextColor="#F194FF"
         />
         <TextInput
-          placeholder="Business address"
+          placeholder="Address"
           onChangeText={(txt) => setAddress(txt)}
           placeholderTextColor="#F194FF"
         />
-        <Button title="Update Profile" onPress={onSubmit} />
+        <Button title="Update Profile" />
     </View>
   );
 };

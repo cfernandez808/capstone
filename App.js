@@ -109,8 +109,8 @@ const App = () => {
                 iconName = 'magnify';
               } else if (route.name === 'MapHub') {
                 iconName = 'google-maps';
-              } else if (route.name === 'Viro') {
-                iconName = 'augmented-reality';
+              } else if (route.name === 'Profile') {
+                iconName = 'book';
               }
 
               // You can return any component that you like here!
@@ -122,9 +122,9 @@ const App = () => {
             inactiveTintColor: '#9D9589',
           }}
         >
-          <Tab.Screen name="Scan" component={ScanStack} />
+          <Tab.Screen name="Scan" children={() => <ScanStack businessId={businessId}/>}/>
           <Tab.Screen name="MapHub" component={MapStack} />
-          <Tab.Screen name="Profile" component={BusinessProfileStack} />
+        <Tab.Screen name="Profile" children={() => <BusinessProfileStack businessId={businessId}/>}/>
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>

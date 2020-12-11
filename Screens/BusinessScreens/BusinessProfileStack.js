@@ -5,14 +5,15 @@ import BusinessProfile from "./BusinessProfile";
 
 const Stack = createStackNavigator();
 
-const BusinessStack = () => {
-
+const BusinessProfileStack = (props) => {
+  const { businessId } = props;
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Your Business Profile" component={BusinessProfile} />
+      <Stack.Screen name="Business Profile" children={() => <BusinessProfile businessId={businessId}/>}
+       />
       <Stack.Screen name="Visitors" component={BusinessVisitors} />
     </Stack.Navigator>
   );
 };
 
-export default BusinessStack;
+export default BusinessProfileStack;

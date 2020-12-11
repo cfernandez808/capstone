@@ -21,7 +21,7 @@ const Scan = ({ navigation }) => {
     if (image && matches !== null) {
       const title = image.split("/").slice(-1).toString();
       // depending on the match result, may need to pass different parameters
-      navigation.navigate("Profile", { image, title, matches, data });
+      navigation.navigate("Customer Profile", { image, title, matches, data });
     }
   }, [image, matches]);
 

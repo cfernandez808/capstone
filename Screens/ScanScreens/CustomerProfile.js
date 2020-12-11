@@ -33,25 +33,6 @@ const CustomerProfile = ({ route }) => {
     // else fetchUsers();
   }, []);
 
-  // async function fetchUsers() {
-  //   try {
-  //     const usersData = await API.graphql(graphqlOperation(listUsers));
-  //     const users = usersData.data.listUsers.items;
-  //     const imageId = matches[0].Face.ImageId;
-  //     const matchedUser = users.find((user) => user.ImageId === imageId);
-  //     setFirstName(matchedUser.firstName);
-  //     setLastName(matchedUser.lastName);
-  //     setId(matchedUser.id);
-  //     setPhone(matchedUser.phone);
-  //     console.log(users);
-  //     console.log(matches);
-  //     console.log(imageId);
-  //     console.log(matchedUser);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   async function handleSubmit(matches) {
     if (!matches.length) {
       const customerID = await createNewCustomer();
