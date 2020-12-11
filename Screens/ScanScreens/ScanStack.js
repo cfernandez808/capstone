@@ -10,7 +10,7 @@ const ScanStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Scan" component={Scan} />
-      <Stack.Screen name="Profile" component={CustomerProfile} />
+      <Stack.Screen name="Customer Profile" component={CustomerProfile} />
     </Stack.Navigator>
   );
 };

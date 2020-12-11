@@ -14,8 +14,6 @@ import {
 } from 'react-native-paper';
 
 
-
-
 const MapHome = ({navigation}) => {
   const [heatMap, setHeatMap] = useState(false)
   const [busMap, setBusMap] = useState(false)

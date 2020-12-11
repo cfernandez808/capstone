@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ScanStack from './ScanStack'
-import MapStack from './Maps/MapStack'
-import BusinessProfile from './BusinessProfile';
+import ScanStack from './Screens/ScanScreens/ScanStack'
+import MapStack from './Screens/MapScreens/MapStack'
+import BusinessProfileStack from './Screens/BusinessScreens/BusinessProfileStack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Amplify, { Auth, API, graphqlOperation } from "aws-amplify";
 import config from "./aws-exports";
@@ -69,7 +69,6 @@ const signUpConfig = {
 }
 
 const App = () => {
-  const [businessProfile, setBusinessProfile] = useState(null);
   const [businessId, setBusinessId] = useState("")
 
   const syncDataBase = async () => {
@@ -81,12 +80,10 @@ const App = () => {
         const { data } = await createNewBusiness({ email, phone: phone_number, name, address: formattedAddress, lat, lng })
         const createdBusiness = data.createBusiness;
         console.log("created business", createdBusiness);
-        setBusinessProfile(createdBusiness);
         setBusinessId(createdBusiness.id)
 
       } else {
         console.log("matchedBusiness", matchedBusiness);
-        setBusinessProfile(matchedBusiness);
         setBusinessId(matchedBusiness.id)
       }
     } catch (error) {
@@ -127,7 +124,7 @@ const App = () => {
         >
           <Tab.Screen name="Scan" component={ScanStack} />
           <Tab.Screen name="MapHub" component={MapStack} />
-          <Tab.Screen name="Profile" component={BusinessProfile} />
+          <Tab.Screen name="Profile" component={BusinessProfileStack} />
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
@@ -142,12 +139,9 @@ export default withAuthenticator(App, {
 
 
 
-/* helper functions to fetch current authenticated user,
-to check if this user (business owner) exists in dynamoDB,
-and to convert address into coordinates, and if this user
-does not exist, to create a new business in dynamoDB
-*/
+//helper functions
 
+//fetch current authenticated user
 const fetchCurrentAuthUser = async () => {
   try {
     const user = await Auth.currentAuthenticatedUser();
@@ -158,6 +152,7 @@ const fetchCurrentAuthUser = async () => {
   }
 }
 
+//check if this user (business owner) exists in dynamoDB
 const checkBusiness = async (email, name) => {
   try {
     const { data } = await API.graphql({ query: queries.listBusinesss })
@@ -172,6 +167,7 @@ const checkBusiness = async (email, name) => {
   }
 }
 
+// formate address and convert address into coordinates
 const getCoordinates = async (address) => {
   try {
     const data = await Geocoder.from(address);
@@ -183,6 +179,7 @@ const getCoordinates = async (address) => {
   }
 }
 
+// if user (business owner) does not exist, to create a new business in dynamoDB
 const createNewBusiness = async(business) => {
   try {
     return await API.graphql(graphqlOperation(createBusiness, {input: business}))

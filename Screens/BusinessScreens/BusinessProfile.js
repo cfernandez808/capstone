@@ -5,10 +5,9 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 
 const BusinessProfile = () => {
 
-  const onSubmit = async () => {
+  useEffect(()=> {
 
-  };
-
+  })
 
   return (
     <View
@@ -42,4 +41,5 @@ const BusinessProfile = () => {
     </View>
   );
 };
+
 export default BusinessProfile;
