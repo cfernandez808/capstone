@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import {
-  IconButton,
   Portal,
-  Dialog,
   Button,
-  Paragraph
+  Searchbar
 } from "react-native-paper";
 import Foursquare from "@foursquare/foursquare-places";
 import Geolocation from "@react-native-community/geolocation";
@@ -40,22 +38,7 @@ export default class BusMap extends Component {
   constructor(props){
     super(props)
     this.state = {
-      businesses: [
-        {
-          id: "0",
-          name: "Fullstack Academy",
-          coordinates: [-74.009499, 40.704498],
-          cases: 0,
-          visible: false
-        },
-        {
-          id: "1",
-          name: "HackReactor Academy",
-          coordinates: [-74.007320, 40.710860],
-          cases: 9001,
-          visible: false
-        }
-      ],
+      businesses: [],
       params: {
         ll: ``,
         query: '',
@@ -63,10 +46,12 @@ export default class BusMap extends Component {
         radius: 48280.3
       },
       fsq: [],
-      userLoc: []
+      userLoc: [],
     }
     this.handleVis = this.handleVis.bind(this);
     this.onRegionDidChange = this.onRegionDidChange.bind(this);
+    this.busSearch = this.busSearch.bind(this)
+    this.handleMarkers = this.handleMarkers.bind(this)
   }
   componentDidMount() {
     MapboxGL.setTelemetryEnabled(true);
@@ -91,6 +76,18 @@ export default class BusMap extends Component {
       }
     })
   }
+  handleMarkers () {
+    foursquare.venues.getVenues(this.state.params).then(res => {
+      this.setState(prevState => {
+        let copy = {...prevState}
+        copy.fsq = [...res.response.venues]
+        copy.fsq.forEach(bus => {
+          bus.visible = false
+        })
+        return copy
+      })
+    });
+  }
   handleVis(bus) {
     this.setState(prevState => {
       let copy = {...prevState}
@@ -108,14 +105,33 @@ export default class BusMap extends Component {
     })
 
   }
+  busSearch (query) {
+    this.setState({
+      params: {
+        ...this.state.params,
+        query: query
+      }
+    })
+    this.handleMarkers()
+  }
   render() {
     const fsqArr = this.state.fsq
     const userLoc = this.state.params.ll
-
     return (
       <Portal.Host>
         <View style={styles.page}>
           <View style={styles.container}>
+            <Searchbar
+              placeholder="Business-Type Search"
+              onIconPress={() => this.busSearch()}
+              onChangeText={text =>this.setState({
+                params: {
+                  ...this.state.params,
+                  query: text
+                }
+              })}
+              value={this.state.params.query}
+              icon="shopping-search" />
             <MapboxGL.MapView
               ref={(c) => (this._map = c)}
               style={styles.map}
@@ -154,16 +170,7 @@ export default class BusMap extends Component {
               }
             </MapboxGL.MapView>
             <Button onPress={()=> {
-              foursquare.venues.getVenues(this.state.params).then(res => {
-                this.setState(prevState => {
-                  let copy = {...prevState}
-                  copy.fsq = [...res.response.venues]
-                  copy.fsq.forEach(bus => {
-                    bus.visible = false
-                  })
-                  return copy
-                })
-              });
+              this.handleMarkers()
             }}>{
               !this.state.fsq[0] ? ('Start Search in Your Location') :
               ('Redo Search in New Location')

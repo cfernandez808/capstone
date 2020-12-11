@@ -3,8 +3,9 @@ import {
   Portal,
   Dialog,
   Button,
-  Paragraph
+  Paragraph,
 } from 'react-native-paper';
+
 const DiaPortalFsq = (props) => {
   const {bus, address, handleVis, city, st} = props
   return (
@@ -18,6 +19,9 @@ const DiaPortalFsq = (props) => {
             city ? <Paragraph>Business in {`${city}`, `${st}`}</Paragraph> :
             <Paragraph>Business in {`${st}`}</Paragraph>
           }
+          <Paragraph>
+            This business is not apart of the Big Brother Ecosystem, have them sign up for free to help your country!
+          </Paragraph>
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={() => handleVis(bus)}>Done</Button>
