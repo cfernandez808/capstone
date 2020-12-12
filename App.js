@@ -74,7 +74,7 @@ const App = () => {
   const syncDataBase = async () => {
     try {
       const { address, email, phone_number, name } = await fetchCurrentAuthUser();
-      const [matchedBusiness] = await checkBusiness(email, name);
+      const [matchedBusiness] = await checkBusiness(email);
       if (!matchedBusiness) {
         const {formattedAddress, lat, lng} = await getCoordinates(address);
         const { data } = await createNewBusiness({ email, phone: phone_number, name, address: formattedAddress, lat, lng })
@@ -122,7 +122,7 @@ const App = () => {
             inactiveTintColor: '#9D9589',
           }}
         >
-          <Tab.Screen name="Scan" component={ScanStack} initialParams={{ businessId: businessId }} />
+          <Tab.Screen name="Scan" children={() => <ScanStack businessId={businessId}/>} />
           <Tab.Screen name="MapHub" component={MapStack} />
         <Tab.Screen name="Profile" children={() => <BusinessProfileStack businessId={businessId}/>}/>
         </Tab.Navigator>
@@ -153,13 +153,13 @@ const fetchCurrentAuthUser = async () => {
 }
 
 //check if this user (business owner) exists in dynamoDB
-const checkBusiness = async (email, name) => {
+const checkBusiness = async (email) => {
   try {
     const { data } = await API.graphql({ query: queries.listBusinesss })
     const allBusinesses = data.listBusinesss.items;
     console.log("all businesses", allBusinesses);
     const match = allBusinesses.filter(business => {
-      return (business.email === email && business.name === name)
+      return (business.email === email)
     })
     return match;
   } catch (error) {

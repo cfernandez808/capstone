@@ -145,9 +145,3 @@ const CustomerProfile = ({ route }) => {
 export default CustomerProfile;
 
 
-
-// check all the visits of a business (for heatmap)
-  // const getBusinessesWithVisits = async () => {
-  //   const businessVisits = await API.graphql({ query: queries.getBusiness, variables: { id: "B1" }})
-  //   console.log("the record of visits at B1", businessVisits.data.getBusiness.visitors)
-  // }

@@ -11,7 +11,7 @@ Amplify.configure({
   },
 });
 
-const Scan = ({ navigation, route }) => {
+const Scan = ({ navigation }) => {
   const [image, setImage] = useState(null);
   // data from DynamoDB when there is a match
   const [data, setData] = useState(null);
@@ -21,8 +21,7 @@ const Scan = ({ navigation, route }) => {
     if (image && matches !== null) {
       const title = image.split("/").slice(-1).toString();
       // depending on the match result, may need to pass different parameters
-      const { businessId } = route.params
-      navigation.navigate("Customer Profile", { image, title, matches, data, businessId });
+      navigation.navigate("Customer Profile", { image, title, matches, data });
     }
   }, [image, matches]);
 
