@@ -10,7 +10,7 @@ const BusinessProfile = ({ navigation, route }) => {
   const [Bemail, setBemail] = useState("")
   const [Bphone, setBphone] = useState("")
   const [Baddress, setBaddress] = useState("")
-  const [visitors, setVisitors] = useState([]);
+  const [visits, setVisits] = useState([]);
 
   const { businessId } = route.params;
 
@@ -24,7 +24,7 @@ const BusinessProfile = ({ navigation, route }) => {
     setBaddress(address);
     setBemail(email);
     setBphone(phone)
-    setVisitors(visitors.items);
+    setVisits(visitors.items);
   }
 
   const handleSubmit = async () => {
@@ -39,7 +39,7 @@ const BusinessProfile = ({ navigation, route }) => {
         lat,
         lng,
       }
-      const updatedBusiness = await API.graphql(graphqlOperation(updateBusiness, { input: updateData}))
+      const updatedBusiness = await API.graphql(graphqlOperation(updateBusiness, { input: updateData }))
       console.log("successfully updated business profile", updatedBusiness)
     } catch (error) {
       console.log('failed to update business profile', error)
@@ -54,7 +54,7 @@ const BusinessProfile = ({ navigation, route }) => {
         justifyContent: "center",
       }}
     >
-        <Text>{`${visitors.length} total visits and ${visitors.filter(visitors => visitors.hasSymptom.toLowerCase().includes('yes')).length} COVID case(s)`}</Text>
+        <Text>{`${visits.length} total visits and ${visits.filter(visit => visit.hasSymptom.toLowerCase().includes('yes')).length} COVID case(s)`}</Text>
         <TextInput
           mode= "outlined"
           label="Business Name"
@@ -85,8 +85,8 @@ const BusinessProfile = ({ navigation, route }) => {
           placeholderTextColor="#F194FF"
         />
         <Button title="Update Profile" onPress={handleSubmit}/>
-        <Button title="View Visitors" onPress={() => {
-          navigation.navigate("Visitors", { visitors })
+        <Button title="View Visits" onPress={() => {
+          navigation.navigate("Visits", { visits })
         }}/>
     </View>
   );
