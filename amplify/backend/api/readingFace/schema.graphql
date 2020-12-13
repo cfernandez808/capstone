@@ -6,13 +6,12 @@ type Business @model {
   phone: String!
   lat: String!
   lng: String!
-  visitors: [Visit] @connection(keyName: "byBusiness", fields: ["id"])
+  visits: [Visit] @connection(keyName: "byBusiness", fields: ["id"])
 }
 type Visit
   @model(queries: null)
   @key(name: "byBusiness", fields: ["businessID", "hasSymptom"])
   @key(name: "byCustomer", fields: ["customerID", "hasSymptom"]) {
-  id: ID!
   hasSymptom: String!
   businessID: ID!
   customerID: ID!
@@ -26,5 +25,5 @@ type Customer @model {
   phone: String!
   email: String!
   imageId: ID!
-  businesses: [Visit] @connection(keyName: "byCustomer", fields: ["id"])
+  visits: [Visit] @connection(keyName: "byCustomer", fields: ["id"])
 }

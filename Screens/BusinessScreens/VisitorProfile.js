@@ -10,18 +10,22 @@ const VisitorProfile = ({route}) => {
   const [lastName, setLastName] = useState('');
 
   const { customerID } = route.params;
-  useEffect(() => {
-    fetchCustomerInfo(customerID);
-  }, [])
 
   const fetchCustomerInfo = async (cutomerID) => {
     try {
         const customer = await getCustomerWithVisits(customerID);
-        console.log("who is customer", customer);
+        setEmail(customer.email);
+        setPhone(customer.phone);
+        setFirstName(customer.firstName);
+        setLastName(customer.lastName);
     } catch (error) {
       console.log('failed to load customers', error)
     }
   }
+
+  useEffect(() => {
+    fetchCustomerInfo(customerID);
+  }, [])
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>

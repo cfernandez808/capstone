@@ -5,6 +5,7 @@ import { createVisit, createCustomer, updateCustomer } from '../../graphql/mutat
 import * as queries from '../../graphql/queries'
 import config from "../../aws-exports";
 
+import "../../secrets";
 
 const AWS = require("aws-sdk");
 const awsRegion = config["aws_cognito_region"];
