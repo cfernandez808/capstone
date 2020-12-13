@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Alert, Text, TouchableOpacity, Image } from "react-native";
 import {
-  IconButton,
-  Portal,
-  Dialog,
-  Button,
-  Paragraph,
-} from "react-native-paper";
+  View,
+  Alert,
+  Text,
+  AppText,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+  StyleSheet,
+} from "react-native";
+import { IconButton, Portal, Dialog, Paragraph } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import ImagePicker from "react-native-image-picker";
 
@@ -93,39 +96,57 @@ const Scan = ({ navigation }) => {
 
   // keep the image and match parts for testing
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {/* <Avatar.Icon size={40} icon="all_out" onPress={selectImage} /> */}
-
-      {/* <Icon.Button
-        name="face-recognition"
-        backgroundColor="red"
-        onPress={selectImage}
-        size={80}
+    <ImageBackground style={styles.logo} source={require("./assets/p13.jpg")}>
+      <View
         style={{
-          borderRadius: 10,
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          height: 600,
         }}
       >
-        SCAN
-      </Icon.Button> */}
-      <IconButton
-        icon="face-recognition"
-        color="purple"
-        size={100}
-        onPress={selectImage}
-      />
-
-      {/* <Appbar.Action icon="camera" onPress={selectImage} /> */}
-
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
-      {matches && (
-        <Text>
-          {matches.length} Matches, First Match:{" "}
-          {matches.length && matches[0].Face.ImageId}
+        <IconButton
+          theme={{ roundness: 3 }}
+          icon="face-recognition"
+          color="white"
+          size={100}
+          onPress={selectImage}
+          justifyContent="center"
+        />
+        <Text
+          style={{
+            justifyContent: "center",
+            color: "white",
+            fontWeight: "bold",
+            fontSize: 40,
+          }}
+        >
+          Scan
         </Text>
-      )}
-    </View>
+      </View>
+      <View>
+        {image && (
+          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        )}
+        {matches && (
+          <Text>
+            {matches.length} Matches, First Match:{" "}
+            {matches.length && matches[0].Face.ImageId}
+          </Text>
+        )}
+      </View>
+    </ImageBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  logo: {
+    flex: 1,
+    resizeMode: "cover",
+    width: 375,
+    // justifyContent: "flex-end",
+    alignItems: "center",
+    height: 650,
+  },
+});
 export default withAuthenticator(Scan);

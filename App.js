@@ -1,7 +1,13 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import {
+  Provider as PaperProvider,
+  useTheme,
+  Button,
+} from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
+import merge from "deepmerge";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ScanStack from "./ScanStack";
 import MapStack from "./Maps/MapStack";
@@ -11,19 +17,9 @@ const Tab = createBottomTabNavigator();
 
 // const Stack = createStackNavigator();
 
-const theme = {
-  ...DefaultTheme,
-  // Specify custom property
-  myOwnProperty: true,
-  // Specify custom property in nested object
-  colors: {
-    backgroundColor: "pink",
-    myOwnColor: "#BADA55",
-  },
-};
 const App = () => {
   return (
-    <PaperProvider theme={theme}>
+    <PaperProvider>
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName="Scan"

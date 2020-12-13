@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, View, TextInput, Image } from "react-native";
+import { Button, View, TextInput, Image, StyleSheet, Text } from "react-native";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { createBusiness, createVisit, createCustomer, updateCustomer } from './graphql/mutations'
-import * as queries from './graphql/queries'
+import {
+  createBusiness,
+  createVisit,
+  createCustomer,
+  updateCustomer,
+} from "./graphql/mutations";
+import * as queries from "./graphql/queries";
 import config from "./aws-exports";
 
 Amplify.configure({
@@ -26,18 +31,17 @@ const myConfig = new AWS.Config({
 const rekognition = new AWS.Rekognition(myConfig);
 
 const Profile = ({ route }) => {
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [symptom, setSymptom] = useState('');
-  const [imageId, setImageId] = useState('');
-
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [symptom, setSymptom] = useState("");
+  const [imageId, setImageId] = useState("");
 
   const { image, title, matches, data } = route.params;
 
   useEffect(() => {
-    if(!matches.length) indexFace();
+    if (!matches.length) indexFace();
     // else fetchUsers();
   }, []);
 
@@ -89,86 +93,127 @@ const Profile = ({ route }) => {
         setImageId(data["FaceRecords"][0]["Face"]["ImageId"]);
       }
     });
-  }
+  };
 
   // create a new customer
-  const createNewCustomer = async() => {
+  const createNewCustomer = async () => {
     const inputData = {
       firstName,
       lastName,
       phone,
       email,
       imageId,
-    }
-    const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
+    };
+    const data = await API.graphql(
+      graphqlOperation(createCustomer, { input: inputData })
+    );
     console.log(data);
     const customerID = data.data.createCustomer.id;
     console.log(customerID);
     return customerID;
-  }
+  };
 
   // create a new visit
-  const createNewVisit = async(customerID) => {
+  const createNewVisit = async (customerID) => {
     const inputData = {
       hasSymptom: symptom,
       // we need to have businessID available after the business signs in
       businessID: "B1",
       customerID,
-    }
-    return await API.graphql(graphqlOperation(createVisit, {input: inputData}))
-  }
+    };
+    return await API.graphql(
+      graphqlOperation(createVisit, { input: inputData })
+    );
+  };
 
   // get customer visits
   const getCustomerWithVisits = async (customerID) => {
-    const customerVisits = await API.graphql({ query: queries.getCustomer, variables: { id: customerID }})
+    const customerVisits = await API.graphql({
+      query: queries.getCustomer,
+      variables: { id: customerID },
+    });
     console.log("Customer info", customerVisits);
-    console.log("the record of visits by this customer", customerVisits.data.getCustomer.businesses);
-  }
+    console.log(
+      "the record of visits by this customer",
+      customerVisits.data.getCustomer.businesses
+    );
+  };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#5F9EA0",
+      }}
+    >
       {/* if there is a match display the existing photo
       if not, display the new photo */}
       {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <Image
+          source={{ uri: image }}
+          style={{ width: 200, height: 200, marginVertical: 20 }}
+        />
       )}
       <TextInput
+        style={{ fontWeight: "bold", fontSize: 18 }}
         placeholder="email"
-        onChangeText={txt => setEmail(txt)}
-        placeholderTextColor="#f194ff"
+        onChangeText={(txt) => setEmail(txt)}
+        placeholderTextColor="#000080"
       />
       <TextInput
+        style={{ fontWeight: "bold", fontSize: 18 }}
         value={phone}
         placeholder="phone"
         onChangeText={(txt) => setPhone(txt)}
-        placeholderTextColor="#f194ff"
+        placeholderTextColor="#000080"
       />
       <TextInput
+        style={{ fontWeight: "bold", fontSize: 18 }}
         value={firstName}
         placeholder="firstName"
         onChangeText={(txt) => setFirstName(txt)}
-        placeholderTextColor="#f194ff"
+        placeholderTextColor="#000080"
       />
       <TextInput
+        style={{ fontWeight: "bold", fontSize: 18 }}
         value={lastName}
         placeholder="lastName"
         onChangeText={(txt) => setLastName(txt)}
-        placeholderTextColor="#f194ff"
+        placeholderTextColor="#000080"
       />
       <TextInput
+        style={{ fontWeight: "bold", fontSize: 18 }}
         placeholder="no symptom"
-        onChangeText={txt => setSymptom(txt)}
-        placeholderTextColor="#f194ff"
+        onChangeText={(txt) => setSymptom(txt)}
+        placeholderTextColor="#000080"
       />
-      <Button
-        onPress={() => handleSubmit(matches)}
-        title= { matches.length ? "Update Profile" : "Create Profile" }
-        color="#f194ff"
-      />
+      <View style={styles.button}>
+        <Button
+          style={styles.title}
+          color="black"
+          onPress={() => handleSubmit(matches)}
+          title={matches.length ? "Update Profile" : "Create Profile"}
+        />
+      </View>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: "#6495ED",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    width: "70%",
+    marginVertical: 20,
+    padding: 20,
+    height: 80,
+  },
+});
 export default Profile;
 
 // seed business data
@@ -188,7 +233,7 @@ export default Profile;
 // }
 
 // check all the visits of a business (for heatmap)
-  // const getBusinessesWithVisits = async () => {
-  //   const businessVisits = await API.graphql({ query: queries.getBusiness, variables: { id: "B1" }})
-  //   console.log("the record of visits at B1", businessVisits.data.getBusiness.visitors)
-  // }
+// const getBusinessesWithVisits = async () => {
+//   const businessVisits = await API.graphql({ query: queries.getBusiness, variables: { id: "B1" }})
+//   console.log("the record of visits at B1", businessVisits.data.getBusiness.visitors)
+// }
