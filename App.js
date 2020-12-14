@@ -18,6 +18,7 @@ import './secrets'
 Geocoder.init(process.env.GOOGLE_MAPS_API_KEY);
 const Tab = createBottomTabNavigator();
 
+
 Amplify.configure({
   ...config,
   Analytics: {
@@ -132,7 +133,6 @@ const App = () => {
 };
 
 export default withAuthenticator(App, {
-  includeGreetings: true,
   signUpConfig,
   usernameAttributes: 'email'
 });

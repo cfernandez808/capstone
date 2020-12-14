@@ -65,29 +65,29 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
 
     /* list all the faces and delete all of them in a collection, this is not a function of the app, only for testing
     */
-    const listFacesParams = {
-      CollectionId: "irelia-faces"
-    };
+    // const listFacesParams = {
+    //   CollectionId: "irelia-faces"
+    // };
 
-    client.listFaces(listFacesParams, (err, data) => {
-      if(err) console.log(err, err.stack);
-      else {
-        console.log("data from listFaces", data["Faces"]);
-        // delete faces
-        data["Faces"].map(face => {
-          const faceId = face["FaceId"];
-          console.log(faceId);
-          const deleteFaceParams = {
-            CollectionId: "irelia-faces",
-            FaceIds: [faceId]
-          }
-          client.deleteFaces(deleteFaceParams, (err, data) => {
-            if(err) console.log(err, err.stack);
-            else console.log("deleted face", data);
-          })
-        })
-      }
-    })
+    // client.listFaces(listFacesParams, (err, data) => {
+    //   if(err) console.log(err, err.stack);
+    //   else {
+    //     console.log("data from listFaces", data["Faces"]);
+    //     // delete faces
+    //     data["Faces"].map(face => {
+    //       const faceId = face["FaceId"];
+    //       console.log(faceId);
+    //       const deleteFaceParams = {
+    //         CollectionId: "irelia-faces",
+    //         FaceIds: [faceId]
+    //       }
+    //       client.deleteFaces(deleteFaceParams, (err, data) => {
+    //         if(err) console.log(err, err.stack);
+    //         else console.log("deleted face", data);
+    //       })
+    //     })
+    //   }
+    // })
 
     const searchFacesParams = {
       CollectionId: "irelia-faces",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, View, TextInput, Text } from "react-native"
-import { API, graphqlOperation } from "aws-amplify";
+import { Button, View, Text } from "react-native"
+import { TextInput } from "react-native-paper";
+import { API, Auth, graphqlOperation } from "aws-amplify";
 import * as queries from '../../graphql/queries'
 import { updateBusiness } from '../../graphql/mutations'
 import Geocoder from 'react-native-geocoding'
@@ -16,10 +17,10 @@ const BusinessProfile = ({ navigation, route }) => {
 
   useEffect(()=> {
     loadProfileForm(businessId);
-  }, [visits])
+  }, [])
 
   const loadProfileForm = async (businessId) => {
-    // console.log(businessId);
+    console.log(businessId);
     const {name, address, email, phone, visits } = await getBusinessWithVisits(businessId);
     setBname(name);
     setBaddress(address);
@@ -47,35 +48,35 @@ const BusinessProfile = ({ navigation, route }) => {
     }
   }
 
+  const signout = async() => {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      console.log('failed to sign out', error)
+    }
+  }
+
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <View>
         <Text>{`${visits.length} total visits and ${visits.filter(visit => visit.hasSymptom.toLowerCase().includes('yes')).length} COVID case(s)`}</Text>
         <TextInput
+          style={textInputStyle}
           mode= "outlined"
           label="Business Name"
           value={Bname}
           onChangeText={(txt) => setBname(txt)}
-          placeholderTextColor="#F194FF"
         />
         <TextInput
           mode= "outlined"
           label="Address"
           value={Baddress}
           onChangeText={(txt) => setBaddress(txt)}
-          placeholderTextColor="#F194FF"
         />
         <TextInput
           mode= "outlined"
           label="Phone Number"
           value={Bphone}
           onChangeText={(txt) => setBphone(txt)}
-          placeholderTextColor="#F194FF"
         />
         <TextInput
           mode= "outlined"
@@ -83,15 +84,19 @@ const BusinessProfile = ({ navigation, route }) => {
           label="Email"
           value={Bemail}
           onChangeText={(txt) => setBemail(txt)}
-          placeholderTextColor="#F194FF"
         />
         <Button title="Update Profile" onPress={handleSubmit}/>
         <Button title="View Visits" onPress={() => {
           navigation.navigate("Visits", { visits })
         }}/>
+        <Button title="Sign Out" onPress={signout}/>
     </View>
   );
 };
+
+const textInputStyle = {
+  borderColor: 'rgb(18, 48, 92)'
+}
 
 export default BusinessProfile;
 

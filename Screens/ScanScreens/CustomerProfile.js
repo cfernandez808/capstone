@@ -27,7 +27,7 @@ const CustomerProfile = ({ navigation, route }) => {
   const [lastName, setLastName] = useState('');
   const [symptom, setSymptom] = useState('');
   const [imageId, setImageId] = useState('');
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const [hasSymptom, setHasSymptom] = useState(false);
 
   const { image, title, matches, data, businessId } = route.params;
@@ -74,13 +74,13 @@ const CustomerProfile = ({ navigation, route }) => {
     }
   }
 
-  async function handleSubmit(evt) {
+  async function handleSubmit() {
     if (!matches.length) {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
     } else {
-      await updateSameCustomer();
+      await updateSameCustomer()
     }
     navigation.navigate("Scan");
   }
