@@ -23,7 +23,7 @@ const config = new aws.Config({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: "faceimages194107-mapboxdev",
+    bucket: "faceimages00139-mbtester",
     acl: "public-read",
     metadata(req, file, cb) {
       cb(null, { fieldName: file.fieldname });
@@ -94,7 +94,7 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: "faceimages194107-mapboxdev",
+          Bucket: "faceimages00139-mbtester",
           Name: req.file.key,
         },
       },

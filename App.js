@@ -75,7 +75,7 @@ const App = () => {
   const syncDataBase = async () => {
     try {
       const { address, email, phone_number, name } = await fetchCurrentAuthUser();
-      const [matchedBusiness] = await checkBusiness(email, name);
+      const [matchedBusiness] = await checkBusiness(email);
       if (!matchedBusiness) {
         const {formattedAddress, lat, lng} = await getCoordinates(address);
         const { data } = await createNewBusiness({ email, phone: phone_number, name, address: formattedAddress, lat, lng })
@@ -90,7 +90,7 @@ const App = () => {
         setBusinessId(matchedBusiness.id)
       }
     } catch (error) {
-      console.log("failed to sync Business mode in database", error)
+      console.log("failed to sync Business model in database", error)
     }
   }
 
@@ -158,13 +158,13 @@ const fetchCurrentAuthUser = async () => {
   }
 }
 
-const checkBusiness = async (email, name) => {
+const checkBusiness = async (email) => {
   try {
     const { data } = await API.graphql({ query: queries.listBusinesss })
     const allBusinesses = data.listBusinesss.items;
     console.log("all businesses", allBusinesses);
     const match = allBusinesses.filter(business => {
-      return (business.email === email && business.name === name)
+      return (business.email === email)
     })
     return match;
   } catch (error) {
