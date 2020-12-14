@@ -14,7 +14,7 @@ export const createBusiness = /* GraphQL */ `
       phone
       lat
       lng
-      visitors {
+      visits {
         items {
           id
           hasSymptom
@@ -43,7 +43,7 @@ export const updateBusiness = /* GraphQL */ `
       phone
       lat
       lng
-      visitors {
+      visits {
         items {
           id
           hasSymptom
@@ -72,7 +72,7 @@ export const deleteBusiness = /* GraphQL */ `
       phone
       lat
       lng
-      visitors {
+      visits {
         items {
           id
           hasSymptom
@@ -106,7 +106,7 @@ export const createVisit = /* GraphQL */ `
         phone
         lat
         lng
-        visitors {
+        visits {
           nextToken
         }
         createdAt
@@ -119,7 +119,7 @@ export const createVisit = /* GraphQL */ `
         phone
         email
         imageId
-        businesses {
+        visits {
           nextToken
         }
         createdAt
@@ -148,7 +148,7 @@ export const updateVisit = /* GraphQL */ `
         phone
         lat
         lng
-        visitors {
+        visits {
           nextToken
         }
         createdAt
@@ -161,7 +161,7 @@ export const updateVisit = /* GraphQL */ `
         phone
         email
         imageId
-        businesses {
+        visits {
           nextToken
         }
         createdAt
@@ -190,7 +190,7 @@ export const deleteVisit = /* GraphQL */ `
         phone
         lat
         lng
-        visitors {
+        visits {
           nextToken
         }
         createdAt
@@ -203,7 +203,7 @@ export const deleteVisit = /* GraphQL */ `
         phone
         email
         imageId
-        businesses {
+        visits {
           nextToken
         }
         createdAt
@@ -226,7 +226,7 @@ export const createCustomer = /* GraphQL */ `
       phone
       email
       imageId
-      businesses {
+      visits {
         items {
           id
           hasSymptom
@@ -254,7 +254,7 @@ export const updateCustomer = /* GraphQL */ `
       phone
       email
       imageId
-      businesses {
+      visits {
         items {
           id
           hasSymptom
@@ -282,7 +282,7 @@ export const deleteCustomer = /* GraphQL */ `
       phone
       email
       imageId
-      businesses {
+      visits {
         items {
           id
           hasSymptom
