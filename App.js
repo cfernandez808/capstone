@@ -152,10 +152,7 @@ const fetchCurrentAuthUser = async () => {
   }
 }
 
-<<<<<<< HEAD
-=======
 //check if this user (business owner) exists in dynamoDB
->>>>>>> a4c89d6d31fdbbe14ac55f767991cd897ee3754d
 const checkBusiness = async (email) => {
   try {
     const { data } = await API.graphql({ query: queries.listBusinesss })
