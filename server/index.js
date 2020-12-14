@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const multerS3 = require("multer-s3");
-require('../data.js')
+require("../data.js");
 
 require("../secrets");
 
@@ -36,28 +36,28 @@ const upload = multer({
 
 app.use(morgan("dev"));
 
-app.get('/api/covid', (req, res, next) => {
+app.get("/api/covid", (req, res, next) => {
   const geo = {
     type: "FeatureCollection",
-    features: []
-  }
-  const geoMap = covid.map(obj => {
-    if(obj.cases) {
+    features: [],
+  };
+  const geoMap = covid.map((obj) => {
+    if (obj.cases) {
       geo.features.push({
-        "type": "feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [...obj.coordinates]
+        type: "feature",
+        geometry: {
+          type: "Point",
+          coordinates: [...obj.coordinates],
         },
-        "properties": {
-          "cases": obj.cases
-        }
-      })
-      return geo
+        properties: {
+          cases: obj.cases,
+        },
+      });
+      return geo;
     }
-  })
-  res.json(geo)
-})
+  });
+  res.json(geo);
+});
 
 app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   try {
@@ -110,7 +110,6 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
         res.send(data.FaceMatches);
       }
     });
-
   } catch (err) {
     next(err);
   }
@@ -120,4 +119,3 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
 app.listen(8080, () => {
   console.log("Listening on port 8080");
 });
-

@@ -2,6 +2,7 @@ type Business @model {
   id: ID!
   name: String!
   address: String!
+  email: String!
   phone: String!
   lat: String!
   lng: String!
