@@ -23,7 +23,7 @@ const config = new aws.Config({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: "faceimages00139-mbtester",
+    bucket: "faceimages194107-mapboxdev",
     acl: "public-read",
     metadata(req, file, cb) {
       cb(null, { fieldName: file.fieldname });
@@ -59,11 +59,12 @@ app.get('/api/covid', (req, res, next) => {
   res.json(geo)
 })
 
-app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
+app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
 
-    // list all the faces in a collection
+    /* list all the faces and delete all of them in a collection, this is not a function of the app, only for testing
+    */
     // const listFacesParams = {
     //   CollectionId: "irelia-faces"
     // };
@@ -93,7 +94,7 @@ app.post("/api/upload:title", upload.single("photo"), (req, res, next) => {
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: "faceimages00139-mbtester",
+          Bucket: "faceimages194107-mapboxdev",
           Name: req.file.key,
         },
       },

@@ -7,6 +7,7 @@ export const onCreateBusiness = /* GraphQL */ `
       id
       name
       address
+      email
       phone
       lat
       lng
@@ -32,6 +33,7 @@ export const onUpdateBusiness = /* GraphQL */ `
       id
       name
       address
+      email
       phone
       lat
       lng
@@ -57,6 +59,7 @@ export const onDeleteBusiness = /* GraphQL */ `
       id
       name
       address
+      email
       phone
       lat
       lng
@@ -87,6 +90,7 @@ export const onCreateVisit = /* GraphQL */ `
         id
         name
         address
+        email
         phone
         lat
         lng
@@ -125,6 +129,7 @@ export const onUpdateVisit = /* GraphQL */ `
         id
         name
         address
+        email
         phone
         lat
         lng
@@ -163,6 +168,7 @@ export const onDeleteVisit = /* GraphQL */ `
         id
         name
         address
+        email
         phone
         lat
         lng

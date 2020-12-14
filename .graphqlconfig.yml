@@ -1,5 +1,5 @@
 projects:
-  readingface:
+  readingFace:
     schemaPath: graphql/schema.json
     includes:
       - src/graphql/**/*.js

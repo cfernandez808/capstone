@@ -7,6 +7,7 @@ export const getBusiness = /* GraphQL */ `
       id
       name
       address
+      email
       phone
       lat
       lng
@@ -37,6 +38,7 @@ export const listBusinesss = /* GraphQL */ `
         id
         name
         address
+        email
         phone
         lat
         lng

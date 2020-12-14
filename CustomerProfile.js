@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, View, TextInput, Image } from "react-native";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { createBusiness, createVisit, createCustomer, updateCustomer } from './graphql/mutations'
+import { createVisit, createCustomer, updateCustomer } from './graphql/mutations'
 import * as queries from './graphql/queries'
 import config from "./aws-exports";
 
@@ -25,7 +25,7 @@ const myConfig = new AWS.Config({
 
 const rekognition = new AWS.Rekognition(myConfig);
 
-const Profile = ({ route }) => {
+const CustomerProfile = ({ route }) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -65,6 +65,7 @@ const Profile = ({ route }) => {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
+      // navigation.navigate("Scan");
     }
     // await addUser("test");
   }
@@ -76,7 +77,7 @@ const Profile = ({ route }) => {
       DetectionAttributes: ["ALL"],
       Image: {
         S3Object: {
-          Bucket: "faceimages00139-mbtester",
+          Bucket: awsBucket,
           Name: title,
         },
       },
@@ -84,8 +85,7 @@ const Profile = ({ route }) => {
     rekognition.indexFaces(paramsIndexFace, (err, data) => {
       if (err) console.log(err, err.stack);
       else {
-        console.log(data);
-        console.log("what is this?", data["FaceRecords"][0]["Face"]["ImageId"]);
+        console.log("successfully indexed a new face", data);
         setImageId(data["FaceRecords"][0]["Face"]["ImageId"]);
       }
     });
@@ -101,7 +101,7 @@ const Profile = ({ route }) => {
       imageId,
     }
     const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
-    console.log(data);
+    console.log("successfully created a new customer", data);
     const customerID = data.data.createCustomer.id;
     console.log(customerID);
     return customerID;
@@ -169,23 +169,9 @@ const Profile = ({ route }) => {
   );
 };
 
-export default Profile;
+export default CustomerProfile;
 
-// seed business data
-// const seed = async () => {
 
-//   const createNewBusiness = async() => {
-//     const businesses = [
-//       { id: "B1", name: "Business 1", address: "Philadelphia", lat: "39.9", lng: "-75.1", phone: "888-888-8888" },
-//       { id: "B2", name: "Business 2", address: "Chicago", lat: "41.8", lng: "-87.6", phone: "666-666-6666"},
-//     ];
-
-//     businesses.map( async (business) => {
-//       return await API.graphql(graphqlOperation(createBusiness, {input: business}))
-//     })
-//   }
-//   createNewBusiness();
-// }
 
 // check all the visits of a business (for heatmap)
   // const getBusinessesWithVisits = async () => {
