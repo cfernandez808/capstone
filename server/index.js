@@ -36,28 +36,33 @@ const upload = multer({
 
 app.use(morgan("dev"));
 
-app.get("/api/covid", (req, res, next) => {
-  const geo = {
-    type: "FeatureCollection",
-    features: [],
-  };
-  const geoMap = covid.map((obj) => {
-    if (obj.cases) {
-      geo.features.push({
-        type: "feature",
-        geometry: {
-          type: "Point",
-          coordinates: [...obj.coordinates],
-        },
-        properties: {
-          cases: obj.cases,
-        },
-      });
-      return geo;
-    }
-  });
-  res.json(geo);
-});
+// app.get("/api/covid", (req, res, next) => {
+//   const geo = {
+//     type: "FeatureCollection",
+//     features: [],
+//   };
+//   const geoMap = covid.map((obj) => {
+//     if (obj.cases) {
+//       geo.features.push({
+//         type: "feature",
+//         geometry: {
+//           type: "Point",
+//           coordinates: [...obj.coordinates],
+//         },
+//         properties: {
+//           cases: obj.cases,
+//         },
+//       });
+//       return geo;
+//     }
+//   });
+//   res.json(geo);
+// });
+
+app.get('/api/covid', (req, res, next) => {
+  res.json(covid)
+})
+
 
 app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   try {
