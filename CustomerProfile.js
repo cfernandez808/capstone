@@ -12,6 +12,7 @@ Amplify.configure({
   },
 });
 import "./secrets";
+import { getCameraRollPermissionsAsync } from "expo-image-picker";
 
 const AWS = require("aws-sdk");
 const awsRegion = config["aws_cognito_region"];
@@ -25,49 +26,69 @@ const myConfig = new AWS.Config({
 
 const rekognition = new AWS.Rekognition(myConfig);
 
-const CustomerProfile = ({ route }) => {
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [symptom, setSymptom] = useState('');
-  const [imageId, setImageId] = useState('');
-
+const CustomerProfile = ({ route, navigation }) => {
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [symptom, setSymptom] = useState("");
+  const [imageId, setImageId] = useState("");
+  const [id, setId] = useState("");
+  const [hasSymptom, setHasSymptom] = useState(false);
 
   const { image, title, matches, data } = route.params;
 
   useEffect(() => {
-    if(!matches.length) indexFace();
-    // else fetchUsers();
+    if (!matches.length) indexFace();
+    else {
+      console.log(matches, data);
+      fetchCustomers();
+    }
   }, []);
 
-  // async function fetchUsers() {
-  //   try {
-  //     const usersData = await API.graphql(graphqlOperation(listUsers));
-  //     const users = usersData.data.listUsers.items;
-  //     const imageId = matches[0].Face.ImageId;
-  //     const matchedUser = users.find((user) => user.ImageId === imageId);
-  //     setFirstName(matchedUser.firstName);
-  //     setLastName(matchedUser.lastName);
-  //     setId(matchedUser.id);
-  //     setPhone(matchedUser.phone);
-  //     console.log(users);
-  //     console.log(matches);
-  //     console.log(imageId);
-  //     console.log(matchedUser);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  async function fetchCustomers() {
+    try {
+      const customersData = await API.graphql(
+        graphqlOperation(queries.listCustomers)
+      );
+      const customers = customersData.data.listCustomers.items;
+      const imageId = matches[0].Face.ImageId;
+      const matchedCustomer = customers.find(
+        (customer) => customer.imageId === imageId
+      );
+      const symptom = matchedCustomer.firstName.includes(":S");
+      let firstName;
+      if (symptom) {
+        firstName = matchedCustomer.firstName.slice(0, -2);
+      } else {
+        firstName = matchedCustomer.firstName;
+      }
+      setFirstName(firstName);
+      setLastName(matchedCustomer.lastName);
+      setImageId(matchedCustomer.imageId);
+      setId(matchedCustomer.id);
+      setPhone(matchedCustomer.phone);
+      setEmail(matchedCustomer.email);
+      setHasSymptom(symptom);
+      setSymptom(symptom ? "YES!" : "NO!");
+      // console.log(customers);
+      if (symptom) {
+        alert("Danger! Do not enter!");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  async function handleSubmit(matches) {
+  async function handleSubmit(evt) {
     if (!matches.length) {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
-      // navigation.navigate("Scan");
+    } else {
+      await updateSameCustomer();
     }
-    // await addUser("test");
+    navigation.navigate("Scan");
   }
 
   //index a new face to collection
@@ -89,10 +110,46 @@ const CustomerProfile = ({ route }) => {
         setImageId(data["FaceRecords"][0]["Face"]["ImageId"]);
       }
     });
-  }
+  };
+
+  //update Customer
+  const updateSameCustomer = async () => {
+    try {
+      let hasSymptomTemp = false;
+      if (symptom.toLowerCase().includes("y")) {
+        setHasSymptom(true);
+        hasSymptomTemp = true;
+      } else {
+        setHasSymptom(false);
+        hasSymptomTemp = false;
+      }
+      console.log(hasSymptom);
+      console.log(hasSymptomTemp);
+      console.log(symptom);
+      const inputData = {
+        id,
+        firstName: firstName + (hasSymptomTemp ? ":S" : ""),
+        lastName,
+        phone,
+        email,
+        imageId,
+      };
+      console.log("DATA", inputData);
+      const data = await API.graphql(
+        graphqlOperation(updateCustomer, { input: inputData })
+      );
+      console.log(data);
+      if (hasSymptomTemp) {
+        alert("Danger! Do not enter!");
+      }
+      await createNewVisit(id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // create a new customer
-  const createNewCustomer = async() => {
+  const createNewCustomer = async () => {
     const inputData = {
       firstName,
       lastName,
@@ -105,25 +162,33 @@ const CustomerProfile = ({ route }) => {
     const customerID = data.data.createCustomer.id;
     console.log(customerID);
     return customerID;
-  }
+  };
 
   // create a new visit
-  const createNewVisit = async(customerID) => {
+  const createNewVisit = async (customerID) => {
     const inputData = {
       hasSymptom: symptom,
       // we need to have businessID available after the business signs in
       businessID: "B1",
       customerID,
-    }
-    return await API.graphql(graphqlOperation(createVisit, {input: inputData}))
-  }
+    };
+    return await API.graphql(
+      graphqlOperation(createVisit, { input: inputData })
+    );
+  };
 
   // get customer visits
   const getCustomerWithVisits = async (customerID) => {
-    const customerVisits = await API.graphql({ query: queries.getCustomer, variables: { id: customerID }})
+    const customerVisits = await API.graphql({
+      query: queries.getCustomer,
+      variables: { id: customerID },
+    });
     console.log("Customer info", customerVisits);
-    console.log("the record of visits by this customer", customerVisits.data.getCustomer.businesses);
-  }
+    console.log(
+      "the record of visits by this customer",
+      customerVisits.data.getCustomer.businesses
+    );
+  };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -133,8 +198,9 @@ const CustomerProfile = ({ route }) => {
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <TextInput
+        value={email}
         placeholder="email"
-        onChangeText={txt => setEmail(txt)}
+        onChangeText={(txt) => setEmail(txt)}
         placeholderTextColor="#f194ff"
       />
       <TextInput
@@ -156,13 +222,14 @@ const CustomerProfile = ({ route }) => {
         placeholderTextColor="#f194ff"
       />
       <TextInput
+        value={symptom}
         placeholder="no symptom"
-        onChangeText={txt => setSymptom(txt)}
+        onChangeText={(txt) => setSymptom(txt)}
         placeholderTextColor="#f194ff"
       />
       <Button
-        onPress={() => handleSubmit(matches)}
-        title= { matches.length ? "Update Profile" : "Create Profile" }
+        onPress={handleSubmit}
+        title={matches.length ? "Update Profile" : "Create Profile"}
         color="#f194ff"
       />
     </View>
@@ -174,7 +241,7 @@ export default CustomerProfile;
 
 
 // check all the visits of a business (for heatmap)
-  // const getBusinessesWithVisits = async () => {
-  //   const businessVisits = await API.graphql({ query: queries.getBusiness, variables: { id: "B1" }})
-  //   console.log("the record of visits at B1", businessVisits.data.getBusiness.visitors)
-  // }
+// const getBusinessesWithVisits = async () => {
+//   const businessVisits = await API.graphql({ query: queries.getBusiness, variables: { id: "B1" }})
+//   console.log("the record of visits at B1", businessVisits.data.getBusiness.visitors)
+// }
