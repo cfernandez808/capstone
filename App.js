@@ -106,7 +106,7 @@ const App = () => {
               let iconName;
 
               if (route.name === 'Scan') {
-                iconName = 'magnify';
+                iconName = 'account-search';
               } else if (route.name === 'MapHub') {
                 iconName = 'google-maps';
               } else if (route.name === 'Profile') {
