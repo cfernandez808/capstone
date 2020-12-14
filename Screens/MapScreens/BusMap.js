@@ -10,6 +10,8 @@ import Foursquare from "@foursquare/foursquare-places";
 import Geolocation from "@react-native-community/geolocation";
 import MarkersFsq from "./MarkersFsq"
 import MarkersBus from "./MarkersBus"
+import { API } from "aws-amplify";
+import * as queries from '../../graphql/queries'
 import "../../secrets";
 
 const FSQ_KEY = process.env.FOURSQ_ID
@@ -52,8 +54,10 @@ export default class BusMap extends Component {
     this.onRegionDidChange = this.onRegionDidChange.bind(this);
     this.busSearch = this.busSearch.bind(this)
     this.handleMarkers = this.handleMarkers.bind(this)
+    this.getEcoBusinesses = this.getEcoBusinesses.bind(this)
   }
   componentDidMount() {
+    this.getEcoBusinesses()
     MapboxGL.setTelemetryEnabled(true);
     Geolocation.getCurrentPosition(info => {
       const data = {...info}
@@ -66,6 +70,10 @@ export default class BusMap extends Component {
     });
 
 
+  }
+  async getEcoBusinesses () {
+    const allBusinesses = await API.graphql({query: queries.listBusinesss})
+    console.log(allBusinesses)
   }
   async onRegionDidChange(){
     const center = await this._map.getCenter()
