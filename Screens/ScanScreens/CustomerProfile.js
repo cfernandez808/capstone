@@ -19,7 +19,7 @@ const myConfig = new AWS.Config({
 
 const rekognition = new AWS.Rekognition(myConfig);
 
-const CustomerProfile = ({ route }) => {
+const CustomerProfile = ({ navigation, route }) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -39,9 +39,9 @@ const CustomerProfile = ({ route }) => {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
-      // navigation.navigate("Scan");
     }
     // await addUser("test");
+    navigation.navigate("Scan");
   }
 
   //index a new face to collection

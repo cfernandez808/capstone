@@ -88,15 +88,6 @@ const Scan = ({ navigation }) => {
       <TouchableOpacity onPress={selectImage}>
         <Text>Scan</Text>
       </TouchableOpacity>
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
-      {matches && (
-        <Text>
-          {matches.length} Matches, First Match:{" "}
-          {matches.length && matches[0].Face.ImageId}
-        </Text>
-      )}
     </View>
   );
 };
