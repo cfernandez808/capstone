@@ -9,7 +9,7 @@ const MarkersBus= props => {
   return (
     <MapboxGL.MarkerView
       id="business"
-      coordinate={bus.coordinates}
+      coordinate={[bus.lng, bus.lat]}
     >
       <View>
         <IconButton

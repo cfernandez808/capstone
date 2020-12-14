@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Alert } from "react-native";
+import { API } from "aws-amplify";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import {
   Portal,
@@ -10,6 +11,7 @@ import Foursquare from "@foursquare/foursquare-places";
 import Geolocation from "@react-native-community/geolocation";
 import MarkersFsq from "./MarkersFsq"
 import MarkersBus from "./MarkersBus"
+import * as queries from '../graphql/queries'
 import "../secrets";
 
 const FSQ_KEY = process.env.FOURSQ_ID
@@ -55,6 +57,7 @@ export default class BusMap extends Component {
   }
   componentDidMount() {
     MapboxGL.setTelemetryEnabled(true);
+    // this.getBusinessesInArea()
     Geolocation.getCurrentPosition(info => {
       const data = {...info}
       this.setState({
@@ -67,6 +70,14 @@ export default class BusMap extends Component {
 
 
   }
+
+  // async getBusinessesInArea () {
+
+  //   // console.log("Businesses", businessList);
+  //   // console.log("the record of businesses", businessList.data.listBusinesss);
+
+  // }
+
   async onRegionDidChange(){
     const center = await this._map.getCenter()
     this.setState({
@@ -76,7 +87,12 @@ export default class BusMap extends Component {
       }
     })
   }
-  handleMarkers () {
+  async handleMarkers () {
+    const businessList = await API.graphql({ query: queries.listBusinesss})
+    this.setState({
+      businesses: [...businessList.data.listBusinesss.items]
+    })
+
     foursquare.venues.getVenues(this.state.params).then(res => {
       this.setState(prevState => {
         let copy = {...prevState}
@@ -117,6 +133,7 @@ export default class BusMap extends Component {
   render() {
     const fsqArr = this.state.fsq
     const userLoc = this.state.params.ll
+    console.log(this.state.businesses)
     return (
       <Portal.Host>
         <View style={styles.page}>
