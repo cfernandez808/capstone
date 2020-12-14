@@ -124,7 +124,7 @@ const App = () => {
         >
           <Tab.Screen name="Scan" children={() => <ScanStack businessId={businessId}/>} />
           <Tab.Screen name="MapHub" component={MapStack} />
-        <Tab.Screen name="Profile" children={() => <BusinessProfileStack businessId={businessId}/>}/>
+          <Tab.Screen name="Profile" children={() => <BusinessProfileStack businessId={businessId}/>}/>
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>

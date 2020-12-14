@@ -16,9 +16,10 @@ const BusinessProfile = ({ navigation, route }) => {
 
   useEffect(()=> {
     loadProfileForm(businessId);
-  }, [])
+  })
 
   const loadProfileForm = async (businessId) => {
+    console.log(businessId);
     const {name, address, email, phone, visits } = await getBusinessWithVisits(businessId);
     setBname(name);
     setBaddress(address);
