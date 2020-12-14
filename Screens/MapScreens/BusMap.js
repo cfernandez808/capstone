@@ -11,7 +11,7 @@ import {
 import DiaPortalEco from "./DiaPortalEco";
 import DiaPortalFsq from "./DiaPortalFsq";
 import Foursquare from "@foursquare/foursquare-places";
-import "../secrets";
+import "../../secrets";
 const FSQ_KEY = process.env.FOURSQ_ID
 const FSQ_SECRET = process.env.FOURSQ_SECRET
 MapboxGL.setAccessToken(process.env.MB_PUB_ACCESS_KEY);

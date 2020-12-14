@@ -13,10 +13,7 @@
     },
     "categories": {
       "auth": {
-        "readingface32687b80": {}
-      },
-      "function": {
-        "formfunction": {}
+        "readingface826be470": {}
       }
     }
   },
@@ -34,7 +31,8 @@
     },
     "categories": {
       "auth": {
-        "readingface32687b80": {}
+        "readingface32687b80": {},
+        "readingface826be470": {}
       },
       "function": {
         "formfunction": {}

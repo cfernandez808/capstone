@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, View, TextInput, Image } from "react-native";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { createVisit, createCustomer, updateCustomer } from './graphql/mutations'
-import * as queries from './graphql/queries'
-import config from "./aws-exports";
+import { API, graphqlOperation } from "aws-amplify";
+import { createVisit, createCustomer, updateCustomer } from '../../graphql/mutations'
+import * as queries from '../../graphql/queries'
+import config from "../../aws-exports";
 
-Amplify.configure({
-  ...config,
-  Analytics: {
-    disabled: true,
-  },
-});
-import "./secrets";
-import { getCameraRollPermissionsAsync } from "expo-image-picker";
+import "../../secrets";
 
 const AWS = require("aws-sdk");
 const awsRegion = config["aws_cognito_region"];
@@ -26,17 +19,18 @@ const myConfig = new AWS.Config({
 
 const rekognition = new AWS.Rekognition(myConfig);
 
-const CustomerProfile = ({ route, navigation }) => {
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [symptom, setSymptom] = useState("");
-  const [imageId, setImageId] = useState("");
+
+const CustomerProfile = ({ navigation, route }) => {
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [symptom, setSymptom] = useState('');
+  const [imageId, setImageId] = useState('');
   const [id, setId] = useState("");
   const [hasSymptom, setHasSymptom] = useState(false);
 
-  const { image, title, matches, data } = route.params;
+  const { image, title, matches, data, businessId } = route.params;
 
   useEffect(() => {
     if (!matches.length) indexFace();
@@ -160,7 +154,7 @@ const CustomerProfile = ({ route, navigation }) => {
     const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
     console.log("successfully created a new customer", data);
     const customerID = data.data.createCustomer.id;
-    console.log(customerID);
+    (customerID);
     return customerID;
   };
 
@@ -169,7 +163,7 @@ const CustomerProfile = ({ route, navigation }) => {
     const inputData = {
       hasSymptom: symptom,
       // we need to have businessID available after the business signs in
-      businessID: "B1",
+      businessID: businessId,
       customerID,
     };
     return await API.graphql(
@@ -184,11 +178,8 @@ const CustomerProfile = ({ route, navigation }) => {
       variables: { id: customerID },
     });
     console.log("Customer info", customerVisits);
-    console.log(
-      "the record of visits by this customer",
-      customerVisits.data.getCustomer.businesses
-    );
-  };
+    console.log("the record of visits by this customer", customerVisits.data.getCustomer.visits);
+  }
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -222,9 +213,10 @@ const CustomerProfile = ({ route, navigation }) => {
         placeholderTextColor="#f194ff"
       />
       <TextInput
+
         value={symptom}
-        placeholder="no symptom"
-        onChangeText={(txt) => setSymptom(txt)}
+        placeholder="no/yes"
+        onChangeText={txt => setSymptom(txt)}
         placeholderTextColor="#f194ff"
       />
       <Button
@@ -237,11 +229,3 @@ const CustomerProfile = ({ route, navigation }) => {
 };
 
 export default CustomerProfile;
-
-
-
-// check all the visits of a business (for heatmap)
-// const getBusinessesWithVisits = async () => {
-//   const businessVisits = await API.graphql({ query: queries.getBusiness, variables: { id: "B1" }})
-//   console.log("the record of visits at B1", businessVisits.data.getBusiness.visitors)
-// }

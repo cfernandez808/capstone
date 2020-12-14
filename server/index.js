@@ -23,7 +23,7 @@ const config = new aws.Config({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: "faceimages194107-mapboxdev",
+    bucket: "faceimages00139-mbtester",
     acl: "public-read",
     metadata(req, file, cb) {
       cb(null, { fieldName: file.fieldname });
@@ -65,36 +65,36 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
 
     /* list all the faces and delete all of them in a collection, this is not a function of the app, only for testing
     */
-    // const listFacesParams = {
-    //   CollectionId: "irelia-faces"
-    // };
+    const listFacesParams = {
+      CollectionId: "irelia-faces"
+    };
 
-    // client.listFaces(listFacesParams, (err, data) => {
-    //   if(err) console.log(err, err.stack);
-    //   else {
-    //     console.log("data from listFaces", data["Faces"]);
-    //     // delete faces
-    //     data["Faces"].map(face => {
-    //       const faceId = face["FaceId"];
-    //       console.log(faceId);
-    //       const deleteFaceParams = {
-    //         CollectionId: "irelia-faces",
-    //         FaceIds: [faceId]
-    //       }
-    //       client.deleteFaces(deleteFaceParams, (err, data) => {
-    //         if(err) console.log(err, err.stack);
-    //         else console.log("deleted face", data);
-    //       })
-    //     })
-    //   }
-    // })
+    client.listFaces(listFacesParams, (err, data) => {
+      if(err) console.log(err, err.stack);
+      else {
+        console.log("data from listFaces", data["Faces"]);
+        // delete faces
+        data["Faces"].map(face => {
+          const faceId = face["FaceId"];
+          console.log(faceId);
+          const deleteFaceParams = {
+            CollectionId: "irelia-faces",
+            FaceIds: [faceId]
+          }
+          client.deleteFaces(deleteFaceParams, (err, data) => {
+            if(err) console.log(err, err.stack);
+            else console.log("deleted face", data);
+          })
+        })
+      }
+    })
 
     const searchFacesParams = {
       CollectionId: "irelia-faces",
       FaceMatchThreshold: 75,
       Image: {
         S3Object: {
-          Bucket: "faceimages194107-mapboxdev",
+          Bucket: "faceimages00139-mbtester",
           Name: req.file.key,
         },
       },
@@ -113,7 +113,6 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   } catch (err) {
     next(err);
   }
-  // console.log("FILE", req.file);
 });
 
 app.listen(8080, () => {

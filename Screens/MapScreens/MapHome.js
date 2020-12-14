@@ -14,8 +14,6 @@ import {
 } from 'react-native-paper';
 
 
-
-
 const MapHome = ({navigation}) => {
   const [heatMap, setHeatMap] = useState(false)
   const [busMap, setBusMap] = useState(false)
@@ -33,7 +31,7 @@ const MapHome = ({navigation}) => {
   //Make cards further into components later on
   return (
     <View style={{backgroundColor: '#6200ee'}}>
-        <Card style={{height: '50%'}}>
+        <Card style={{height: '30%'}}>
           <Card.Content>
             <Title>Heat Map</Title>
             <Paragraph>Press here to interact with a heat map on COVID-19 cases in your area, and around the world</Paragraph>
@@ -43,7 +41,7 @@ const MapHome = ({navigation}) => {
             <Button onPress={()=>setHeatMap(!heatMap)}>GO</Button>
           </Card.Actions>
         </Card>
-        <Card style={{height: '50%'}}>
+        <Card style={{height: '30%'}}>
         <Card.Content>
           <Title>Business Map</Title>
           <Paragraph>Press here to view businesses in our ecosystem, and statistics of their virus incidences</Paragraph>

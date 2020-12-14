@@ -11,14 +11,13 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		31B00B35A726542E0A24E45D /* libPods-readingFace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF19D5A5B38A326DAB7F4D7D /* libPods-readingFace.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		78F90031291F1DE6FDD13E89 /* libPods-readingFace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BA2BFA2011210F1FE82C81 /* libPods-readingFace.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		01643314EE994FC49FEBDCD5 /* Pods-readingFace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-readingFace.release.xcconfig"; path = "Target Support Files/Pods-readingFace/Pods-readingFace.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* readingFace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = readingFace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = readingFace/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = readingFace/AppDelegate.m; sourceTree = "<group>"; };
@@ -26,12 +25,13 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = readingFace/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = readingFace/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = readingFace/main.m; sourceTree = "<group>"; };
-		991CB3D15FC9F0D03604BBA6 /* Pods-readingFace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-readingFace.debug.xcconfig"; path = "Target Support Files/Pods-readingFace/Pods-readingFace.debug.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = readingFace/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		DF19D5A5B38A326DAB7F4D7D /* libPods-readingFace.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-readingFace.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1BA2BFA2011210F1FE82C81 /* libPods-readingFace.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-readingFace.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E82303B377BF1732CB1A3933 /* Pods-readingFace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-readingFace.debug.xcconfig"; path = "Target Support Files/Pods-readingFace/Pods-readingFace.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F8AEBE68E3ED7ACDC601A0F5 /* Pods-readingFace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-readingFace.release.xcconfig"; path = "Target Support Files/Pods-readingFace/Pods-readingFace.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31B00B35A726542E0A24E45D /* libPods-readingFace.a in Frameworks */,
+				78F90031291F1DE6FDD13E89 /* libPods-readingFace.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,7 +67,7 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				DF19D5A5B38A326DAB7F4D7D /* libPods-readingFace.a */,
+				C1BA2BFA2011210F1FE82C81 /* libPods-readingFace.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -113,8 +113,8 @@
 		D65327D7A22EEC0BE12398D9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				991CB3D15FC9F0D03604BBA6 /* Pods-readingFace.debug.xcconfig */,
-				01643314EE994FC49FEBDCD5 /* Pods-readingFace.release.xcconfig */,
+				E82303B377BF1732CB1A3933 /* Pods-readingFace.debug.xcconfig */,
+				F8AEBE68E3ED7ACDC601A0F5 /* Pods-readingFace.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -126,14 +126,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "readingFace" */;
 			buildPhases = (
-				3195DF39F985A55953A9E3B7 /* [CP] Check Pods Manifest.lock */,
+				7F6928AFF2108B378B594D4D /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				191F254CE6C24D631DFBB1E5 /* [CP] Embed Pods Frameworks */,
-				2D5C8FB6007E3884F49316E5 /* [CP] Copy Pods Resources */,
+				23B3998E88B9D857DE4FA83D /* [CP] Embed Pods Frameworks */,
+				74939C4A22DCB369CBA4E692 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -205,7 +205,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n../node_modules/expo-updates/scripts/create-manifest-ios.sh\n";
 		};
-		191F254CE6C24D631DFBB1E5 /* [CP] Embed Pods Frameworks */ = {
+		23B3998E88B9D857DE4FA83D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -227,7 +227,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-readingFace/Pods-readingFace-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2D5C8FB6007E3884F49316E5 /* [CP] Copy Pods Resources */ = {
+		74939C4A22DCB369CBA4E692 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -279,7 +279,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-readingFace/Pods-readingFace-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3195DF39F985A55953A9E3B7 /* [CP] Check Pods Manifest.lock */ = {
+		7F6928AFF2108B378B594D4D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -349,7 +349,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 991CB3D15FC9F0D03604BBA6 /* Pods-readingFace.debug.xcconfig */;
+			baseConfigurationReference = E82303B377BF1732CB1A3933 /* Pods-readingFace.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -380,7 +380,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01643314EE994FC49FEBDCD5 /* Pods-readingFace.release.xcconfig */;
+			baseConfigurationReference = F8AEBE68E3ED7ACDC601A0F5 /* Pods-readingFace.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

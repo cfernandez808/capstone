@@ -11,7 +11,7 @@ export const getBusiness = /* GraphQL */ `
       phone
       lat
       lng
-      visitors {
+      visits {
         items {
           id
           hasSymptom
@@ -42,7 +42,7 @@ export const listBusinesss = /* GraphQL */ `
         phone
         lat
         lng
-        visitors {
+        visits {
           nextToken
         }
         createdAt
@@ -61,7 +61,7 @@ export const getCustomer = /* GraphQL */ `
       phone
       email
       imageId
-      businesses {
+      visits {
         items {
           id
           hasSymptom
@@ -91,7 +91,7 @@ export const listCustomers = /* GraphQL */ `
         phone
         email
         imageId
-        businesses {
+        visits {
           nextToken
         }
         createdAt

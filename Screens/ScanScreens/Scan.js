@@ -3,7 +3,7 @@ import { View, Alert, Text, TouchableOpacity, Image } from "react-native";
 import ImagePicker from "react-native-image-picker";
 
 import Amplify from "aws-amplify";
-import config from "./aws-exports";
+import config from "../../aws-exports";
 Amplify.configure({
   ...config,
   Analytics: {
@@ -21,7 +21,7 @@ const Scan = ({ navigation }) => {
     if (image && matches !== null) {
       const title = image.split("/").slice(-1).toString();
       // depending on the match result, may need to pass different parameters
-      navigation.navigate("Profile", { image, title, matches, data });
+      navigation.navigate("Customer Profile", { image, title, matches, data });
     }
   }, [image, matches]);
 
@@ -71,7 +71,8 @@ const Scan = ({ navigation }) => {
         const fetchResult = await fetch(
           // `http://10.0.0.27:8080/api/upload/${title}`,
           // `http://localhost:8080/api/upload/`,
-          `http:/192.168.1.66:8080/api/upload/${title}`,
+          // `http://192.168.1.66:8080/api/upload/${title}`,
+              `http://192.168.1.18:8080/api/upload/${title}`,
           options
         );
         const data = await fetchResult.json();
@@ -88,15 +89,6 @@ const Scan = ({ navigation }) => {
       <TouchableOpacity onPress={selectImage}>
         <Text>Scan</Text>
       </TouchableOpacity>
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
-      {matches && (
-        <Text>
-          {matches.length} Matches, First Match:{" "}
-          {matches.length && matches[0].Face.ImageId}
-        </Text>
-      )}
     </View>
   );
 };
