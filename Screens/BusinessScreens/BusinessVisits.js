@@ -19,7 +19,7 @@ const handlePress = ((customerID) => {
     <Text> You have no visits yet </Text> :
     visits.map((visit) => {
       return <TouchableOpacity key={visit.id} onPress={() => handlePress(visit.customerID)}>
-        <Text>{`visit at ${visit.createdAt}, ${visit.hasSymptom} symptoms`}</Text>
+        <Text>{`visit at ${visit.createdAt}, ${visit.hasSymptom.toLowerCase().includes("no") ? "no" : "had"} symptoms`}</Text>
       </TouchableOpacity>
     })}
     </View>

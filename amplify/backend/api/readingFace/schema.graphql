@@ -10,8 +10,8 @@ type Business @model {
 }
 type Visit
   @model(queries: null)
-  @key(name: "byBusiness", fields: ["businessID", "hasSymptom"])
-  @key(name: "byCustomer", fields: ["customerID", "hasSymptom"]) {
+  @key(name: "byBusiness", fields: ["businessID", "customerID"])
+  @key(name: "byCustomer", fields: ["customerID", "businessID"]) {
   hasSymptom: String!
   businessID: ID!
   customerID: ID!

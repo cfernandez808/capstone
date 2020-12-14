@@ -96,7 +96,7 @@ const CustomerProfile = ({ route }) => {
   const getCustomerWithVisits = async (customerID) => {
     const customerVisits = await API.graphql({ query: queries.getCustomer, variables: { id: customerID }})
     console.log("Customer info", customerVisits);
-    console.log("the record of visits by this customer", customerVisits.data.getCustomer.businesses);
+    console.log("the record of visits by this customer", customerVisits.data.getCustomer.visits);
   }
 
   return (
@@ -130,7 +130,7 @@ const CustomerProfile = ({ route }) => {
         placeholderTextColor="#f194ff"
       />
       <TextInput
-        placeholder="no symptom"
+        placeholder="no/yes"
         onChangeText={txt => setSymptom(txt)}
         placeholderTextColor="#f194ff"
       />

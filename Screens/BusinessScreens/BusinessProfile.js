@@ -19,12 +19,12 @@ const BusinessProfile = ({ navigation, route }) => {
   }, [])
 
   const loadProfileForm = async (businessId) => {
-    const {name, address, email, phone, visitors } = await getBusinessWithVisits(businessId);
+    const {name, address, email, phone, visits } = await getBusinessWithVisits(businessId);
     setBname(name);
     setBaddress(address);
     setBemail(email);
     setBphone(phone)
-    setVisits(visitors.items);
+    setVisits(visits.items);
   }
 
   const handleSubmit = async () => {
