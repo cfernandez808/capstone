@@ -19,10 +19,7 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		085B7D49DAE2E4E68B7807B4 /* Pods-readingFace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-readingFace.release.xcconfig"; path = "Target Support Files/Pods-readingFace/Pods-readingFace.release.xcconfig"; sourceTree = "<group>"; };
-=======
->>>>>>> a4c89d6d31fdbbe14ac55f767991cd897ee3754d
 		13B07F961A680F5B00A75B9A /* readingFace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = readingFace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = readingFace/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = readingFace/AppDelegate.m; sourceTree = "<group>"; };
