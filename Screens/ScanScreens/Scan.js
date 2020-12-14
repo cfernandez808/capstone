@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Alert, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Alert,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  StyleSheet,
+} from "react-native";
+import { IconButton } from "react-native-paper";
 import ImagePicker from "react-native-image-picker";
 
 import Amplify from "aws-amplify";
@@ -71,8 +79,8 @@ const Scan = ({ navigation }) => {
         const fetchResult = await fetch(
           // `http://10.0.0.27:8080/api/upload/${title}`,
           // `http://localhost:8080/api/upload/`,
-          // `http://192.168.1.66:8080/api/upload/${title}`,
-              `http://192.168.1.18:8080/api/upload/${title}`,
+          `http://192.168.1.66:8080/api/upload/${title}`,
+          // `http://192.168.1.18:8080/api/upload/${title}`,
           options
         );
         const data = await fetchResult.json();
@@ -85,11 +93,47 @@ const Scan = ({ navigation }) => {
 
   // keep the image and match parts for testing
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <TouchableOpacity onPress={selectImage}>
-        <Text>Scan</Text>
-      </TouchableOpacity>
-    </View>
+    <ImageBackground
+      style={styles.logo}
+      source={require("../../assets/photo.jpg")}
+    >
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          height: 500,
+        }}
+      >
+        <TouchableOpacity onPress={selectImage}>
+          <IconButton
+            icon="face-recognition"
+            color="white"
+            size={82}
+            onPress={selectImage}
+            justifyContent="center"
+          />
+          <Text style={styles.text}>Scan</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  logo: {
+    resizeMode: "cover",
+    width: 400,
+    alignItems: "center",
+    height: 570,
+  },
+  text: {
+    color: "white",
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
+
 export default Scan;
