@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { TextInput, Banner, Title, Button } from "react-native-paper";
+import { Button, View, TextInput, Image, StyleSheet } from "react-native";
 import { API, graphqlOperation } from "aws-amplify";
-import {
-  createVisit,
-  createCustomer,
-  updateCustomer,
-} from "../../graphql/mutations";
-import * as queries from "../../graphql/queries";
+import { createVisit, createCustomer, updateCustomer } from '../../graphql/mutations'
+import * as queries from '../../graphql/queries'
 import config from "../../aws-exports";
 
 import "../../secrets";
@@ -24,14 +19,15 @@ const myConfig = new AWS.Config({
 
 const rekognition = new AWS.Rekognition(myConfig);
 
+
 const CustomerProfile = ({ navigation, route }) => {
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [symptom, setSymptom] = useState("");
-  const [imageId, setImageId] = useState("");
-  const [id, setId] = useState("");
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [symptom, setSymptom] = useState('');
+  const [imageId, setImageId] = useState('');
+  const [id, setId] = useState('');
   const [hasSymptom, setHasSymptom] = useState(false);
 
   const { image, title, matches, data, businessId } = route.params;
@@ -79,14 +75,18 @@ const CustomerProfile = ({ navigation, route }) => {
   }
 
   async function handleSubmit() {
-    if (!matches.length) {
-      const customerID = await createNewCustomer();
-      await createNewVisit(customerID);
-      await getCustomerWithVisits(customerID);
-    } else {
-      await updateSameCustomer()
+    try {
+      if (!matches.length) {
+        const customerID = await createNewCustomer();
+        await createNewVisit(customerID);
+        await getCustomerWithVisits(customerID);
+      } else {
+        await updateSameCustomer()
+      }
+      navigation.navigate("Scan");
+    } catch (error) {
+      console.log("failed to create/update customer", error)
     }
-    navigation.navigate("Scan");
   }
 
   //index a new face to collection
@@ -148,140 +148,101 @@ const CustomerProfile = ({ navigation, route }) => {
 
   // create a new customer
   const createNewCustomer = async () => {
-    const inputData = {
-      firstName,
-      lastName,
-      phone,
-      email,
-      imageId,
-    };
-    const data = await API.graphql(
-      graphqlOperation(createCustomer, { input: inputData })
-    );
-    console.log("successfully created a new customer", data);
-    const customerID = data.data.createCustomer.id;
-    customerID;
-    return customerID;
+    try {
+      const inputData = {
+        firstName,
+        lastName,
+        phone,
+        email,
+        imageId,
+      }
+      const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
+      console.log("successfully created a new customer", data);
+      const customerID = data.data.createCustomer.id;
+      (customerID);
+      return customerID;
+  } catch (error) {
+    console.log()
+  }
   };
 
   // create a new visit
   const createNewVisit = async (customerID) => {
-    const inputData = {
-      hasSymptom: symptom,
-      // we need to have businessID available after the business signs in
-      businessID: businessId,
-      customerID,
-    };
-    return await API.graphql(
-      graphqlOperation(createVisit, { input: inputData })
-    );
+    try {
+      const inputData = {
+        hasSymptom: symptom,
+        // we need to have businessID available after the business signs in
+        businessID: businessId,
+        customerID,
+      };
+      return await API.graphql(
+        graphqlOperation(createVisit, { input: inputData })
+      );
+    } catch (error) {
+      console.log("failed to create a new visit", error);
+    }
   };
 
   // get customer visits
   const getCustomerWithVisits = async (customerID) => {
-    const customerVisits = await API.graphql({
-      query: queries.getCustomer,
-      variables: { id: customerID },
-    });
-    console.log("Customer info", customerVisits);
-    console.log(
-      "the record of visits by this customer",
-      customerVisits.data.getCustomer.visits
-    );
-  };
+    try{
+      const customerVisits = await API.graphql({
+        query: queries.getCustomer,
+        variables: { id: customerID },
+      });
+      console.log("Customer info", customerVisits);
+      console.log("customer visits", customerVisits.data.getCustomer.visits);
+    } catch (error) {
+      console.log("failed to get the customer with visits", error)
+    }
+  }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#5F9EA0",
-      }}
-    >
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {/* if there is a match display the existing photo
       if not, display the new photo */}
       {image && (
-        <Image
-          source={{ uri: image }}
-          style={{
-            width: 200,
-            height: 200,
-          }}
-        />
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <TextInput
-        style={styles.input}
         value={email}
-        mode="outlined"
         placeholder="email"
         onChangeText={(txt) => setEmail(txt)}
-        placeholderTextColor="red"
+        placeholderTextColor="#f194ff"
       />
       <TextInput
-        mode="outlined"
-        style={styles.input}
         value={phone}
         placeholder="phone"
         onChangeText={(txt) => setPhone(txt)}
-        placeholderTextColor="red"
+        placeholderTextColor="#f194ff"
       />
       <TextInput
-        style={styles.input}
-        mode="outlined"
         value={firstName}
         placeholder="firstName"
         onChangeText={(txt) => setFirstName(txt)}
-        placeholderTextColor="red"
+        placeholderTextColor="#f194ff"
       />
       <TextInput
-        mode="outlined"
-        style={styles.input}
         value={lastName}
         placeholder="lastName"
         onChangeText={(txt) => setLastName(txt)}
-        placeholderTextColor="red"
+        placeholderTextColor="#f194ff"
       />
       <TextInput
-        style={styles.input}
-        mode="outlined"
+
         value={symptom}
         placeholder="no/yes"
-        onChangeText={(txt) => setSymptom(txt)}
-        placeholderTextColor="red"
+        onChangeText={txt => setSymptom(txt)}
+        placeholderTextColor="#f194ff"
       />
-
       <Button
-        mode="contained"
-        style={styles.button}
         onPress={handleSubmit}
-        color="white"
-      >
-        {matches.length ? "Update Profile" : "Create Profile"}
-      </Button>
+        title={matches.length ? "Update Profile" : "Create Profile"}
+        color="#f194ff"
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  input: {
-    marginBottom: 20,
-    marginLeft: 3,
-    marginRight: 2,
-    fontWeight: "bold",
-    fontSize: 18,
-    justifyContent: "center",
-    backgroundColor: "#e2e2ff",
-    height: 30,
-  },
 
-  button: {
-    backgroundColor: "#e2ffff",
-    color: "red",
-    margin: 10,
-    height: 50,
-    backgroundColor: "#6495ED",
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 export default CustomerProfile;

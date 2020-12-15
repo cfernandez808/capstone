@@ -20,13 +20,17 @@ const BusinessProfile = ({ navigation, route }) => {
   }, [])
 
   const loadProfileForm = async (businessId) => {
-    console.log(businessId);
-    const {name, address, email, phone, visits } = await getBusinessWithVisits(businessId);
-    setBname(name);
-    setBaddress(address);
-    setBemail(email);
-    setBphone(phone);
-    setBvisits(visits.items);
+    try {
+      console.log(businessId);
+      const {name, address, email, phone, visits } = await getBusinessWithVisits(businessId);
+      setBname(name);
+      setBaddress(address);
+      setBemail(email);
+      setBphone(phone);
+      setBvisits(visits.items);
+    } catch (error) {
+      console.log("failed to fecth business owner's information", error)
+    }
   }
 
   const handleSubmit = async () => {
@@ -51,10 +55,14 @@ const BusinessProfile = ({ navigation, route }) => {
   };
 
   const handlePress = async(businessId) => {
-    const { visits } = await getBusinessWithVisits(businessId);
-    const currentVisits = visits.items;
-    if (currentVisits.length !== Bvisits.length) setBvisits(currentVisits)
-    navigation.navigate("Visits", { currentVisits })
+    try {
+      const { visits } = await getBusinessWithVisits(businessId);
+      const currentVisits = visits.items;
+      if (currentVisits.length !== Bvisits.length) setBvisits(currentVisits)
+      navigation.navigate("Visits", { currentVisits })
+    } catch (error) {
+      console.log("failed to load updated visits", error);
+    }
   }
 
   const signout = async() => {
@@ -66,7 +74,7 @@ const BusinessProfile = ({ navigation, route }) => {
   };
 
   return (
-    <View>
+    <View style={styles.view}>
         <TextInput
           style = {styles.input}
           mode= "outlined"
@@ -104,6 +112,10 @@ const BusinessProfile = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  view: {
+    backgroundColor: "#DBEFFB",
+    height: 800,
+  },
   input:{
     marginTop: 10,
     marginBottom: 10,
@@ -111,7 +123,7 @@ const styles = StyleSheet.create({
     marginRight: 3,
   },
   button: {
-    backgroundColor: "#f4a261",
+    backgroundColor: "#1B94DA",
     color: "#ffffff",
     margin: 10,
     height: 50,

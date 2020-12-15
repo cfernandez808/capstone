@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { Portal, Button, Title, Dialog, DataTable } from "react-native-paper"
+import { Portal, Button, Paragraph, Dialog, DataTable } from "react-native-paper"
 
 const BusinessVisitors = ({ navigation, route }) => {
   const { currentVisits } = route.params;
@@ -17,23 +17,23 @@ const BusinessVisitors = ({ navigation, route }) => {
     })
 
   return (
-    <View>
+    <View style={styles.view}>
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>
+        <Dialog visible={visible} onDismiss={hideDialog} style={styles.dialog}>
+          <Dialog.Title style={styles.title}>
           {`${currentVisits.length} total visits and ${currentVisits.filter(visit => visit.hasSymptom.toLowerCase().includes('yes')).length} COVID case(s)`}
           </Dialog.Title>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>OK</Button>
+            <Button onPress={hideDialog}><Paragraph style={styles.title}>OK</Paragraph></Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
       <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>Date</DataTable.Title>
-          <DataTable.Title>Time</DataTable.Title>
-          <DataTable.Title>Symptom</DataTable.Title>
-          <DataTable.Title>Customer Profile</DataTable.Title>
+        <DataTable.Header style={styles.dialog}>
+          <DataTable.Title><Paragraph style={styles.title}>Date</Paragraph></DataTable.Title>
+          <DataTable.Title><Paragraph style={styles.title}>Time</Paragraph></DataTable.Title>
+          <DataTable.Title><Paragraph style={styles.title}>Symptom</Paragraph></DataTable.Title>
+          <DataTable.Title><Paragraph style={styles.title}>Info</Paragraph></DataTable.Title>
         </DataTable.Header>
         { currentVisits.map(visit => {
           const dateArray = visit.createdAt.split("T");
@@ -60,15 +60,16 @@ const BusinessVisitors = ({ navigation, route }) => {
   );
 };
 const styles = StyleSheet.create({
+  view: {
+    backgroundColor: "#DBEFFB",
+    height: 800,
+  },
+  dialog: {
+    backgroundColor: "#259EE4",
+  },
   title: {
-    marginLeft: 10,
-    fontSize: 14,
-    marginRight: 10,
-    justifyContent: "center",
-    height: 30,
     fontWeight: "bold",
-    color: "red",
-    paddingTop: 10,
+    color: "white",
   },
 });
 export default BusinessVisitors;
