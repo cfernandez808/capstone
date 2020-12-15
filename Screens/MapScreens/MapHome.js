@@ -26,16 +26,11 @@ const MapHome = ({navigation}) => {
 
   /* CLUSTER MAP CARD AND BUSINESS MAP CARD */
   return (
-<<<<<<< Updated upstream
-    <View style={{backgroundColor: '#6200ee'}}>
-        <Card style={{height: '50%'}}>
-=======
     <View>
         <Card
           style={{height: '50%'}}
           onPress={()=>setHeatMap(!heatMap)}
         >
->>>>>>> Stashed changes
           <Card.Content>
             <Title>Cluster Map</Title>
             <Paragraph>Press here to interact with a cluster map on COVID-19 cases in your area, and around the world</Paragraph>
@@ -45,14 +40,10 @@ const MapHome = ({navigation}) => {
             <Button onPress={()=>setHeatMap(!heatMap)}>GO</Button>
           </Card.Actions>
         </Card>
-<<<<<<< Updated upstream
-        <Card style={{height: '50%'}}>
-=======
         <Card
           style={{height: '50%'}}
           onPress={()=>setBusMap(!busMap)}
         >
->>>>>>> Stashed changes
         <Card.Content>
           <Title>Ecosystem's Businesses</Title>
           <Paragraph>Press here to view businesses in our ecosystem, and statistics of their virus incidences</Paragraph>
