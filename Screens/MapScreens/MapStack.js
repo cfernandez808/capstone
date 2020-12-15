@@ -12,7 +12,7 @@ const ScanStack = () => {
     <mStack.Navigator>
       <mStack.Screen name="MapHub" component={MapHome} />
       <mStack.Screen name="HeatMap" component={HeatMap} />
-      <mStack.Screen name="Ecosystem Business Map" component={BusMap} />
+      <mStack.Screen name="BusinessMap" component={BusMap} />
     </mStack.Navigator>
   )
 }

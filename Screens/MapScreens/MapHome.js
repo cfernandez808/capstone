@@ -19,7 +19,7 @@ const MapHome = ({navigation}) => {
       setHeatMap(!heatMap)
     }
     if (busMap) {
-      navigation.navigate('Ecosystem Business Map')
+      navigation.navigate('BusinessMap')
       setBusMap(!busMap)
     }
   })
@@ -32,10 +32,10 @@ const MapHome = ({navigation}) => {
           onPress={()=>setHeatMap(!heatMap)}
         >
           <Card.Content>
-            <Title>Cluster Map</Title>
-            <Paragraph>Press here to interact with a cluster map on COVID-19 cases in your area, and around the world</Paragraph>
+            <Title>Incidence Heat Map</Title>
+            <Paragraph>Press here to interact with a heat map on COVID-19 cases in your area, and around the world</Paragraph>
           </Card.Content>
-          <Card.Cover source={{uri: 'https://www.acuriousanimal.com/static/05d6214c7f51538730dbe512db60b27c/ed75b/Screenshot-from-2012-08-11-202356.png'}} />
+          <Card.Cover source={{uri: 'https://developer.tomtom.com/sites/default/files/blog-assets/heatmap12.jpg'}} />
           <Card.Actions>
             <Button onPress={()=>setHeatMap(!heatMap)}>GO</Button>
           </Card.Actions>
