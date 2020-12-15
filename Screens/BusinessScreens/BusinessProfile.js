@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, View, Text } from "react-native"
-import { TextInput } from "react-native-paper";
+import { View, StyleSheet} from "react-native"
+import { TextInput, Button } from "react-native-paper";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import * as queries from '../../graphql/queries'
 import { updateBusiness } from '../../graphql/mutations'
@@ -11,7 +11,7 @@ const BusinessProfile = ({ navigation, route }) => {
   const [Bemail, setBemail] = useState("")
   const [Bphone, setBphone] = useState("")
   const [Baddress, setBaddress] = useState("")
-  const [visits, setVisits] = useState([]);
+  const [Bvisits, setBvisits] = useState("")
 
   const { businessId } = route.params;
 
@@ -25,8 +25,8 @@ const BusinessProfile = ({ navigation, route }) => {
     setBname(name);
     setBaddress(address);
     setBemail(email);
-    setBphone(phone)
-    setVisits(visits.items);
+    setBphone(phone);
+    setBvisits(visits.items);
   }
 
   const handleSubmit = async () => {
@@ -48,6 +48,13 @@ const BusinessProfile = ({ navigation, route }) => {
     }
   }
 
+  const handlePress = async(businessId) => {
+    const { visits } = await getBusinessWithVisits(businessId);
+    const currentVisits = visits.items;
+    if (currentVisits.length !== Bvisits.length) setBvisits(currentVisits)
+    navigation.navigate("Visits", { currentVisits })
+  }
+
   const signout = async() => {
     try {
       await Auth.signOut();
@@ -58,52 +65,63 @@ const BusinessProfile = ({ navigation, route }) => {
 
   return (
     <View>
-        <Text>{`${visits.length} total visits and ${visits.filter(visit => visit.hasSymptom.toLowerCase().includes('yes')).length} COVID case(s)`}</Text>
         <TextInput
-          style={textInputStyle}
+          style = {styles.input}
           mode= "outlined"
           label="Business Name"
           value={Bname}
           onChangeText={(txt) => setBname(txt)}
         />
         <TextInput
+          style = {styles.input}
           mode= "outlined"
           label="Address"
           value={Baddress}
           onChangeText={(txt) => setBaddress(txt)}
         />
         <TextInput
+          style = {styles.input}
           mode= "outlined"
           label="Phone Number"
           value={Bphone}
           onChangeText={(txt) => setBphone(txt)}
         />
         <TextInput
+          style = {styles.input}
           mode= "outlined"
           editable = {false}
           label="Email"
           value={Bemail}
           onChangeText={(txt) => setBemail(txt)}
         />
-        <Button title="Update Profile" onPress={handleSubmit}/>
-        <Button title="View Visits" onPress={() => {
-          navigation.navigate("Visits", { visits })
-        }}/>
-        <Button title="Sign Out" onPress={signout}/>
+        <Button mode="contained" style={styles.button} onPress={handleSubmit}>Update Profile</Button>
+        <Button mode="contained" style={styles.button} onPress={() => {handlePress(businessId)}}>View Visits</Button>
+        <Button mode="contained" style={styles.button} onPress={signout}>Sign Out</Button>
     </View>
   );
 };
 
-const textInputStyle = {
-  borderColor: 'rgb(18, 48, 92)'
-}
+const styles = StyleSheet.create({
+  input:{
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 3,
+    marginRight: 3,
+  },
+  button: {
+    backgroundColor: "#f4a261",
+    color: "#ffffff",
+    margin: 10,
+    height: 50,
+  }
+})
 
 export default BusinessProfile;
 
 //helper functions
 
 // get business with all its visits
-const getBusinessWithVisits = async (businessId) => {
+export const getBusinessWithVisits = async (businessId) => {
   try{
     const { data } = await API.graphql({ query: queries.getBusiness, variables: { id: businessId }});
     const businessInfo = data.getBusiness;

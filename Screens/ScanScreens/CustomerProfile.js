@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, View, TextInput, Image } from "react-native";
+import { Button, View, TextInput, Image, StyleSheet } from "react-native";
 import { API, graphqlOperation } from "aws-amplify";
 import { createVisit, createCustomer, updateCustomer } from '../../graphql/mutations'
 import * as queries from '../../graphql/queries'
@@ -227,5 +227,6 @@ const CustomerProfile = ({ navigation, route }) => {
     </View>
   );
 };
+
 
 export default CustomerProfile;

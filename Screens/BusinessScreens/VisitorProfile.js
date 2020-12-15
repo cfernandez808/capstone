@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { API } from "aws-amplify";
 import * as queries from '../../graphql/queries'
+import { TextInput, Button } from "react-native-paper";
 
 const VisitorProfile = ({route}) => {
   const [phone, setPhone] = useState('');
@@ -28,30 +29,52 @@ const VisitorProfile = ({route}) => {
   }, [])
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={styles.container}>
       <TextInput
-        value = {email}
-        onChangeText={txt => setEmail(txt)}
-        placeholderTextColor="#f194ff"
-      />
-      <TextInput
-        value={phone}
-        onChangeText={(txt) => setPhone(txt)}
-        placeholderTextColor="#f194ff"
-      />
-      <TextInput
+        style = {styles.input}
+        mode= "outlined"
+        label="First Name"
         value={firstName}
         onChangeText={(txt) => setFirstName(txt)}
-        placeholderTextColor="#f194ff"
       />
       <TextInput
+        style = {styles.input}
+        mode= "outlined"
+        label="Last Name"
         value={lastName}
         onChangeText={(txt) => setLastName(txt)}
-        placeholderTextColor="#f194ff"
+      />
+      <TextInput
+        style = {styles.input}
+        mode= "outlined"
+        label="Phone Number"
+        value={phone}
+        onChangeText={(txt) => setPhone(txt)}
+      />
+      <TextInput
+        style = {styles.input}
+        mode= "outlined"
+        label="Email"
+        value = {email}
+        onChangeText={txt => setEmail(txt)}
       />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  input:{
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+  },
+})
+
+export default VisitorProfile;
 
 //helper functions
 
@@ -63,5 +86,3 @@ const getCustomerWithVisits = async (customerID) => {
     console.log("failed to get customer with visits", error);
   }
 }
-
-export default VisitorProfile;
