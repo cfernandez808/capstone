@@ -78,13 +78,13 @@ const CustomerProfile = ({ navigation, route }) => {
     }
   }
 
-  async function handleSubmit(evt) {
+  async function handleSubmit() {
     if (!matches.length) {
       const customerID = await createNewCustomer();
       await createNewVisit(customerID);
       await getCustomerWithVisits(customerID);
     } else {
-      await updateSameCustomer();
+      await updateSameCustomer()
     }
     navigation.navigate("Scan");
   }
