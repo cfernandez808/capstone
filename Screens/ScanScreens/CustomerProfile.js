@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, View, TextInput, Image } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
+import { TextInput, Banner, Title, Button } from "react-native-paper";
 import { API, graphqlOperation } from "aws-amplify";
-import { createVisit, createCustomer, updateCustomer } from '../../graphql/mutations'
-import * as queries from '../../graphql/queries'
+import {
+  createVisit,
+  createCustomer,
+  updateCustomer,
+} from "../../graphql/mutations";
+import * as queries from "../../graphql/queries";
 import config from "../../aws-exports";
 
 import "../../secrets";
@@ -19,14 +24,13 @@ const myConfig = new AWS.Config({
 
 const rekognition = new AWS.Rekognition(myConfig);
 
-
 const CustomerProfile = ({ navigation, route }) => {
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [symptom, setSymptom] = useState('');
-  const [imageId, setImageId] = useState('');
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [symptom, setSymptom] = useState("");
+  const [imageId, setImageId] = useState("");
   const [id, setId] = useState("");
   const [hasSymptom, setHasSymptom] = useState(false);
 
@@ -150,11 +154,13 @@ const CustomerProfile = ({ navigation, route }) => {
       phone,
       email,
       imageId,
-    }
-    const data = await API.graphql(graphqlOperation(createCustomer, {input: inputData}))
+    };
+    const data = await API.graphql(
+      graphqlOperation(createCustomer, { input: inputData })
+    );
     console.log("successfully created a new customer", data);
     const customerID = data.data.createCustomer.id;
-    (customerID);
+    customerID;
     return customerID;
   };
 
@@ -178,54 +184,104 @@ const CustomerProfile = ({ navigation, route }) => {
       variables: { id: customerID },
     });
     console.log("Customer info", customerVisits);
-    console.log("the record of visits by this customer", customerVisits.data.getCustomer.visits);
-  }
+    console.log(
+      "the record of visits by this customer",
+      customerVisits.data.getCustomer.visits
+    );
+  };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#5F9EA0",
+      }}
+    >
       {/* if there is a match display the existing photo
       if not, display the new photo */}
       {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <Image
+          source={{ uri: image }}
+          style={{
+            width: 200,
+            height: 200,
+          }}
+        />
       )}
       <TextInput
+        style={styles.input}
         value={email}
+        mode="outlined"
         placeholder="email"
         onChangeText={(txt) => setEmail(txt)}
-        placeholderTextColor="#f194ff"
+        placeholderTextColor="red"
       />
       <TextInput
+        mode="outlined"
+        style={styles.input}
         value={phone}
         placeholder="phone"
         onChangeText={(txt) => setPhone(txt)}
-        placeholderTextColor="#f194ff"
+        placeholderTextColor="red"
       />
       <TextInput
+        style={styles.input}
+        mode="outlined"
         value={firstName}
         placeholder="firstName"
         onChangeText={(txt) => setFirstName(txt)}
-        placeholderTextColor="#f194ff"
+        placeholderTextColor="red"
       />
       <TextInput
+        mode="outlined"
+        style={styles.input}
         value={lastName}
         placeholder="lastName"
         onChangeText={(txt) => setLastName(txt)}
-        placeholderTextColor="#f194ff"
+        placeholderTextColor="red"
       />
       <TextInput
-
+        style={styles.input}
+        mode="outlined"
         value={symptom}
         placeholder="no/yes"
-        onChangeText={txt => setSymptom(txt)}
-        placeholderTextColor="#f194ff"
+        onChangeText={(txt) => setSymptom(txt)}
+        placeholderTextColor="red"
       />
+
       <Button
+        mode="contained"
+        style={styles.button}
         onPress={handleSubmit}
-        title={matches.length ? "Update Profile" : "Create Profile"}
-        color="#f194ff"
-      />
+        color="white"
+      >
+        {matches.length ? "Update Profile" : "Create Profile"}
+      </Button>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  input: {
+    marginBottom: 20,
+    marginLeft: 3,
+    marginRight: 2,
+    fontWeight: "bold",
+    fontSize: 18,
+    justifyContent: "center",
+    backgroundColor: "#e2e2ff",
+    height: 30,
+  },
+
+  button: {
+    backgroundColor: "#e2ffff",
+    color: "red",
+    margin: 10,
+    height: 50,
+    backgroundColor: "#6495ED",
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 export default CustomerProfile;

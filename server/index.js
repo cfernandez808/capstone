@@ -59,40 +59,39 @@ app.use(morgan("dev"));
 //   res.json(geo);
 // });
 
-app.get('/api/covid', (req, res, next) => {
-  res.json(covid)
-})
-
+app.get("/api/covid", (req, res, next) => {
+  res.json(covid);
+});
 
 app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
 
     /* list all the faces and delete all of them in a collection, this is not a function of the app, only for testing
-    */
-    const listFacesParams = {
-      CollectionId: "irelia-faces"
-    };
+     */
+    // const listFacesParams = {
+    //   CollectionId: "irelia-faces"
+    // };
 
-    client.listFaces(listFacesParams, (err, data) => {
-      if(err) console.log(err, err.stack);
-      else {
-        console.log("data from listFaces", data["Faces"]);
-        // delete faces
-        data["Faces"].map(face => {
-          const faceId = face["FaceId"];
-          console.log(faceId);
-          const deleteFaceParams = {
-            CollectionId: "irelia-faces",
-            FaceIds: [faceId]
-          }
-          client.deleteFaces(deleteFaceParams, (err, data) => {
-            if(err) console.log(err, err.stack);
-            else console.log("deleted face", data);
-          })
-        })
-      }
-    })
+    // client.listFaces(listFacesParams, (err, data) => {
+    //   if(err) console.log(err, err.stack);
+    //   else {
+    //     console.log("data from listFaces", data["Faces"]);
+    //     // delete faces
+    //     data["Faces"].map(face => {
+    //       const faceId = face["FaceId"];
+    //       console.log(faceId);
+    //       const deleteFaceParams = {
+    //         CollectionId: "irelia-faces",
+    //         FaceIds: [faceId]
+    //       }
+    //       client.deleteFaces(deleteFaceParams, (err, data) => {
+    //         if(err) console.log(err, err.stack);
+    //         else console.log("deleted face", data);
+    //       })
+    //     })
+    //   }
+    // })
 
     const searchFacesParams = {
       CollectionId: "irelia-faces",
