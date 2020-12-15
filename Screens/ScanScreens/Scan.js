@@ -45,48 +45,51 @@ const Scan = ({ navigation }) => {
 
     ImagePicker.showImagePicker(options, async (response) => {
       // console.log({ response });
+      try {
+        if (response.didCancel) {
+          console.log("User cancelled photo picker");
+          Alert.alert("You did not select any image");
+        } else if (response.error) {
+          console.log("ImagePicker Error: ", response.error);
+        } else if (response.customButton) {
+          console.log("User tapped custom button: ", response.customButton);
+        } else {
+          const uri = response.uri;
+          const uriParts = uri.split(".");
+          // generate a title based on image picker's automatically created image name
+          const title = uri.split("/").slice(-1).toString();
+          let fileType = uriParts[uriParts.length - 1];
+          let formData = new FormData();
 
-      if (response.didCancel) {
-        console.log("User cancelled photo picker");
-        Alert.alert("You did not select any image");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-      } else if (response.customButton) {
-        console.log("User tapped custom button: ", response.customButton);
-      } else {
-        const uri = response.uri;
-        const uriParts = uri.split(".");
-        // generate a title based on image picker's automatically created image name
-        const title = uri.split("/").slice(-1).toString();
-        let fileType = uriParts[uriParts.length - 1];
-        let formData = new FormData();
+          formData.append("photo", {
+            uri,
+            name: `photo.${fileType}`,
+            type: `image/${fileType}`,
+          });
 
-        formData.append("photo", {
-          uri,
-          name: `photo.${fileType}`,
-          type: `image/${fileType}`,
-        });
+          let options = {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "multipart/form-data",
+            },
+          };
 
-        let options = {
-          method: "POST",
-          body: formData,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "multipart/form-data",
-          },
-        };
-
-        const fetchResult = await fetch(
-          // `http://10.0.0.27:8080/api/upload/${title}`,
-          // `http://localhost:8080/api/upload/`,
-          `http://192.168.1.66:8080/api/upload/${title}`,
-          // `http://192.168.1.18:8080/api/upload/${title}`,
-          options
-        );
-        const data = await fetchResult.json();
-        setMatches(data);
-        console.log(data);
-        setImage(response.uri);
+          const fetchResult = await fetch(
+            `http://10.0.0.27:8080/api/upload/${title}`,
+            // `http://localhost:8080/api/upload/`,
+            // `http://192.168.1.66:8080/api/upload/${title}`,
+            // `http://192.168.1.18:8080/api/upload/${title}`,
+            options
+          );
+          const data = await fetchResult.json();
+          setMatches(data);
+          console.log(data);
+          setImage(response.uri);
+        }
+      } catch (error) {
+        console.log("failed to upload or compare faces", error);
       }
     });
   }
