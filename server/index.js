@@ -59,17 +59,20 @@ app.use(morgan("dev"));
 //   res.json(geo);
 // });
 
-app.get('/api/covid', (req, res, next) => {
-  res.json(covid)
-})
-
+app.get("/api/covid", (req, res, next) => {
+  res.json(covid);
+});
 
 app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
   try {
     const client = new aws.Rekognition(config);
 
     /* list all the faces and delete all of them in a collection, this is not a function of the app, only for testing
+<<<<<<< HEAD
     */
+=======
+     */
+>>>>>>> 629e68c64414ca1360182955dec28b7e80da0d60
     // const listFacesParams = {
     //   CollectionId: "irelia-faces"
     // };

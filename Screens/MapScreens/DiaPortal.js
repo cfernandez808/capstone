@@ -6,6 +6,7 @@ import {
   Paragraph
 } from 'react-native-paper';
 
+//
 const DiaPortal = (props) => {
   const {bus, handleVis} = props
   return (

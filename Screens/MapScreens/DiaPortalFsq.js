@@ -6,6 +6,8 @@ import {
   Paragraph,
 } from 'react-native-paper';
 
+/* DIALOGUE BOX WRAPPED IN A PORTAL FOR FOURSQUARE BUSINESSES
+THROUGH PLACES API */
 const DiaPortalFsq = (props) => {
   const {bus, address, handleVis, city, st} = props
   return (

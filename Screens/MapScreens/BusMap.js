@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Alert } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import {
   Portal,
@@ -54,16 +54,16 @@ export default class BusMap extends Component {
     this.onRegionDidChange = this.onRegionDidChange.bind(this);
     this.busSearch = this.busSearch.bind(this)
     this.handleMarkers = this.handleMarkers.bind(this)
-    this.getEcoBusinesses = this.getEcoBusinesses.bind(this)
   }
   componentDidMount() {
-    this.getEcoBusinesses()
     MapboxGL.setTelemetryEnabled(true);
+    //Snaps to the user's location upon render
     Geolocation.getCurrentPosition(info => {
       const data = {...info}
       this.setState({
         params: {
           ...this.state.params,
+          //Initialized foursquare search at user location
           ll: `${data.coords.latitude}, ${data.coords.longitude}`
         },
         userLoc: [data.coords.latitude, data.coords.longitude]})
@@ -71,10 +71,8 @@ export default class BusMap extends Component {
 
 
   }
-  async getEcoBusinesses () {
-    const allBusinesses = await API.graphql({query: queries.listBusinesss})
-    console.log(allBusinesses)
-  }
+  /* CHECKS FOR THE CENTER OF THE MAP VIEW CONSTANTLY
+  FOR FSQ MARKER RENDERING WHEN SEARCHING IN NEW LOCATION */
   async onRegionDidChange(){
     const center = await this._map.getCenter()
     this.setState({
@@ -84,7 +82,20 @@ export default class BusMap extends Component {
       }
     })
   }
-  handleMarkers () {
+
+  /* FIRST SETS TO STATE ECO SYSTEM BUSINESS MARKERS THEN FSQ BUSINESS MARKERS
+  UPON CLCIKING THE 'SEARCH IN LOCATION' BUTTON. ALSO ATTACHES THE 'VISIBLE'
+  PROPERTY TO EACH BUSINESS FOR THE DIALOGUE BOX */
+  async handleMarkers () {
+    const allBusinesses = await API.graphql({query: queries.listBusinesss})
+    this.setState(prevState => {
+      let copy ={...prevState}
+      copy.businesses = [...allBusinesses.data.listBusinesss.items]
+      copy.businesses.forEach(bus => {
+        bus.visible = false
+      })
+      return copy
+    })
     foursquare.venues.getVenues(this.state.params).then(res => {
       this.setState(prevState => {
         let copy = {...prevState}
@@ -96,15 +107,17 @@ export default class BusMap extends Component {
       })
     });
   }
+  /*UPON CLICKING A BUSINESS MARKER, CHANGES THE VISIBLE PROPERTY
+  FOR THAT MARKER TO BE OPPOSITE */
   handleVis(bus) {
     this.setState(prevState => {
       let copy = {...prevState}
-      copy.businesses.forEach( (business, idx) => {
-        if (idx == bus.id) {
+      copy.businesses.forEach( (business) => {
+        if (business.id == bus.id) {
           business.visible = !business.visible
         }
       })
-      copy.fsq.forEach( (business, idx) => {
+      copy.fsq.forEach( (business) => {
         if(bus.id === business.id) {
           business.visible = !business.visible
         }
@@ -113,6 +126,8 @@ export default class BusMap extends Component {
     })
 
   }
+
+  /* CHANGES THE SEARCH QUERY FOR FOURSQUARE BUSINESS MARKERS */
   busSearch (query) {
     this.setState({
       params: {
@@ -129,6 +144,7 @@ export default class BusMap extends Component {
       <Portal.Host>
         <View style={styles.page}>
           <View style={styles.container}>
+            {/* SEARCHBAR FOR FOURSQUARE BUSINESSES */}
             <Searchbar
               placeholder="Business-Type Search"
               onIconPress={() => this.busSearch()}
@@ -140,21 +156,25 @@ export default class BusMap extends Component {
               })}
               value={this.state.params.query}
               icon="shopping-search" />
+            {/* INITIALIZES THE MAPBOX VIEW */}
             <MapboxGL.MapView
               ref={(c) => (this._map = c)}
               style={styles.map}
               onRegionDidChange={this.onRegionDidChange}
             >
+            {/* ALLOWS FOR RENDERING USER LOCATION MARKER */}
             <MapboxGL.UserLocation
               visible={true}
               showsUserHeadingIndicator={true}
             />{
               userLoc ?
+                /* CENTERS CAMERA AT USER'S LOCATION */
                 <MapboxGL.Camera
                   zoomLevel={10}
                   centerCoordinate={[this.state.userLoc[1], this.state.userLoc[0]]}
                 /> : <Text>LOADING</Text>
             }
+              {/* RENDERS FOURSQUARE MARKERS THEN BUSINESS MARKERS */}
               {
                 fsqArr.map(bus => (
                   <MarkersFsq
@@ -177,6 +197,7 @@ export default class BusMap extends Component {
                 ))
               }
             </MapboxGL.MapView>
+            {/* START/REDO SEARCH IN AREA BUTTON */}
             <Button onPress={()=> {
               this.handleMarkers()
             }}>{
