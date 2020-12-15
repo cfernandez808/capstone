@@ -1,12 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { Provider as PaperProvider, DefaultTheme as PaperDefaultTheme, DarkTheme as PaperDarkTheme} from 'react-native-paper';
-import { NavigationContainer, DefaultTheme as NavigationDefaultTheme, DarkTheme as NavigationDarkTheme } from '@react-navigation/native';
-=======
 import { DefaultTheme as PaperDefaultTheme, DarkTheme as PaperDarkTheme, Provider as PaperProvider } from 'react-native-paper';
 import { DefaultTheme as NavigationDefaultTheme, DarkTheme as NavigationDarkTheme, NavigationContainer } from '@react-navigation/native';
->>>>>>> main
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ScanStack from './Screens/ScanScreens/ScanStack'
 import MapStack from './Screens/MapScreens/MapStack'
@@ -18,13 +13,9 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import { createBusiness } from './graphql/mutations'
 import * as queries from './graphql/queries'
 import Geocoder from 'react-native-geocoding'
-<<<<<<< HEAD
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 import merge from 'deepmerge'
-=======
-import merge from "deepmerge"
->>>>>>> main
 import './secrets'
 
 Geocoder.init(process.env.GOOGLE_MAPS_API_KEY);
@@ -133,13 +124,8 @@ const App = () => {
 
 
   return (
-<<<<<<< HEAD
     <PaperProvider theme={theme}>
       <NavigationContainer theme={theme}>
-=======
-    <PaperProvider theme={CombinedDefaultTheme}>
-      <NavigationContainer theme={CombinedDefaultTheme}>
->>>>>>> main
         <Tab.Navigator
           initialRouteName="Scan"
           screenOptions={({ route }) => ({
