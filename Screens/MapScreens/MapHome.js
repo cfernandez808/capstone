@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  StyleSheet
 } from "react-native";
 import {
   Button,
@@ -30,8 +31,8 @@ const MapHome = ({navigation}) => {
 
   //Make cards further into components later on
   return (
-    <View style={{backgroundColor: '#6200ee'}}>
-        <Card style={{height: '30%'}}>
+    <View style={styles.view}>
+        <Card style={styles.card}>
           <Card.Content>
             <Title>Heat Map</Title>
             <Paragraph>Press here to interact with a heat map on COVID-19 cases in your area, and around the world</Paragraph>
@@ -41,12 +42,12 @@ const MapHome = ({navigation}) => {
             <Button onPress={()=>setHeatMap(!heatMap)}>GO</Button>
           </Card.Actions>
         </Card>
-        <Card style={{height: '30%'}}>
+        <Card tyle={styles.card}>
         <Card.Content>
           <Title>Business Map</Title>
           <Paragraph>Press here to view businesses in our ecosystem, and statistics of their virus incidences</Paragraph>
         </Card.Content>
-        <Card.Cover source={{uri: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/1800x1200_virus_3d_render_red_03_other.jpg?resize=*:350px'}} />
+        <Card.Cover style={styles.image} source={{uri: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/1800x1200_virus_3d_render_red_03_other.jpg?resize=*:350px'}} />
         <Card.Actions>
           <Button onPress={()=>setBusMap(!busMap)}> GO </Button>
         </Card.Actions>
@@ -54,5 +55,17 @@ const MapHome = ({navigation}) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  view: {
+    backgroundColor: "#DBEFFB",
+    height: 800,
+  },
+  card: {
+    height: 300,
+    margin: 10,
+    padding: 2,
+  }
+})
 
 export default MapHome;

@@ -74,7 +74,7 @@ const BusinessProfile = ({ navigation, route }) => {
   }
 
   return (
-    <View>
+    <View style={styles.view}>
         <TextInput
           style = {styles.input}
           mode= "outlined"
@@ -112,6 +112,10 @@ const BusinessProfile = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  view: {
+    backgroundColor: "#DBEFFB",
+    height: 800,
+  },
   input:{
     marginTop: 10,
     marginBottom: 10,
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
     marginRight: 3,
   },
   button: {
-    backgroundColor: "#f4a261",
+    backgroundColor: "#1B94DA",
     color: "#ffffff",
     margin: 10,
     height: 50,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { API } from "aws-amplify";
 import * as queries from '../../graphql/queries'
-import { TextInput, Button } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 
 const VisitorProfile = ({route}) => {
   const [phone, setPhone] = useState('');
@@ -29,7 +29,7 @@ const VisitorProfile = ({route}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.view}>
       <TextInput
         style = {styles.input}
         mode= "outlined"
@@ -63,8 +63,9 @@ const VisitorProfile = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  view: {
+    backgroundColor: "#DBEFFB",
+    height: 800,
   },
   input:{
     marginTop: 10,
