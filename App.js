@@ -34,17 +34,17 @@ const theme = {
   colors: {
     primary: "blue",
     card: "rgb(37,135,255)",
-    background:  "rgb(237,237,237)",
-    text: 'black',
-    border: 'black',
-    notifcation: 'black',
-    accent: 'black',
-    backdrop: 'black',
-    placeholder: 'black',
-    onBackground: 'black',
-    onSurface: 'black',
-    disabled: 'black',
-    error: 'black',
+    // background:  "rgb(237,237,237)",
+    // text: 'black',
+    // border: 'black',
+    // notifcation: 'black',
+    // accent: 'black',
+    // backdrop: 'black',
+    // placeholder: 'black',
+    // onBackground: 'black',
+    // onSurface: 'black',
+    // disabled: 'black',
+    // error: 'black',
 
   }
 }
@@ -91,10 +91,6 @@ const signUpConfig = {
     }
   ]
 }
-
-const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
-const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
-
 const App = () => {
   const [businessId, setBusinessId] = useState("")
 

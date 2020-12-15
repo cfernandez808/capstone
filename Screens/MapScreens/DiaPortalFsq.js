@@ -22,7 +22,7 @@ const DiaPortalFsq = (props) => {
             <Paragraph>Business in {`${st}`}</Paragraph>
           }
           <Paragraph>
-            This business is not apart of the Big Brother Ecosystem, have them sign up for free to help your country!
+            This business is not apart of the CoPass Ecosystem, have them sign up for free to help your country!
           </Paragraph>
         </Dialog.Content>
         <Dialog.Actions>
