@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme as PaperDefaultTheme, DarkTheme as PaperDarkTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme as NavigationDefaultTheme, DarkTheme as NavigationDarkTheme, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ScanStack from './Screens/ScanScreens/ScanStack'
 import MapStack from './Screens/MapScreens/MapStack'
@@ -13,10 +13,12 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import { createBusiness } from './graphql/mutations'
 import * as queries from './graphql/queries'
 import Geocoder from 'react-native-geocoding'
+import merge from "deepmerge"
 import './secrets'
 
 Geocoder.init(process.env.GOOGLE_MAPS_API_KEY);
 const Tab = createBottomTabNavigator();
+
 
 Amplify.configure({
   ...config,
@@ -68,6 +70,9 @@ const signUpConfig = {
   ]
 }
 
+const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
+
 const App = () => {
   const [businessId, setBusinessId] = useState("")
 
@@ -87,7 +92,7 @@ const App = () => {
         setBusinessId(matchedBusiness.id)
       }
     } catch (error) {
-      console.log("failed to sync Business mode in database", error)
+      console.log("failed to sync Business model in database", error)
     }
   }
 
@@ -95,9 +100,10 @@ const App = () => {
     syncDataBase();
   }, []);
 
+
   return (
-    <PaperProvider>
-      <NavigationContainer>
+    <PaperProvider theme={CombinedDefaultTheme}>
+      <NavigationContainer theme={CombinedDefaultTheme}>
         <Tab.Navigator
           initialRouteName="Scan"
           screenOptions={({ route }) => ({
@@ -132,7 +138,6 @@ const App = () => {
 };
 
 export default withAuthenticator(App, {
-  includeGreetings: true,
   signUpConfig,
   usernameAttributes: 'email'
 });
