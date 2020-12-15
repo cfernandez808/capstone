@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  View,
-  Alert,
-  Text,
-  TouchableOpacity,
-  Image,
+  View
 } from "react-native";
 import {
   Button,
@@ -23,27 +19,33 @@ const MapHome = ({navigation}) => {
       setHeatMap(!heatMap)
     }
     if (busMap) {
-      navigation.navigate('BusMap')
+      navigation.navigate('BusinessMap')
       setBusMap(!busMap)
     }
   })
 
-  //Make cards further into components later on
+  /* CLUSTER MAP CARD AND BUSINESS MAP CARD */
   return (
-    <View style={{backgroundColor: '#6200ee'}}>
-        <Card style={{height: '30%'}}>
+    <View>
+        <Card
+          style={{height: '50%'}}
+          onPress={()=>setHeatMap(!heatMap)}
+        >
           <Card.Content>
-            <Title>Heat Map</Title>
+            <Title>Incidence Heat Map</Title>
             <Paragraph>Press here to interact with a heat map on COVID-19 cases in your area, and around the world</Paragraph>
           </Card.Content>
-          <Card.Cover source={{uri: 'https://i.stack.imgur.com/Gc1wv.png'}} />
+          <Card.Cover source={{uri: 'https://developer.tomtom.com/sites/default/files/blog-assets/heatmap12.jpg'}} />
           <Card.Actions>
             <Button onPress={()=>setHeatMap(!heatMap)}>GO</Button>
           </Card.Actions>
         </Card>
-        <Card style={{height: '30%'}}>
+        <Card
+          style={{height: '50%'}}
+          onPress={()=>setBusMap(!busMap)}
+        >
         <Card.Content>
-          <Title>Business Map</Title>
+          <Title>Ecosystem's Businesses</Title>
           <Paragraph>Press here to view businesses in our ecosystem, and statistics of their virus incidences</Paragraph>
         </Card.Content>
         <Card.Cover source={{uri: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/1800x1200_virus_3d_render_red_03_other.jpg?resize=*:350px'}} />

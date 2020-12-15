@@ -2,14 +2,14 @@ import React from "react";
 import {View} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import MapboxGL from "@react-native-mapbox-gl/maps";
-import DiaPortalEco from "./DiaPortalFsq";
+import DiaPortalEco from "./DiaPortalEco";
 
 const MarkersBus= props => {
   const {bus, handleVis} = props
   return (
     <MapboxGL.MarkerView
       id="business"
-      coordinate={bus.coordinates}
+      coordinate={[Number(bus.lng), Number(bus.lat)]}
     >
       <View>
         <IconButton

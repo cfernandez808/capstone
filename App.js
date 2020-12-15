@@ -13,7 +13,9 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import { createBusiness } from './graphql/mutations'
 import * as queries from './graphql/queries'
 import Geocoder from 'react-native-geocoding'
-import merge from "deepmerge"
+const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
+import merge from 'deepmerge'
 import './secrets'
 
 Geocoder.init(process.env.GOOGLE_MAPS_API_KEY);
@@ -26,6 +28,26 @@ Amplify.configure({
     disabled: true,
   },
 });
+
+const theme = {
+  ...PaperDefaultTheme,
+  colors: {
+    primary: "blue",
+    card: "rgb(37,135,255)",
+    // background:  "rgb(237,237,237)",
+    // text: 'black',
+    // border: 'black',
+    // notifcation: 'black',
+    // accent: 'black',
+    // backdrop: 'black',
+    // placeholder: 'black',
+    // onBackground: 'black',
+    // onSurface: 'black',
+    // disabled: 'black',
+    // error: 'black',
+
+  }
+}
 
 const signUpConfig = {
   header: 'Business Owner Sign Up',
@@ -69,10 +91,6 @@ const signUpConfig = {
     }
   ]
 }
-
-const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
-const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
-
 const App = () => {
   const [businessId, setBusinessId] = useState("")
 
@@ -102,8 +120,8 @@ const App = () => {
 
 
   return (
-    <PaperProvider theme={CombinedDefaultTheme}>
-      <NavigationContainer theme={CombinedDefaultTheme}>
+    <PaperProvider theme={theme}>
+      <NavigationContainer theme={theme}>
         <Tab.Navigator
           initialRouteName="Scan"
           screenOptions={({ route }) => ({

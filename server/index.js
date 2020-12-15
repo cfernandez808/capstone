@@ -68,7 +68,9 @@ app.post("/api/upload/:title", upload.single("photo"), (req, res, next) => {
     const client = new aws.Rekognition(config);
 
     /* list all the faces and delete all of them in a collection, this is not a function of the app, only for testing
+
     */
+
     // const listFacesParams = {
     //   CollectionId: "irelia-faces"
     // };

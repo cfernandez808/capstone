@@ -63,7 +63,7 @@ const BusinessProfile = ({ navigation, route }) => {
     } catch (error) {
       console.log('failed to sign out', error)
     }
-  }
+  };
 
   return (
     <View>

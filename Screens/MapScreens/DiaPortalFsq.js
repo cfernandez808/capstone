@@ -6,6 +6,8 @@ import {
   Paragraph,
 } from 'react-native-paper';
 
+/* DIALOGUE BOX WRAPPED IN A PORTAL FOR FOURSQUARE BUSINESSES
+THROUGH PLACES API */
 const DiaPortalFsq = (props) => {
   const {bus, address, handleVis, city, st} = props
   return (
@@ -20,7 +22,7 @@ const DiaPortalFsq = (props) => {
             <Paragraph>Business in {`${st}`}</Paragraph>
           }
           <Paragraph>
-            This business is not apart of the Big Brother Ecosystem, have them sign up for free to help your country!
+            This business is not apart of the CoPass Ecosystem, have them sign up for free to help your country!
           </Paragraph>
         </Dialog.Content>
         <Dialog.Actions>
