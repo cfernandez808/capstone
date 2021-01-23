@@ -1,4 +1,4 @@
-# capstone
+# capstone (CoPass)
 Our mobile application has Businesses and Customers as users. Those who are registered as Businesses are able to leverage AWS's deep learning power to recognize if a customer has been to another business on the ecosystem recently, and if that customer has measured a "high" temperature at a previous business. If so, the customer shouldn't be allowed admittance to the business, in light of COVID-19.
 
 As a customer, you should have a heat map of businesses on the ecosystem and the customer's reported "high temperature cases" (simulated until adaptation/deployment).
